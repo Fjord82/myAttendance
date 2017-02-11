@@ -8,10 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="324.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="324.0" stylesheets="@Resources/styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="121.0" layoutY="76.0" text="Sign in:" />
+      <Label layoutX="121.0" layoutY="76.0" stylesheets="@Resources/styleSheetLogin.css" text="Sign in:" />
       <TextField layoutX="79.0" layoutY="100.0" promptText="Username" />
       <TextField layoutX="79.0" layoutY="132.0" promptText="Password" />
       <Button defaultButton="true" layoutX="79.0" layoutY="175.0" mnemonicParsing="false" text="Login" />
