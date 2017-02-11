@@ -5,13 +5,13 @@
  */
 package myattendance;
 
+import java.io.IOException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  *
@@ -19,19 +19,20 @@ import javafx.stage.Stage;
  */
 public class MyAttendance extends Application
 {
-    
+    public Window stage;
+
     @Override
-    public void start(Stage primaryStage)
+    public void start(Stage primaryStage) throws IOException
     {
-        
-        StackPane root = new StackPane();
-        
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/View/LoginView.fxml"));
+
+        Scene scene = new Scene(root);
+
+        primaryStage.setTitle("Login");
+
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     /**
@@ -41,5 +42,5 @@ public class MyAttendance extends Application
     {
         launch(args);
     }
-    
+
 }
