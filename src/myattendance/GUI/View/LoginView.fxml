@@ -8,12 +8,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<<<<<<< HEAD
 <AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="324.0" stylesheets="@Resources/styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+=======
+<AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="324.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.LoginViewController">
+>>>>>>> Development
    <children>
       <Label layoutX="121.0" layoutY="76.0" stylesheets="@Resources/styleSheetLogin.css" text="Sign in:" />
       <TextField layoutX="79.0" layoutY="100.0" promptText="Username" />
       <TextField layoutX="79.0" layoutY="132.0" promptText="Password" />
-      <Button defaultButton="true" layoutX="79.0" layoutY="175.0" mnemonicParsing="false" text="Login" />
+      <Button fx:id="loginButton" defaultButton="true" layoutX="79.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
       <CheckBox layoutX="144.0" layoutY="170.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Remeber me" />
       <ImageView fitHeight="38.0" fitWidth="167.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
          <image>
