@@ -12,6 +12,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import myattendance.GUI.Model.AttendanceParser;
 
@@ -23,13 +26,23 @@ import myattendance.GUI.Model.AttendanceParser;
 public class LoginViewController implements Initializable
 {
 
+    private final String studentUsername = "student";
+    private final String teacherUsername = "teacher";
+    private final String password = "pass";
+
     /**
-     * Gets the singleton instance of the model.
+     * Gets the singleton instance of AttendanceParser.java.
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
 
     @FXML
     private Button loginButton;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private CheckBox rememberMeCheckBox;
 
     /**
      * Initializes the controller class.
@@ -43,11 +56,22 @@ public class LoginViewController implements Initializable
     @FXML
     private void handleLogin(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
+        if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals("pass"))
+        {
+            attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
 
-        // Closes the primary stage
-        Stage stage = (Stage) loginButton.getScene().getWindow();
-        stage.close();
+            // Closes the primary stage
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close();
+        }
+        if (usernameField.getText().equals(teacherUsername) && passwordField.getText().equals("pass"))
+        {
+            attendanceParser.changeView("Homepage", "GUI/View/TeacherHomepage.fxml");
+
+            // Closes the primary stage
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+        }
+
     }
 
 }

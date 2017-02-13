@@ -20,7 +20,7 @@ import myattendance.GUI.Model.AttendanceParser;
  *
  * @author Kristoffers
  */
-public class MainAttendanceOverviewController implements Initializable
+public class TeacherHomepageController implements Initializable
 {
 
     /**
@@ -29,11 +29,7 @@ public class MainAttendanceOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
 
     @FXML
-    private Button signOutButton;
-    @FXML
-    private Button loadSingleOverviewButton;
-    @FXML
-    private Button absenceOverviewButton;
+    private Button logoutButton;
 
     /**
      * Initializes the controller class.
@@ -50,17 +46,7 @@ public class MainAttendanceOverviewController implements Initializable
         attendanceParser.changeView("Login", "GUI/View/LoginView.fxml");
 
         // Closes the primary stage
-        Stage stage = (Stage) signOutButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void handleAbsenceOverview(ActionEvent event) throws IOException
-    {
-        attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml");
-
-        // Closes the primary stage
-        Stage stage = (Stage) absenceOverviewButton.getScene().getWindow();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.close();
     }
 

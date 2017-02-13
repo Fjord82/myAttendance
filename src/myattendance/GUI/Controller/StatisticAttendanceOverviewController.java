@@ -24,7 +24,7 @@ public class StatisticAttendanceOverviewController implements Initializable
 {
 
     /**
-     * Gets the singleton instance of the model.
+     * Gets the singleton instance of AttendanceParser.java.
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
 
