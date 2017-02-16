@@ -24,7 +24,11 @@ public class MainAttendanceOverviewController implements Initializable
 {
 
     /**
+<<<<<<< HEAD
+     * Gets the singleton instance of the model.
+=======
      * Gets the singleton instance of AttendanceParser.java.
+>>>>>>> Development
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
 
@@ -53,12 +57,20 @@ public class MainAttendanceOverviewController implements Initializable
         Stage stage = (Stage) signOutButton.getScene().getWindow();
         stage.close();
     }
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> Development
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
         attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml");
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> Development
         // Closes the primary stage
         Stage stage = (Stage) absenceOverviewButton.getScene().getWindow();
         stage.close();
