@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -19,7 +20,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
    <children>
       <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -114,11 +115,11 @@
                            </padding>
                         </TableView>
                      </children></FlowPane>
-                  <Button fx:id="btnAttendanceReqst" mnemonicParsing="false" prefHeight="26.0" prefWidth="175.0" text="Send Attendance Request">
+                  <Label fx:id="labelPresentCounter" contentDisplay="CENTER" text="Present: 0/0">
                      <VBox.margin>
-                        <Insets left="12.5" top="10.0" />
+                        <Insets left="10.0" top="10.0" />
                      </VBox.margin>
-                  </Button>
+                  </Label>
                </children>
             </VBox>
          </right>
