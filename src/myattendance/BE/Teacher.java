@@ -9,7 +9,7 @@ package myattendance.BE;
  *
  * @author Fjord82
  */
-public class ClassProgramme
+public class Teacher
 {
     
 }
