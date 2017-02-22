@@ -19,6 +19,7 @@ import javafx.stage.Window;
  */
 public class MyAttendance extends Application
 {
+
     public Window stage;
 
     @Override
@@ -27,6 +28,7 @@ public class MyAttendance extends Application
         Parent root = FXMLLoader.load(getClass().getResource("GUI/View/LoginView.fxml"));
 
         Scene scene = new Scene(root);
+        //scene.getStylesheets().add("file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/styleSheetLogin.css");
 
         primaryStage.setTitle("Login");
 
@@ -41,6 +43,8 @@ public class MyAttendance extends Application
     public static void main(String[] args)
     {
         launch(args);
+        
+        
     }
 
 }
