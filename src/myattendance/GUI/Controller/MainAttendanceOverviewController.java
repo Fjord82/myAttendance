@@ -83,6 +83,9 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private FlowPane flowPaneOnline;
     
+    @FXML
+    private Label labelPresentCounter;
+    
     Student student;
     @FXML
     private TableColumn<Student, String> tblViewName;
@@ -100,6 +103,7 @@ public class MainAttendanceOverviewController implements Initializable
         fillComboBox();
         showConstantCalender();
         populateOnlineList(flowPaneOnline);
+        updatePresentCounter();
     }
 
     private void handleLogout(ActionEvent event) throws IOException
@@ -189,6 +193,30 @@ public class MainAttendanceOverviewController implements Initializable
     
     private void sortStudentStatus()
     {
+        
+    }
+    
+    /**
+     * Updates the counter for how many students are currently present,
+     * out of the total amount.
+     * 
+     * Max present is the total number of students in the table.
+     * Currently present is the amount of students with the status 'Online'.
+     */
+    private void updatePresentCounter()
+    {
+        String labelText = "";
+        int maxPresent = tblStatusView.getItems().size();
+        int currentlyPresent = 0;
+        
+        for (Student s : tblStatusView.getItems())
+        {
+            if (s.getStatus().equals("Online"))
+                currentlyPresent++;
+        }
+        
+        labelText = "Currently Present: " + currentlyPresent + "/" + maxPresent;
+        labelPresentCounter.setText(labelText);
         
     }
 
