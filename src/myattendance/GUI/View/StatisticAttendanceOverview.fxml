@@ -10,15 +10,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StatisticAttendanceOverviewController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <image>
-            <Image url="@../../../../logo.png" />
+            <Image url="file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" text="Homepage" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="70.0" />
+      <Button fx:id="overviewButton" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleHomepage" text="Homepage" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="70.0" />
       <LineChart layoutX="15.0" layoutY="136.0" prefHeight="250.0" prefWidth="312.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
