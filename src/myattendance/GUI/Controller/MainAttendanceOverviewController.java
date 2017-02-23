@@ -97,8 +97,6 @@ public class MainAttendanceOverviewController implements Initializable
     private TableView<Student> tblStatusView;
     @FXML
     private VBox vBoxStatus;
-    
-    
 
     /**
      * Initializes the controller class.
@@ -169,12 +167,16 @@ public class MainAttendanceOverviewController implements Initializable
             tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
             tblStatusView.setItems(studentList);
             tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        } else if (cBoxClassSelection.getValue().equals("Select Class"))
+        {
+            ObservableList<Student> studentList = FXCollections.observableArrayList();
+            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            tblStatusView.setItems(studentList);
+            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         }
-        
         updatePresentCounter();
     }
 
-   
     private void sortStudentStatus()
     {
 
@@ -203,15 +205,13 @@ public class MainAttendanceOverviewController implements Initializable
 
         labelText = "Currently Present: " + currentlyPresent + "/" + maxPresent;
         labelPresentCounter.setText(labelText);
-
     }
 
     @FXML
     private void clickCBox(ActionEvent event)
     {
         populateOnlineList();
-        
-        
+
     }
 
 }

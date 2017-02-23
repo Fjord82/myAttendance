@@ -19,111 +19,116 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
-   <children>
-      <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <left>
-            <VBox fx:id="vBoxSelectionContent" prefHeight="306.0" prefWidth="290.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-               <children>
-                  <ComboBox fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="175.0" promptText="Select Class">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <DatePicker fx:id="datePicker" prefWidth="175.0">
-                     <VBox.margin>
-                        <Insets top="75.0" />
-                     </VBox.margin>
-                  </DatePicker>
-               </children>
-            </VBox>
-         </left>
-         <top>
-            <HBox prefHeight="94.0" prefWidth="800.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
-               <children>
-                  <VBox prefHeight="92.0" prefWidth="275.0">
-                     <children>
-                        <ImageView fitHeight="40.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../logo.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets left="10.0" top="15.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <MenuBar prefHeight="37.0" prefWidth="275.0">
-                          <menus>
-                            <Menu mnemonicParsing="false">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                              </items>
-                            </Menu>
-                          </menus>
-                        </MenuBar>
-                     </children>
-                  </VBox>
-                  <MenuBar fx:id="menuBar" prefHeight="37.0" prefWidth="475.0">
-                    <menus>
-                      <Menu fx:id="menuWeekSchedule" mnemonicParsing="false" text="Weekly schedule" />
-                      <Menu fx:id="menuAttendanceList" mnemonicParsing="false" text="Attendance List" />
-                      <Menu fx:id="menuStatistics" mnemonicParsing="false" text="Statistics" />
-                        <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help          " />
-                    </menus>
-                     <HBox.margin>
-                        <Insets top="55.0" />
-                     </HBox.margin>
-                  </MenuBar>
-                  <MenuBar prefHeight="37.0" prefWidth="250.0">
-                    <menus>
-                      <Menu mnemonicParsing="false">
-                           <graphic>
-                              <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
-                                 <opaqueInsets>
-                                    <Insets right="50.0" />
-                                 </opaqueInsets>
-                              </TextField>
-                           </graphic>
-                      </Menu>
-                    </menus>
-                     <HBox.margin>
-                        <Insets top="55.0" />
-                     </HBox.margin>
-                     <opaqueInsets>
+    <children>
+        <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <VBox fx:id="vBoxSelectionContent" prefHeight="306.0" prefWidth="290.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
                         <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="55.0" />
-                     </padding>
-                  </MenuBar>
-               </children>
-            </HBox>
-         </top>
-         <right>
-            <VBox fx:id="vBoxStatus" prefHeight="345.0" prefWidth="250.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
-               <children>
-                  <TableView fx:id="tblStatusView" prefHeight="356.0" prefWidth="250.0">
-                    <columns>
-                      <TableColumn fx:id="tblViewName" prefWidth="150.0" text="Name" />
-                      <TableColumn fx:id="tblViewStatus" prefWidth="75.0" />
-                    </columns>
-                  </TableView>
-                  <Label fx:id="labelPresentCounter" contentDisplay="CENTER" text="Present: 0/0">
-                     <VBox.margin>
-                        <Insets left="15.0" top="25.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
-         </right>
-         <center>
-            <StackPane fx:id="stackPane" prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <VBox prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
-               </children>
-            </StackPane>
-         </center>
-      </BorderPane>
-   </children>
+                    </BorderPane.margin>
+                    <children>
+                        <ComboBox fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="175.0" promptText="Select Class">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <DatePicker fx:id="datePicker" prefWidth="175.0">
+                            <VBox.margin>
+                                <Insets top="75.0" />
+                            </VBox.margin>
+                        </DatePicker>
+                    </children>
+                </VBox>
+            </left>
+            <top>
+                <HBox prefHeight="94.0" prefWidth="800.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
+                    <children>
+                        <VBox prefHeight="92.0" prefWidth="275.0">
+                            <children>
+                                <ImageView fitHeight="40.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../logo.png" />
+                                    </image>
+                                    <VBox.margin>
+                                        <Insets left="10.0" top="15.0" />
+                                    </VBox.margin>
+                                </ImageView>
+                                <MenuBar prefHeight="37.0" prefWidth="275.0">
+                                    <menus>
+                                        <Menu mnemonicParsing="false">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="About" />
+                                            </items>
+                                        </Menu>
+                                    </menus>
+                                </MenuBar>
+                            </children>
+                        </VBox>
+                        <MenuBar fx:id="menuBar" prefHeight="37.0" prefWidth="475.0">
+                            <menus>
+                                <Menu fx:id="menuAttendanceList" mnemonicParsing="false" text="Attendance List" />
+                                <Menu fx:id="menuStatistics" mnemonicParsing="false" text="Statistics" />
+                                <Menu fx:id="menuHelp" mnemonicParsing="false" text="Sign out" />
+                            </menus>
+                            <HBox.margin>
+                                <Insets top="55.0" />
+                            </HBox.margin>
+                            <opaqueInsets>
+                                <Insets left="20.0" />
+                            </opaqueInsets>
+                        </MenuBar>
+                        <MenuBar prefHeight="37.0" prefWidth="250.0">
+                            <menus>
+                                <Menu mnemonicParsing="false">
+                                    <graphic>
+                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
+                                            <opaqueInsets>
+                                                <Insets right="50.0" />
+                                            </opaqueInsets>
+                                        </TextField>
+                                    </graphic>
+                                </Menu>
+                            </menus>
+                            <HBox.margin>
+                                <Insets top="55.0" />
+                            </HBox.margin>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="55.0" />
+                            </padding>
+                        </MenuBar>
+                    </children>
+                </HBox>
+            </top>
+            <right>
+                <VBox fx:id="vBoxStatus" prefHeight="345.0" prefWidth="250.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
+                    <children>
+                        <TableView fx:id="tblStatusView" prefHeight="356.0" prefWidth="250.0">
+                            <placeholder>
+                                <Label text=""/>
+                            </placeholder>
+                            <columns>
+                                <TableColumn fx:id="tblViewName" prefWidth="150.0" text="Name" />
+                                <TableColumn fx:id="tblViewStatus" prefWidth="75.0" />
+                            </columns>
+                        </TableView>
+                        <Label fx:id="labelPresentCounter" contentDisplay="CENTER" text="Present: 0/0">
+                            <VBox.margin>
+                                <Insets left="15.0" top="25.0" />
+                            </VBox.margin>
+                        </Label>
+                    </children>
+                </VBox>
+            </right>
+            <center>
+                <StackPane fx:id="stackPane" prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <VBox prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
+                    </children>
+                </StackPane>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>
