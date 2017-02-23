@@ -34,12 +34,12 @@ public class StudentManager
     FileManager fileManager = FileManager.getInstance();
     
     
-    public Student[] getDanishClassList()
+    public List<Student> getDanishClassList()
     {
         return fileManager.getDanishClassList();
     }
     
-    public Student[] getInternationalClassList()
+    public List<Student> getInternationalClassList()
     {
         return fileManager.getInternaionalClassList();
     }

@@ -5,6 +5,7 @@
  */
 package myattendance.GUI.Model;
 
+import java.util.List;
 import myattendance.BE.Student;
 import myattendance.BLL.StudentManager;
 
@@ -33,12 +34,12 @@ public class StudentParser
     
     StudentManager studentManager = StudentManager.getInstance();
     
-    public Student[] getDanishClassList()
+    public List<Student> getDanishClassList()
     {
         return studentManager.getDanishClassList();
     }
     
-    public Student[] getInternationalClassList()
+    public List<Student> getInternationalClassList()
     {
         return studentManager.getInternationalClassList();
     }
