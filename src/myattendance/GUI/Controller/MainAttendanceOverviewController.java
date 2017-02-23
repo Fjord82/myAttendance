@@ -38,9 +38,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import myattendance.BE.Student;
 import myattendance.GUI.Model.AttendanceParser;
+import myattendance.GUI.Model.StudentParser;
 
 /**
  * FXML Controller class
@@ -54,6 +57,7 @@ public class MainAttendanceOverviewController implements Initializable
      * Gets the singleton instance of AttendanceParser.java.
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
+    StudentParser studentParser = StudentParser.getInstance();
 
     private Button absenceOverviewButton;
     @FXML
@@ -75,17 +79,15 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private Button btnLogOut;
     @FXML
-    private Button btnAttendanceReqst;
-    @FXML
     private StackPane stackPane;
     @FXML
     private VBox vBoxSelectionContent;
     @FXML
     private FlowPane flowPaneOnline;
-    
+
     @FXML
     private Label labelPresentCounter;
-    
+
     Student student;
     @FXML
     private TableColumn<Student, String> tblViewName;
@@ -93,6 +95,10 @@ public class MainAttendanceOverviewController implements Initializable
     private TableColumn<Student, String> tblViewStatus;
     @FXML
     private TableView<Student> tblStatusView;
+    @FXML
+    private VBox vBoxStatus;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -101,8 +107,9 @@ public class MainAttendanceOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         fillComboBox();
+
         showConstantCalender();
-        populateOnlineList(flowPaneOnline);
+        populateOnlineList();
         updatePresentCounter();
     }
 
@@ -123,100 +130,87 @@ public class MainAttendanceOverviewController implements Initializable
         Stage stage = (Stage) absenceOverviewButton.getScene().getWindow();
         stage.close();
     }
-    
+
     private void fillComboBox()
     {
         ObservableList<String> comboItems
-                = FXCollections.observableArrayList("Select Class", "CS DK 2.Sem", "CS INT 2.Sem", "CS DK 4.Sem");
+                = FXCollections.observableArrayList("Select Class", "CS DK 2.Sem", "CS INT 2.Sem");
         cBoxClassSelection.setItems(comboItems);
         cBoxClassSelection.getSelectionModel().selectFirst();
     }
-    
+
     private void showConstantCalender()
     {
-        
+
         //Install JFxtra from the internet!!!
-        
         DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-        
-            Node popupContent = datePickerSkin.getPopupContent();
-            
-            
-            vBoxSelectionContent.getChildren().add(popupContent);
-                   
-    }
-    
-    private void populateOnlineList(FlowPane flowPaneOnline)
-    {
-        flowPaneOnline.setOrientation(Orientation.VERTICAL);
-        flowPaneOnline.setPadding(new Insets(5));
-        
-        Student[] students = new Student[]{
-            new Student ("Joe", "Online"),
-            new Student ("Mark", "Online"),
-            new Student ("Thomas", "Offline"),
-            new Student ("Rocky", "Online"),
-            new Student ("Ken", "Offline"),
-            new Student ("Jimmy", "Offline"),
-            new Student ("Clark", "Offline"),
-            new Student ("Tommy", "Offline"),
-            new Student ("Mick", "Offline"),
-            new Student ("Chris", "Offline"),
-            };
-        
-        ObservableList<Student> studentList = FXCollections.observableArrayList(students);
-        tblViewName.setCellValueFactory(cellData->cellData.getValue().nameProperty());
-        tblStatusView.setItems(studentList);
-        
-        tblViewStatus.setCellValueFactory(cellData->cellData.getValue().statusProperty());
-        
-        
-        /*for (int i=0; i< students.length; i++) 
-        {
-            flowPaneOnline.getChildren().add(new Label(students[i].Name() + students[i].Status()));
-        }*/
+
+        Node popupContent = datePickerSkin.getPopupContent();
+
+        vBoxSelectionContent.setPadding(new Insets(10));
+
+        vBoxSelectionContent.getChildren().add(popupContent);
 
     }
-    
-   /* private void loadStudentsIntoViewer()
+
+    private void populateOnlineList()
     {
-        try
+        vBoxStatus.setPadding(new Insets(10));
+
+        if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
         {
-            ObservableList<Student> studentList = FXCollections.observableArrayList(student.getAllStudents());
-            return studentList;
-        } catch (IOException ex)
+            ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
+            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            tblStatusView.setItems(studentList);
+            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
         {
-            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+            ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
+            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            tblStatusView.setItems(studentList);
+            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         }
-        return null;
-    }*/
-    
+        
+        updatePresentCounter();
+    }
+
+   
     private void sortStudentStatus()
     {
-        
+
     }
-    
+
     /**
-     * Updates the counter for how many students are currently present,
-     * out of the total amount.
-     * 
-     * Max present is the total number of students in the table.
-     * Currently present is the amount of students with the status 'Online'.
+     * Updates the counter for how many students are currently present, out of
+     * the total amount.
+     *
+     * Max present is the total number of students in the table. Currently
+     * present is the amount of students with the status 'Online'.
      */
     private void updatePresentCounter()
     {
         String labelText = "";
         int maxPresent = tblStatusView.getItems().size();
         int currentlyPresent = 0;
-        
+
         for (Student s : tblStatusView.getItems())
         {
             if (s.getStatus().equals("Online"))
+            {
                 currentlyPresent++;
+            }
         }
-        
+
         labelText = "Currently Present: " + currentlyPresent + "/" + maxPresent;
         labelPresentCounter.setText(labelText);
+
+    }
+
+    @FXML
+    private void clickCBox(ActionEvent event)
+    {
+        populateOnlineList();
+        
         
     }
 
