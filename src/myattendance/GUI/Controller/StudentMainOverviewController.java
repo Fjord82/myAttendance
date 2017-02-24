@@ -5,20 +5,18 @@
  */
 package myattendance.GUI.Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import myattendance.GUI.Model.AttendanceParser;
+import myattendance.GUI.Model.StudentParser;
 
 /**
  * FXML Controller class
@@ -29,19 +27,16 @@ public class StudentMainOverviewController implements Initializable
 {
 
     @FXML
-    private MenuBar menuBar;
-    @FXML
-    private Menu menuAttendanceList;
-    @FXML
-    private Menu menuStatistics;
-    @FXML
-    private Menu menuHelp;
-    @FXML
     private VBox vBoxSelectionContent;
     @FXML
-    private ComboBox<?> cBoxClassSelection;
-    @FXML
     private DatePicker datePicker;
+    @FXML
+    private Button btnAbsenceOverview;
+    @FXML
+    private Button btnLogout;
+
+    AttendanceParser attendanceParser = AttendanceParser.getInstance();
+    StudentParser studentParser = StudentParser.getInstance();
 
     /**
      * Initializes the controller class.
@@ -50,11 +45,26 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-    }    
+    }
 
     @FXML
-    private void clickCBox(ActionEvent event)
+    private void handleAbsenceOverview(ActionEvent event)
     {
     }
-    
+
+    @FXML
+    private void clickStatistics(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void handleLogout(ActionEvent event) throws IOException
+    {
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml");
+
+        // Closes the primary stage
+        Stage stage = (Stage) btnLogout.getScene().getWindow();
+        stage.close();
+    }
+
 }
