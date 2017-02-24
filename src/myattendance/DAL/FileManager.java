@@ -32,76 +32,72 @@ public class FileManager
 
     }
 
-    public Student[] getDanishClassList()
+    public List<Student> getDanishClassList()
     {
         
-        Student[] danishStudents = new Student[]
-        {
-            new Student("Adam Lars Hansen", "Online"),
-            new Student("Bo McKenzie Sinclair", "Online"),
-            new Student("Casper Rødgaard", "Offline"),
-            new Student("Casper Tønder Jensen", "Online"),
-            new Student("Charlotte Bach Jensen", "Offline"),
-            new Student("Emit Arentoft Johansen", "Offline"),
-            new Student("Frederik Dyrberg", "Offline"),
-            new Student("Jacob Enemark", "Offline"),
-            new Student("Jens Nissen", "Offline"),
-            new Student("Jesper Bjørnhart Riis", "Offline"),
-            new Student("Joan Frøsig Tingskov Christensen", "Offline"),
-            new Student("Kenneth Kruse Sørensen", "Offline"),
-            new Student("Kenni Bent Rasmussen", "Online"),
-            new Student("Lucas Larsen", "Online"),
-            new Student("Mads Lorentsen", "Offline"),
-            new Student("Mathias Sejrup Plougmann", "Offline"),
-            new Student("Mathias Skovgaard Rasmussen", "Online"),
-            new Student("Michael Christian Ibsen", "Online"),
-            new Student("Mickei Christian Stage Jensen", "Online"),
-            new Student("Miklas Kruchov", "Offline"),
-            new Student("Nicolai Uhre Larsen", "Online"),
-            new Student("Patrick Broe Hansen", "Online"),
-            new Student("Rasmus Kærvang Lindved", "Online"),
-            new Student("Simon Juhl Birkedal", "Offline"),
-            new Student("Simon Walenkamp Hansen", "Offline"),
-            new Student("Stefan Olsen", "Online"),
-            new Student("Stephan Fuhlendorff", "Online"),
-            new Student("Stephan Rosengreen", "Offline"),
-            new Student("Thomas Meyer Hansen", "Offline"),
-            new Student("Kasper Fage", "Online"),
-        };
-
+        List<Student> danishStudents = new ArrayList<>();
+            danishStudents.add(new Student("Adam Lars Hansen", "Online", 50, 50));
+            danishStudents.add(new Student("Bo McKenzie Sinclair", "Online", 50, 50));
+            danishStudents.add(new Student("Casper Rødgaard", "Offline", 50, 50));
+            danishStudents.add(new Student("Casper Tønder Jensen", "Online", 50, 50));
+            danishStudents.add(new Student("Charlotte Bach Jensen", "Offline", 50, 50));
+            danishStudents.add(new Student("Emit Arentoft Johansen", "Offline", 50, 50));
+            danishStudents.add(new Student("Frederik Dyrberg", "Offline", 50, 50));
+            danishStudents.add(new Student("Jacob Enemark", "Offline", 50, 50));
+            danishStudents.add(new Student("Jens Nissen", "Offline", 50, 50));
+            danishStudents.add(new Student("Jesper Bjørnhart Riis", "Offline", 50, 50));
+            danishStudents.add(new Student("Joan Frøsig Tingskov Christensen", "Offline", 50, 50));
+            danishStudents.add(new Student("Kenneth Kruse Sørensen", "Offline", 50, 50));
+            danishStudents.add(new Student("Kenni Bent Rasmussen", "Online", 50, 50));
+            danishStudents.add(new Student("Lucas Larsen", "Online", 50, 50));
+            danishStudents.add(new Student("Mads Lorentsen", "Offline", 50, 50));
+            danishStudents.add(new Student("Mathias Sejrup Plougmann", "Offline", 50, 50));
+            danishStudents.add(new Student("Mathias Skovgaard Rasmussen", "Online", 50, 50));
+            danishStudents.add(new Student("Michael Christian Ibsen", "Online", 50, 50));
+            danishStudents.add(new Student("Mickei Christian Stage Jensen", "Online", 50, 50));
+            danishStudents.add(new Student("Miklas Kruchov", "Offline", 50, 50));
+            danishStudents.add(new Student("Nicolai Uhre Larsen", "Online", 50, 50));
+            danishStudents.add(new Student("Patrick Broe Hansen", "Online", 50, 50));
+            danishStudents.add(new Student("Rasmus Kærvang Lindved", "Online", 50, 50));
+            danishStudents.add(new Student("Simon Juhl Birkedal", "Offline", 50, 50));
+            danishStudents.add(new Student("Simon Walenkamp Hansen", "Offline", 50, 50));
+            danishStudents.add(new Student("Stefan Olsen", "Online", 50, 50));
+            danishStudents.add(new Student("Stephan Fuhlendorff", "Online", 50, 50));
+            danishStudents.add(new Student("Stephan Rosengreen", "Offline", 50, 50));
+            danishStudents.add(new Student("Thomas Meyer Hansen", "Offline", 50, 50));
+            danishStudents.add(new Student("Kasper Fage", "Online", 50, 50));
         
         return danishStudents;
     }
     
-    public Student[] getInternaionalClassList()
+    public List<Student> getInternaionalClassList()
     {
-    Student[] internationalStudents = new Student[]
-        {
-            new Student("Adam Strasak", "Online"),
-            new Student("Boldizsar Koppany", "Online"),
-            new Student("Carlos Fermando Ognissanti", "Online"),
-            new Student("Daniel Kasper Andersen Matras", "Online"),
-            new Student("Deividas Tamosiunas", "Online"),
-            new Student("Edison Javier Lamar", "Online"),
-            new Student("Edwin Mhoy Silva Rifa", "Online"),
-            new Student("Gudlaug Gudjónsdóttir", "Online"),
-            new Student("Ingvar Örn Porarinsson", "Online"),
-            new Student("Jeppe Ganderup Ehmsen", "Offline"),
-            new Student("Jesper Enemark", "Online"),
-            new Student("Jonas Husted Andersen", "Offline"),
-            new Student("Kristof Perger", "Online"),
-            new Student("Kristoffer Møller Christensen", "Offline"),
-            new Student("Linda Braarup", "Online"),
-            new Student("Mark Palmai", "Online"),
-            new Student("Masoud Zangeneh", "Online"),
-            new Student("Meng Ting Dunmow", "Offline"),
-            new Student("Michal Adam Izdebski", "Online"),
-            new Student("Mieszko Aleksander Kozma", "Online"),
-            new Student("Peder Blok Laugesen", "Online"),
-            new Student("Rasmus Fjord Christensen", "Offline"),
-            new Student("Robie Anticristo Sun", "Online"),
+    List<Student> internationalStudents = new ArrayList<>();
+        
+            internationalStudents.add(new Student("Adam Strasak", "Online", 50, 50));
+            internationalStudents.add(new Student("Boldizsar Koppany", "Online", 50, 50));
+            internationalStudents.add(new Student("Carlos Fermando Ognissanti", "Online", 50, 50));
+            internationalStudents.add(new Student("Daniel Kasper Andersen Matras", "Online", 50, 50));
+            internationalStudents.add(new Student("Deividas Tamosiunas", "Online", 50, 50));
+            internationalStudents.add(new Student("Edison Javier Lamar", "Online", 50, 50));
+            internationalStudents.add(new Student("Edwin Mhoy Silva Rifa", "Online", 50, 50));
+            internationalStudents.add(new Student("Gudlaug Gudjónsdóttir", "Online", 50, 50));
+            internationalStudents.add(new Student("Ingvar Örn Porarinsson", "Online", 50, 50));
+            internationalStudents.add(new Student("Jeppe Ganderup Ehmsen", "Offline", 50, 50));
+            internationalStudents.add(new Student("Jesper Enemark", "Online", 50, 50));
+            internationalStudents.add(new Student("Jonas Husted Andersen", "Offline", 50, 50));
+            internationalStudents.add(new Student("Kristof Perger", "Online", 50, 50));
+            internationalStudents.add(new Student("Kristoffer Møller Christensen", "Offline", 50, 50));
+            internationalStudents.add(new Student("Linda Braarup", "Online", 50, 50));
+            internationalStudents.add(new Student("Mark Palmai", "Online", 50, 50));
+            internationalStudents.add(new Student("Masoud Zangeneh", "Online", 50, 50));
+            internationalStudents.add(new Student("Meng Ting Dunmow", "Offline", 50, 50));
+            internationalStudents.add(new Student("Michal Adam Izdebski", "Online", 50, 50));
+            internationalStudents.add(new Student("Mieszko Aleksander Kozma", "Online", 50, 50));
+            internationalStudents.add(new Student("Peder Blok Laugesen", "Online", 50, 50));
+            internationalStudents.add(new Student("Rasmus Fjord Christensen", "Offline", 50, 50));
+            internationalStudents.add(new Student("Robie Anticristo Sun", "Online", 50, 50));
 
-        };
     
         return internationalStudents;
     }

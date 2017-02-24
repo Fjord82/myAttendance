@@ -56,7 +56,7 @@ public class LoginViewController implements Initializable
         @FXML
         private void handleLogin(ActionEvent event) throws IOException
         {
-            if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals("pass"))
+            if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password))
             {
                 attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
 
@@ -64,12 +64,13 @@ public class LoginViewController implements Initializable
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.close();
             }
-            if (usernameField.getText().equals(teacherUsername) && passwordField.getText().equals("pass"))
+            if (usernameField.getText().equals(teacherUsername) && passwordField.getText().equals(password))
             {
-                attendanceParser.changeView("MainAttendanceOverview", "GUI/View/MainAttendanceOverview.fxml");
+                attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
 
                 // Closes the primary stage
                 Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.close();
             }
 
         }

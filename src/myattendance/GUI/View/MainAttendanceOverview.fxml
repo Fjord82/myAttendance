@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -47,7 +49,7 @@
                             <children>
                                 <ImageView fitHeight="40.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../../../logo.png" />
+                                        <Image url="file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/logo.png" />
                                     </image>
                                     <VBox.margin>
                                         <Insets left="10.0" top="15.0" />
@@ -64,24 +66,24 @@
                                 </MenuBar>
                             </children>
                         </VBox>
-                        <MenuBar fx:id="menuBar" prefHeight="37.0" prefWidth="475.0">
-                            <menus>
-                                <Menu fx:id="menuAttendanceList" mnemonicParsing="false" text="Attendance List" />
-                                <Menu fx:id="menuStatistics" mnemonicParsing="false" text="Statistics" />
-                                <Menu fx:id="menuHelp" mnemonicParsing="false" text="Sign out" />
-                            </menus>
-                            <HBox.margin>
-                                <Insets top="55.0" />
-                            </HBox.margin>
-                            <opaqueInsets>
-                                <Insets left="20.0" />
-                            </opaqueInsets>
-                        </MenuBar>
+                  <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" prefHeight="37.0" prefWidth="420.0">
+                    <buttons>
+                      <Button fx:id="btnAbsenceOverview" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="27.0" prefWidth="144.0" text="Attendance List" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="27.0" text="Statistics" />
+                        <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefWidth="81.0" text="Sign out" />
+                    </buttons>
+                     <HBox.margin>
+                        <Insets top="55.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </ButtonBar>
                         <MenuBar prefHeight="37.0" prefWidth="250.0">
                             <menus>
                                 <Menu mnemonicParsing="false">
                                     <graphic>
-                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
+                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
                                             <opaqueInsets>
                                                 <Insets right="50.0" />
                                             </opaqueInsets>
@@ -105,7 +107,7 @@
             <right>
                 <VBox fx:id="vBoxStatus" prefHeight="419.0" prefWidth="275.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
                     <children>
-                        <TableView fx:id="tblStatusView" editable="true" prefHeight="356.0" prefWidth="254.0">
+                        <TableView fx:id="tblStatusView" onMouseReleased="#clickTableStudents" prefHeight="356.0" prefWidth="250.0">
                             <placeholder>
                                 <Label text="PLease select a class list" />
                             </placeholder>
@@ -128,7 +130,7 @@
             <center>
                 <StackPane prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox id="custom" prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
+                        <VBox fx:id="vBoxMiddle" prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
                     </children>
                 </StackPane>
             </center>
