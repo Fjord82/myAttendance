@@ -67,7 +67,7 @@
                         <MenuBar fx:id="menuBar" prefHeight="37.0" prefWidth="475.0">
                             <menus>
                                 <Menu fx:id="menuAttendanceList" mnemonicParsing="false" text="Attendance List" />
-                                <Menu fx:id="menuStatistics" mnemonicParsing="false" onAction="#clickStatistics" text="Statistics" />
+                                <Menu fx:id="menuStatistics" mnemonicParsing="false" onAction="#clickStatistics" onHidden="#clickStatistics" onHiding="#clickStatistics" onMenuValidation="#clickStatistics" onShowing="#clickStatistics" onShown="#clickStatistics" text="Statistics" />
                                 <Menu fx:id="menuHelp" mnemonicParsing="false" text="Sign out" />
                             </menus>
                             <HBox.margin>
@@ -125,7 +125,7 @@
             <center>
                 <StackPane fx:id="stackPane" prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
+                        <VBox fx:id="vBoxMiddle" prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
                     </children>
                 </StackPane>
             </center>
