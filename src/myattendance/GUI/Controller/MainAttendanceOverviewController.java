@@ -54,7 +54,7 @@ public class MainAttendanceOverviewController implements Initializable
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     PieChart absenceChart = new PieChart(pieChartData);
-    
+
     Label absenceLabel = new Label();
 
     private Button absenceOverviewButton;
@@ -125,7 +125,7 @@ public class MainAttendanceOverviewController implements Initializable
     private void fillComboBox()
     {
         ObservableList<String> comboItems
-                = FXCollections.observableArrayList("Select Class", "CS DK 2.Sem", "CS INT 2.Sem");
+                = FXCollections.observableArrayList("Select Class", "CS2016A", "CS2016B");
         cBoxClassSelection.setItems(comboItems);
         cBoxClassSelection.getSelectionModel().selectFirst();
     }
@@ -150,13 +150,13 @@ public class MainAttendanceOverviewController implements Initializable
 
         if (txtFldSearchStudent.getText().equals(""))
         {
-            if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+            if (cBoxClassSelection.getValue().equals("CS2016A"))
             {
                 ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
 
                 tblStatusView.setItems(studentList);
 
-            } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
             {
                 ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
                 tblStatusView.setItems(studentList);
@@ -170,13 +170,13 @@ public class MainAttendanceOverviewController implements Initializable
         {
             List<Student> filteredList = new ArrayList<>();
             List<Student> unFilteredList = new ArrayList<>();
-            if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+            if (cBoxClassSelection.getValue().equals("CS2016A"))
             {
                 unFilteredList = studentParser.getDanishClassList();
 
                 for (Student s : unFilteredList)
                 {
-                    if (s.getName().contains(txtFldSearchStudent.getText()))
+                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
                     {
                         filteredList.add(s);
                     }
@@ -185,13 +185,13 @@ public class MainAttendanceOverviewController implements Initializable
                 ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
                 tblStatusView.setItems(studentList);
 
-            } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
             {
                 unFilteredList = studentParser.getInternationalClassList();
 
                 for (Student s : unFilteredList)
                 {
-                    if (s.getName().contains(txtFldSearchStudent.getText()))
+                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
                     {
                         filteredList.add(s);
                     }
@@ -261,8 +261,6 @@ public class MainAttendanceOverviewController implements Initializable
     {
 
         vBoxMiddle.getChildren().clear();
-        
-        
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
@@ -278,10 +276,10 @@ public class MainAttendanceOverviewController implements Initializable
             pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
             pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
             absenceLabel.setText(
-                    "Student Attendance: " +
-                    lastSelectedStudent.getPresentClasses() +
-                    "/" + 
-                    Math.addExact(lastSelectedStudent.getAbsentClasses(), lastSelectedStudent.getPresentClasses()));
+                    "Student Attendance: "
+                    + lastSelectedStudent.getPresentClasses()
+                    + "/"
+                    + Math.addExact(lastSelectedStudent.getAbsentClasses(), lastSelectedStudent.getPresentClasses()));
         }
     }
 
