@@ -3,13 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -41,7 +37,7 @@
                 </VBox>
             </left>
             <top>
-                <HBox prefHeight="94.0" prefWidth="800.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
+                <HBox prefHeight="97.0" prefWidth="750.0" BorderPane.alignment="CENTER">
                     <children>
                         <VBox prefHeight="92.0" prefWidth="275.0">
                             <children>
@@ -77,58 +73,13 @@
                                 <Insets left="20.0" />
                             </opaqueInsets>
                         </MenuBar>
-                        <MenuBar prefHeight="37.0" prefWidth="250.0">
-                            <menus>
-                                <Menu mnemonicParsing="false">
-                                    <graphic>
-                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
-                                            <opaqueInsets>
-                                                <Insets right="50.0" />
-                                            </opaqueInsets>
-                                        </TextField>
-                                    </graphic>
-                                </Menu>
-                            </menus>
-                            <HBox.margin>
-                                <Insets top="55.0" />
-                            </HBox.margin>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <padding>
-                                <Insets left="55.0" />
-                            </padding>
-                        </MenuBar>
                     </children>
                 </HBox>
             </top>
-            <right>
-                <VBox fx:id="vBoxStatus" prefHeight="419.0" prefWidth="275.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
-                    <children>
-                        <TableView fx:id="tblStatusView" editable="true" prefHeight="356.0" prefWidth="254.0">
-                            <placeholder>
-                                <Label text="PLease select a class list" />
-                            </placeholder>
-                            <columns>
-                                <TableColumn fx:id="tblViewName" prefWidth="167.0" resizable="false" text="Name" />
-                                <TableColumn fx:id="tblViewStatus" prefWidth="69.0" resizable="false" />
-                            </columns>
-                        </TableView>
-                        <Label fx:id="labelPresentCounter" contentDisplay="CENTER" text="Present: 0/0">
-                            <VBox.margin>
-                                <Insets left="15.0" top="25.0" />
-                            </VBox.margin>
-                        </Label>
-                    </children>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-                </VBox>
-            </right>
             <center>
                 <StackPane prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox id="custom" prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
+                        <VBox id="custom" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;" />
                     </children>
                 </StackPane>
             </center>

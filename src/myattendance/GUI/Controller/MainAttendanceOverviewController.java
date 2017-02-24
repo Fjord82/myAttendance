@@ -63,8 +63,6 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private MenuBar menuBar;
     @FXML
-    private Menu menuWeekSchedule;
-    @FXML
     private Menu menuAttendanceList;
     @FXML
     private Menu menuStatistics;
@@ -76,14 +74,9 @@ public class MainAttendanceOverviewController implements Initializable
     private DatePicker datePicker;
     @FXML
     private ComboBox<String> cBoxClassSelection;
-    @FXML
     private Button btnLogOut;
     @FXML
-    private StackPane stackPane;
-    @FXML
     private VBox vBoxSelectionContent;
-    @FXML
-    private FlowPane flowPaneOnline;
 
     @FXML
     private Label labelPresentCounter;
