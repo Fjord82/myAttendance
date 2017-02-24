@@ -130,28 +130,48 @@ and open the template in the editor.
     -fx-text-fill: white;
 }
 
+.button-bar 
+{
+    -fx-background-color: #3b5998; 
+    -fx-text-fill: white;
+}
+
+.button-bar .button 
+{
+    -fx-background-color: #3b5998;
+    -fx-text-fill: white; 
+}
+
+.button-bar .button:hover
+{
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
+    -fx-text-fill: rgb(17, 145, 213); 
+}
+
 .menu-bar 
 {
     -fx-background-color: #3b5998; 
     -fx-text-fill: white;
 }
 
-.menu-bar .label
+.menu-bar .label 
 {
+    /*-fx-background-color: #3b5998;*/
     -fx-text-fill: white; 
 }
 
 .menu-bar .label:hover
 {
-    -fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
     -fx-text-fill: rgb(17, 145, 213); 
 }
+
 
 
 .menu:hover
 {
     /*-fx-background-color: #dfe3ee;*/
-    -fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
 }
 
 .label
