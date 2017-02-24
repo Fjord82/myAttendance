@@ -44,4 +44,9 @@ public class StudentManager
         return fileManager.getInternaionalClassList();
     }
     
+    public Student getRasmus()
+    {
+        return fileManager.getRasmus();
+    }
+    
 }
