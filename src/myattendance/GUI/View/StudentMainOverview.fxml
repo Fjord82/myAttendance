@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -22,6 +23,16 @@
                         <Insets />
                     </BorderPane.margin>
                     <children>
+                  <Label fx:id="lblStudentName" text="Student">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblStudentClass" text="Class">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
                         <DatePicker fx:id="datePicker" prefWidth="175.0" promptText="mm/dd/yyyy">
                             <VBox.margin>
                                 <Insets top="75.0" />
@@ -65,7 +76,7 @@
             <center>
                 <StackPane prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox id="custom" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;" />
+                        <VBox id="custom" fx:id="vBoxMiddle" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;" />
                     </children>
                 </StackPane>
             </center>

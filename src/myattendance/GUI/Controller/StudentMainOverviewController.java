@@ -8,13 +8,18 @@ package myattendance.GUI.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import myattendance.BE.Student;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.StudentParser;
 
@@ -35,8 +40,17 @@ public class StudentMainOverviewController implements Initializable
     @FXML
     private Button btnLogout;
 
+    @FXML
+    private VBox vBoxMiddle;
+
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
+
+    Student rasmus = studentParser.getRasmus();
+    @FXML
+    private Label lblStudentName;
+    @FXML
+    private Label lblStudentClass;
 
     /**
      * Initializes the controller class.
@@ -45,6 +59,24 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
+
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        pieChartData.add(new PieChart.Data("Absence", rasmus.getAbsentClasses()));
+        pieChartData.add(new PieChart.Data("Presence", rasmus.getPresentClasses()));
+        
+        PieChart absenceChart = new PieChart(pieChartData);
+        absenceChart.setTitle("Absence");
+        
+        Label absenceLabel = new Label();
+        absenceLabel.setText("Student Attendance: " + rasmus.getPresentClasses() + "/" + Math.addExact(rasmus.getAbsentClasses(), rasmus.getPresentClasses()));
+        
+        
+
+        vBoxMiddle.getChildren().add(absenceChart);
+        vBoxMiddle.getChildren().add(absenceLabel);
+        
+        lblStudentName.setText(rasmus.getName());
+        lblStudentClass.setText("CS2016B");
     }
 
     @FXML

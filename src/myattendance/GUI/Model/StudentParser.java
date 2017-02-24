@@ -44,4 +44,9 @@ public class StudentParser
         return studentManager.getInternationalClassList();
     }
     
+    public Student getRasmus()
+    {
+        return studentManager.getRasmus();
+    }
+    
 }
