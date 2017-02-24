@@ -81,7 +81,7 @@
                             <menus>
                                 <Menu mnemonicParsing="false">
                                     <graphic>
-                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
+                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
                                             <opaqueInsets>
                                                 <Insets right="50.0" />
                                             </opaqueInsets>

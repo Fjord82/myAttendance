@@ -35,6 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -154,25 +155,66 @@ public class MainAttendanceOverviewController implements Initializable
     {
         vBoxStatus.setPadding(new Insets(10));
 
-        if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+        if (txtFldSearchStudent.getText().equals(""))
         {
-            ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
-            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            tblStatusView.setItems(studentList);
-            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+            {
+                ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
+
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            {
+                ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("Select Class"))
+            {
+
+                tblStatusView.getItems().clear();
+            }
+        } else
         {
-            ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
-            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            tblStatusView.setItems(studentList);
-            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        } else if (cBoxClassSelection.getValue().equals("Select Class"))
-        {
-            ObservableList<Student> studentList = FXCollections.observableArrayList();
-            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            tblStatusView.setItems(studentList);
-            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+            List<Student> filteredList = new ArrayList<>();
+            List<Student> unFilteredList = new ArrayList<>();
+            if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+            {
+                unFilteredList = studentParser.getDanishClassList();
+
+                for (Student s : unFilteredList)
+                {
+                    if (s.getName().contains(txtFldSearchStudent.getText()))
+                    {
+                        filteredList.add(s);
+                    }
+                }
+
+                ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            {
+                unFilteredList = studentParser.getInternationalClassList();
+
+                for (Student s : unFilteredList)
+                {
+                    if (s.getName().contains(txtFldSearchStudent.getText()))
+                    {
+                        filteredList.add(s);
+                    }
+                }
+
+                ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("Select Class"))
+            {
+
+                tblStatusView.getItems().clear();
+            }
         }
+        tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         updatePresentCounter();
     }
 
@@ -210,8 +252,18 @@ public class MainAttendanceOverviewController implements Initializable
     private void clickCBox(ActionEvent event)
     {
         populateOnlineList();
+        txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
 
+    }
+
+
+
+
+    @FXML
+    private void keyReleaseSearchField(KeyEvent event)
+    {
+        populateOnlineList();
     }
 
     @FXML
