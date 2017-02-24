@@ -14,13 +14,44 @@ import javafx.beans.property.StringProperty;
  */
 public class Student
 {
+
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private int absentClasses = 0;
+    private int presentClasses = 0;
 
     public Student(String name, String status)
     {
         this.name.set(name);
         this.status.set(status);
+    }
+
+    public Student(String name, String status, int absence, int presence)
+    {
+        this.name.set(name);
+        this.status.set(status);
+        this.absentClasses = absence;
+        this.presentClasses = presence;
+    }
+
+    public int getAbsentClasses()
+    {
+        return absentClasses;
+    }
+
+    public void setAbsentClasses(int absentClasses)
+    {
+        this.absentClasses = absentClasses;
+    }
+
+    public int getPresentClasses()
+    {
+        return presentClasses;
+    }
+
+    public void setPresentClasses(int presentClasses)
+    {
+        this.presentClasses = presentClasses;
     }
 
     public String getStatus()

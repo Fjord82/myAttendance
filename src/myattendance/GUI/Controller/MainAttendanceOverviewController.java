@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -61,8 +62,11 @@ public class MainAttendanceOverviewController implements Initializable
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
-    
+
     Student lastSelectedStudent;
+
+    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    PieChart absenceChart = new PieChart(pieChartData);
 
     private Button absenceOverviewButton;
     @FXML
@@ -97,6 +101,8 @@ public class MainAttendanceOverviewController implements Initializable
     private TableView<Student> tblStatusView;
     @FXML
     private VBox vBoxStatus;
+    @FXML
+    private VBox vBoxMiddle;
 
     /**
      * Initializes the controller class.
@@ -109,6 +115,8 @@ public class MainAttendanceOverviewController implements Initializable
         showConstantCalender();
         populateOnlineList();
         updatePresentCounter();
+
+        absenceChart.setTitle("Student Absence");
     }
 
     private void handleLogout(ActionEvent event) throws IOException
@@ -257,9 +265,6 @@ public class MainAttendanceOverviewController implements Initializable
 
     }
 
-
-
-
     @FXML
     private void keyReleaseSearchField(KeyEvent event)
     {
@@ -269,8 +274,10 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private void clickStatistics(ActionEvent event)
     {
-        PieChart chart = new PieChart();
-        chart.setTitle("Imported Fruits");
+
+        vBoxMiddle.getChildren().clear();
+
+        vBoxMiddle.getChildren().add(absenceChart);
     }
 
     @FXML
@@ -279,8 +286,15 @@ public class MainAttendanceOverviewController implements Initializable
         if (!tblStatusView.getItems().isEmpty())
         {
             lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
-            System.out.println(lastSelectedStudent.getName());
+            pieChartData.clear();
+            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
+            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
         }
+    }
+
+    @FXML
+    private void clickStatistics(Event event)
+    {
     }
 
 }
