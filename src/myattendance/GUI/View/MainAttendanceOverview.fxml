@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -105,15 +105,15 @@
                 </HBox>
             </top>
             <right>
-                <VBox fx:id="vBoxStatus" prefHeight="345.0" prefWidth="250.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
+                <VBox fx:id="vBoxStatus" prefHeight="419.0" prefWidth="275.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
                     <children>
                         <TableView fx:id="tblStatusView" onMouseReleased="#clickTableStudents" prefHeight="356.0" prefWidth="250.0">
                             <placeholder>
-                                <Label text="" />
+                                <Label text="PLease select a class list" />
                             </placeholder>
                             <columns>
-                                <TableColumn fx:id="tblViewName" prefWidth="150.0" text="Name" />
-                                <TableColumn fx:id="tblViewStatus" prefWidth="75.0" />
+                                <TableColumn fx:id="tblViewName" prefWidth="167.0" resizable="false" text="Name" />
+                                <TableColumn fx:id="tblViewStatus" prefWidth="69.0" resizable="false" />
                             </columns>
                         </TableView>
                         <Label fx:id="labelPresentCounter" contentDisplay="CENTER" text="Present: 0/0">
@@ -122,10 +122,13 @@
                             </VBox.margin>
                         </Label>
                     </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
                 </VBox>
             </right>
             <center>
-                <StackPane fx:id="stackPane" prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <StackPane prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
                         <VBox fx:id="vBoxMiddle" prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
                     </children>

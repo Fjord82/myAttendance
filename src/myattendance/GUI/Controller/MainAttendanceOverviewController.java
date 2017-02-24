@@ -64,8 +64,6 @@ public class MainAttendanceOverviewController implements Initializable
     private ComboBox<String> cBoxClassSelection;
     private Button btnLogOut;
     @FXML
-    private StackPane stackPane;
-    @FXML
     private VBox vBoxSelectionContent;
 
     @FXML
