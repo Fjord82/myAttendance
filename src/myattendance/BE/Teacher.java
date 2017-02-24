@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package myattendance.BLL;
+package myattendance.BE;
 
 /**
  *
  * @author Fjord82
  */
-public class AttendanceManager
+public class Teacher
 {
     
 }

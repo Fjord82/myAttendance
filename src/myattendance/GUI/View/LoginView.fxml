@@ -9,12 +9,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="324.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.LoginViewController">
+<AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="324.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.LoginViewController">
     <children>
         <TextField fx:id="usernameField" layoutX="79.0" layoutY="106.0" promptText="Username" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
         <PasswordField fx:id="passwordField" layoutX="79.0" layoutY="142.0" promptText="Password" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
         <Button fx:id="loginButton" defaultButton="true" layoutX="79.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-        <CheckBox fx:id="rememberMeCheckBox" layoutX="144.0" layoutY="176.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Remeber me" />
+        <CheckBox fx:id="rememberMeCheckBox" layoutX="144.0" layoutY="176.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Remember me" />
         <Label layoutX="79.0" layoutY="81.0" text="Sign in:" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="199.0" />
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
             <image>
