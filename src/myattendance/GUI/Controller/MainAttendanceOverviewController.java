@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -34,6 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -58,12 +60,12 @@ public class MainAttendanceOverviewController implements Initializable
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
+    
+    Student lastSelectedStudent;
 
     private Button absenceOverviewButton;
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private Menu menuWeekSchedule;
     @FXML
     private Menu menuAttendanceList;
     @FXML
@@ -76,14 +78,11 @@ public class MainAttendanceOverviewController implements Initializable
     private DatePicker datePicker;
     @FXML
     private ComboBox<String> cBoxClassSelection;
-    @FXML
     private Button btnLogOut;
     @FXML
     private StackPane stackPane;
     @FXML
     private VBox vBoxSelectionContent;
-    @FXML
-    private FlowPane flowPaneOnline;
 
     @FXML
     private Label labelPresentCounter;
@@ -211,7 +210,25 @@ public class MainAttendanceOverviewController implements Initializable
     private void clickCBox(ActionEvent event)
     {
         populateOnlineList();
+        txtFldSearchStudent.requestFocus();
 
+    }
+
+    @FXML
+    private void clickStatistics(ActionEvent event)
+    {
+        PieChart chart = new PieChart();
+        chart.setTitle("Imported Fruits");
+    }
+
+    @FXML
+    private void clickTableStudents(MouseEvent event)
+    {
+        if (!tblStatusView.getItems().isEmpty())
+        {
+            lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
+            System.out.println(lastSelectedStudent.getName());
+        }
     }
 
 }

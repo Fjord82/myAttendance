@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -67,7 +67,7 @@
                         <MenuBar fx:id="menuBar" prefHeight="37.0" prefWidth="475.0">
                             <menus>
                                 <Menu fx:id="menuAttendanceList" mnemonicParsing="false" text="Attendance List" />
-                                <Menu fx:id="menuStatistics" mnemonicParsing="false" text="Statistics" />
+                                <Menu fx:id="menuStatistics" mnemonicParsing="false" onAction="#clickStatistics" text="Statistics" />
                                 <Menu fx:id="menuHelp" mnemonicParsing="false" text="Sign out" />
                             </menus>
                             <HBox.margin>
@@ -105,9 +105,9 @@
             <right>
                 <VBox fx:id="vBoxStatus" prefHeight="345.0" prefWidth="250.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
                     <children>
-                        <TableView fx:id="tblStatusView" prefHeight="356.0" prefWidth="250.0">
+                        <TableView fx:id="tblStatusView" onMouseReleased="#clickTableStudents" prefHeight="356.0" prefWidth="250.0">
                             <placeholder>
-                                <Label text=""/>
+                                <Label text="" />
                             </placeholder>
                             <columns>
                                 <TableColumn fx:id="tblViewName" prefWidth="150.0" text="Name" />
