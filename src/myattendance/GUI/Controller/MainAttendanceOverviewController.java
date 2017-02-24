@@ -54,6 +54,8 @@ public class MainAttendanceOverviewController implements Initializable
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     PieChart absenceChart = new PieChart(pieChartData);
+    
+    Label absenceLabel = new Label();
 
     private Button absenceOverviewButton;
     @FXML
@@ -114,7 +116,7 @@ public class MainAttendanceOverviewController implements Initializable
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
         attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml");
-        
+
         // Closes the primary stage
         Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
         stage.close();
@@ -259,8 +261,11 @@ public class MainAttendanceOverviewController implements Initializable
     {
 
         vBoxMiddle.getChildren().clear();
+        
+        
 
         vBoxMiddle.getChildren().add(absenceChart);
+        vBoxMiddle.getChildren().add(absenceLabel);
     }
 
     @FXML
@@ -272,6 +277,11 @@ public class MainAttendanceOverviewController implements Initializable
             pieChartData.clear();
             pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
             pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
+            absenceLabel.setText(
+                    "Student Attendance: " +
+                    lastSelectedStudent.getPresentClasses() +
+                    "/" + 
+                    Math.addExact(lastSelectedStudent.getAbsentClasses(), lastSelectedStudent.getPresentClasses()));
         }
     }
 

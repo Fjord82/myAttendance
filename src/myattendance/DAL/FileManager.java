@@ -101,5 +101,10 @@ public class FileManager
     
         return internationalStudents;
     }
+    
+    public Student getRasmus()
+    {
+        return new Student("Rasmus Fjord Christensen", "Offline", 5, 95);
+    }
 
 }

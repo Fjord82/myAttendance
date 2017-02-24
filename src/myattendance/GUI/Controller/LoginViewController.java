@@ -58,7 +58,7 @@ public class LoginViewController implements Initializable
         {
             if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password))
             {
-                attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
+                attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
 
                 // Closes the primary stage
                 Stage stage = (Stage) loginButton.getScene().getWindow();
