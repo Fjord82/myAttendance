@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -35,6 +36,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -59,6 +61,8 @@ public class MainAttendanceOverviewController implements Initializable
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
+    
+    Student lastSelectedStudent;
 
     private Button absenceOverviewButton;
     @FXML
@@ -249,13 +253,34 @@ public class MainAttendanceOverviewController implements Initializable
     {
         populateOnlineList();
         txtFldSearchStudent.clear();
+        txtFldSearchStudent.requestFocus();
 
     }
+
+
+
 
     @FXML
     private void keyReleaseSearchField(KeyEvent event)
     {
         populateOnlineList();
+    }
+
+    @FXML
+    private void clickStatistics(ActionEvent event)
+    {
+        PieChart chart = new PieChart();
+        chart.setTitle("Imported Fruits");
+    }
+
+    @FXML
+    private void clickTableStudents(MouseEvent event)
+    {
+        if (!tblStatusView.getItems().isEmpty())
+        {
+            lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
+            System.out.println(lastSelectedStudent.getName());
+        }
     }
 
 }
