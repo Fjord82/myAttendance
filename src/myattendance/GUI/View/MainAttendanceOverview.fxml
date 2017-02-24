@@ -48,54 +48,47 @@
                             <children>
                                 <ImageView fitHeight="40.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/logo.png" />
+                                        <Image url="@../../../../logo.png" />
                                     </image>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="10.0" top="10.0" />
                                     </VBox.margin>
                                 </ImageView>
-                                <MenuBar prefHeight="37.0" prefWidth="275.0">
-                                    <menus>
-                                        
-                                    </menus>
-                                </MenuBar>
+                                <MenuBar minWidth="275.0" prefHeight="37.0" prefWidth="275.0" />
                             </children>
                         </VBox>
-                        <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" prefHeight="37.0" prefWidth="420.0">
-                            <buttons>
-                                <Button fx:id="btnAbsenceOverview" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="27.0" prefWidth="144.0" text="Attendance List" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="27.0" text="Statistics" />
-                                <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefWidth="81.0" text="Sign out" />
-                            </buttons>
-                            <HBox.margin>
-                                <Insets top="55.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets right="10.0" />
-                            </padding>
-                        </ButtonBar>
-                        <MenuBar prefHeight="37.0" prefWidth="250.0">
-                            <menus>
-                                <Menu mnemonicParsing="false">
-                                    <graphic>
-                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
+                  <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" minWidth="450.0" prefHeight="37.0" prefWidth="450.0">
+                    <buttons>
+                      <Button fx:id="btnAbsenceOverview" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="34.0" prefWidth="175.0" text="Attendance List" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="27.0" text="Statistics" />
+                        <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="34.0" prefWidth="81.0" text="Sign out" />
+                    </buttons>
+                     <HBox.margin>
+                        <Insets top="55.0" />
+                     </HBox.margin>
+                  </ButtonBar>
+                  <MenuBar prefHeight="0.0" prefWidth="275.0">
+                    <menus>
+                      <Menu mnemonicParsing="false">
+                           <graphic>
+                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="10.0" prefWidth="174.0" promptText="Search Student">
                                             <opaqueInsets>
-                                                <Insets right="50.0" />
+                                                <Insets right="40.0" />
                                             </opaqueInsets>
                                         </TextField>
-                                    </graphic>
-                                </Menu>
-                            </menus>
-                            <HBox.margin>
-                                <Insets top="55.0" />
-                            </HBox.margin>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <padding>
-                                <Insets left="55.0" />
-                            </padding>
-                        </MenuBar>
+                           </graphic>
+                      </Menu>
+                    </menus>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="60.0" />
+                     </padding>
+                  </MenuBar>
                     </children>
                 </HBox>
             </top>
