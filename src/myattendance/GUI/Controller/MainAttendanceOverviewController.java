@@ -19,11 +19,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -34,6 +36,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -59,11 +63,14 @@ public class MainAttendanceOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
+    Student lastSelectedStudent;
+
+    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    PieChart absenceChart = new PieChart(pieChartData);
+
     private Button absenceOverviewButton;
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private Menu menuWeekSchedule;
     @FXML
     private Menu menuAttendanceList;
     @FXML
@@ -76,14 +83,11 @@ public class MainAttendanceOverviewController implements Initializable
     private DatePicker datePicker;
     @FXML
     private ComboBox<String> cBoxClassSelection;
-    @FXML
     private Button btnLogOut;
     @FXML
     private StackPane stackPane;
     @FXML
     private VBox vBoxSelectionContent;
-    @FXML
-    private FlowPane flowPaneOnline;
 
     @FXML
     private Label labelPresentCounter;
@@ -97,6 +101,8 @@ public class MainAttendanceOverviewController implements Initializable
     private TableView<Student> tblStatusView;
     @FXML
     private VBox vBoxStatus;
+    @FXML
+    private VBox vBoxMiddle;
 
     /**
      * Initializes the controller class.
@@ -109,6 +115,8 @@ public class MainAttendanceOverviewController implements Initializable
         showConstantCalender();
         populateOnlineList();
         updatePresentCounter();
+
+        absenceChart.setTitle("Student Absence");
     }
 
     private void handleLogout(ActionEvent event) throws IOException
@@ -155,25 +163,66 @@ public class MainAttendanceOverviewController implements Initializable
     {
         vBoxStatus.setPadding(new Insets(10));
 
-        if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+        if (txtFldSearchStudent.getText().equals(""))
         {
-            ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
-            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            tblStatusView.setItems(studentList);
-            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+            {
+                ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
+
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            {
+                ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("Select Class"))
+            {
+
+                tblStatusView.getItems().clear();
+            }
+        } else
         {
-            ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
-            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            tblStatusView.setItems(studentList);
-            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        } else if (cBoxClassSelection.getValue().equals("Select Class"))
-        {
-            ObservableList<Student> studentList = FXCollections.observableArrayList();
-            tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            tblStatusView.setItems(studentList);
-            tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+            List<Student> filteredList = new ArrayList<>();
+            List<Student> unFilteredList = new ArrayList<>();
+            if (cBoxClassSelection.getValue().equals("CS DK 2.Sem"))
+            {
+                unFilteredList = studentParser.getDanishClassList();
+
+                for (Student s : unFilteredList)
+                {
+                    if (s.getName().contains(txtFldSearchStudent.getText()))
+                    {
+                        filteredList.add(s);
+                    }
+                }
+
+                ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("CS INT 2.Sem"))
+            {
+                unFilteredList = studentParser.getInternationalClassList();
+
+                for (Student s : unFilteredList)
+                {
+                    if (s.getName().contains(txtFldSearchStudent.getText()))
+                    {
+                        filteredList.add(s);
+                    }
+                }
+
+                ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("Select Class"))
+            {
+
+                tblStatusView.getItems().clear();
+            }
         }
+        tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         updatePresentCounter();
     }
 
@@ -211,7 +260,41 @@ public class MainAttendanceOverviewController implements Initializable
     private void clickCBox(ActionEvent event)
     {
         populateOnlineList();
+        txtFldSearchStudent.clear();
+        txtFldSearchStudent.requestFocus();
 
+    }
+
+    @FXML
+    private void keyReleaseSearchField(KeyEvent event)
+    {
+        populateOnlineList();
+    }
+
+    @FXML
+    private void clickStatistics(ActionEvent event)
+    {
+
+        vBoxMiddle.getChildren().clear();
+
+        vBoxMiddle.getChildren().add(absenceChart);
+    }
+
+    @FXML
+    private void clickTableStudents(MouseEvent event)
+    {
+        if (!tblStatusView.getItems().isEmpty())
+        {
+            lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
+            pieChartData.clear();
+            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
+            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
+        }
+    }
+
+    @FXML
+    private void clickStatistics(Event event)
+    {
     }
 
 }
