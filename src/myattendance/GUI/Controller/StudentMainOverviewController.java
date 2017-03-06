@@ -5,14 +5,19 @@
  */
 package myattendance.GUI.Controller;
 
+import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -59,7 +64,8 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-
+        showConstantCalender();
+       
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         pieChartData.add(new PieChart.Data("Absence", rasmus.getAbsentClasses()));
         pieChartData.add(new PieChart.Data("Presence", rasmus.getPresentClasses()));
@@ -75,19 +81,11 @@ public class StudentMainOverviewController implements Initializable
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         
+        
         lblStudentName.setText(rasmus.getName());
         lblStudentClass.setText("CS2016B");
     }
 
-    @FXML
-    private void handleAbsenceOverview(ActionEvent event)
-    {
-    }
-
-    @FXML
-    private void clickStatistics(ActionEvent event)
-    {
-    }
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
@@ -97,6 +95,20 @@ public class StudentMainOverviewController implements Initializable
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();
         stage.close();
+    }
+    
+    private void showConstantCalender()
+    {
+
+        //Install JFxtra from the internet!!!
+        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
+
+        Node popupContent = datePickerSkin.getPopupContent();
+
+        vBoxSelectionContent.setPadding(new Insets(10));
+
+        vBoxSelectionContent.getChildren().add(popupContent);
+
     }
 
 }
