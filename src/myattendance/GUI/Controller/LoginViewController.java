@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -43,6 +44,8 @@ public class LoginViewController implements Initializable
     private PasswordField passwordField;
     @FXML
     private CheckBox rememberMeCheckBox;
+    @FXML
+    private Label wrongLoginLabel;
 
     /**
      * Initializes the controller class.
@@ -51,28 +54,35 @@ public class LoginViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
+
+        // Hides the "Wrong username or password" label
+        wrongLoginLabel.setVisible(false);
     }
 
-        @FXML
-        private void handleLogin(ActionEvent event) throws IOException
+    @FXML
+    private void handleLogin(ActionEvent event) throws IOException
+    {
+        if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password))
         {
-            if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password))
-            {
-                attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
+            attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
 
-                // Closes the primary stage
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.close();
-            }
-            if (usernameField.getText().equals(teacherUsername) && passwordField.getText().equals(password))
-            {
-                attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
-
-                // Closes the primary stage
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.close();
-            }
-
+            // Closes the primary stage
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close();
         }
+        if (usernameField.getText().equals(teacherUsername) && passwordField.getText().equals(password))
+        {
+            attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
+
+            // Closes the primary stage
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close();
+        } else
+        {
+            // Displays the "Wrong username or password" label
+            wrongLoginLabel.setVisible(true);
+        }
+
+    }
 
 }
