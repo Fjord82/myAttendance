@@ -7,44 +7,31 @@ package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import myattendance.BE.Student;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.StudentParser;
@@ -70,22 +57,12 @@ public class MainAttendanceOverviewController implements Initializable
 
     private Button absenceOverviewButton;
     @FXML
-    private MenuBar menuBar;
-    @FXML
-    private Menu menuAttendanceList;
-    @FXML
-    private Menu menuStatistics;
-    @FXML
-    private Menu menuHelp;
-    @FXML
     private TextField txtFldSearchStudent;
     @FXML
     private DatePicker datePicker;
     @FXML
     private ComboBox<String> cBoxClassSelection;
     private Button btnLogOut;
-    @FXML
-    private StackPane stackPane;
     @FXML
     private VBox vBoxSelectionContent;
 
@@ -103,6 +80,10 @@ public class MainAttendanceOverviewController implements Initializable
     private VBox vBoxStatus;
     @FXML
     private VBox vBoxMiddle;
+    @FXML
+    private Button btnAbsenceOverview;
+    @FXML
+    private Button btnLogout;
 
     /**
      * Initializes the controller class.
@@ -119,21 +100,23 @@ public class MainAttendanceOverviewController implements Initializable
         absenceChart.setTitle("Student Absence");
     }
 
+    @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
         attendanceParser.changeView("Login", "GUI/View/LoginView.fxml");
 
         // Closes the primary stage
-        Stage stage = (Stage) btnLogOut.getScene().getWindow();
+        Stage stage = (Stage) btnLogout.getScene().getWindow();
         stage.close();
     }
 
+    @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
         attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml");
-
+        
         // Closes the primary stage
-        Stage stage = (Stage) absenceOverviewButton.getScene().getWindow();
+        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
         stage.close();
     }
 
@@ -290,11 +273,6 @@ public class MainAttendanceOverviewController implements Initializable
             pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
             pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
         }
-    }
-
-    @FXML
-    private void clickStatistics(Event event)
-    {
     }
 
 }
