@@ -6,7 +6,11 @@
 package myattendance.GUI.Controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,7 +65,32 @@ public class LoginViewController implements Initializable
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException
-    {
+    { 
+        // THIS PRINTS YOUR BROADCASTING ADDRESS WHEN LOGGING IN
+        Enumeration<NetworkInterface> interfaces
+                = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements())
+        {
+            NetworkInterface networkInterface = interfaces.nextElement();
+            if (networkInterface.isLoopback())
+            {
+                continue;    // Don't want to broadcast to the loopback interface
+            }
+            for (InterfaceAddress interfaceAddress
+                    : networkInterface.getInterfaceAddresses())
+            {
+                InetAddress broadcast = interfaceAddress.getBroadcast();
+                if (broadcast == null)
+                {
+                    continue;
+                }
+                // Use the address
+                System.out.println(broadcast);
+
+            }
+
+        }
+
         if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password))
         {
             attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
