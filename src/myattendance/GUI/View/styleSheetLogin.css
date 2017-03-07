@@ -20,13 +20,30 @@ and open the template in the editor.
     -fx-font-family: 'Taviraj', serif;
 }
 
+#anchorpanelogin
+{
+    -fx-background-color: 
+    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        #428bca,
+        #dfe3ee,
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-text-fill: white;
+    -fx-padding: 2 0 2 10;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    
+}
+
 .scroll-bar {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-padding: 2;
 }
 .scroll-bar .thumb {
-    -fx-background-color: #8b9dc3;
+    -fx-background-color: 
+    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        #428bca,
+        #dfe3ee,
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
     -fx-background-insets: 0;
     -fx-background-radius: 0.5em;
 }
@@ -61,7 +78,6 @@ and open the template in the editor.
     -fx-border-radius: 8;
     -fx-padding: 2 2 2 2;
     -fx-font: bold italic 8pt "LucidaBrightDemiBold";
-    
 }
 
 
@@ -80,13 +96,19 @@ and open the template in the editor.
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
-   
+    -fx-border-width: 1;
+    -fx-border-color: #428bca;
 }
 
 .table-view .column-header {
     -fx-background-color: #8b9dc3;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
+}
+
+.table-view .column-header .label:hover
+{
+    -fx-text-fill: #ffbf00;
 }
 
 .table-row-cell {
@@ -130,38 +152,137 @@ and open the template in the editor.
     -fx-text-fill: white;
 }
 
+.button-bar 
+{
+    -fx-background-color: #3b5998; 
+    -fx-text-fill: white;
+}
+
+.button-bar .button 
+{
+    -fx-background-color: #3b5998;
+    -fx-text-fill: white; 
+}
+
+.button-bar .button:hover
+{
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
+    -fx-text-fill: #ffbf00;
+}
+
 .menu-bar 
 {
     -fx-background-color: #3b5998; 
     -fx-text-fill: white;
 }
 
-.menu-bar .label
+.menu-bar .label 
 {
+    /*-fx-background-color: #3b5998;*/
     -fx-text-fill: white; 
 }
 
 .menu-bar .label:hover
 {
-    -fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);
-    -fx-text-fill: rgb(17, 145, 213); 
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
+    
 }
+
 
 
 .menu:hover
 {
     /*-fx-background-color: #dfe3ee;*/
-    -fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
 }
 
 .label
 {
     -fx-text-fill: rgb(17, 145, 213); 
-    -fx-padding: 6 6 6 0;
+    -fx-padding: 0 0 0 0;
     -fx-font: bold italic 12pt "LucidaBrightDemiBold";
-    
     /*-fx-font-size: 18px;*/
     /*-fx-text-fill: rgb(34, 50, 71);*/
+}
+
+#labellogin
+{
+    -fx-text-fill:white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#checkboxlogin
+{
+    -fx-text-fill:white;
+    -fx-border-color: transparent;
+}
+
+#classlistlabel
+{
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        #428bca,
+        #dfe3ee,
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-text-fill: white;
+    -fx-padding:5 10 5 10;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#comboclasslist 
+{
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-prompt-color: white;
+    -fx-border-color:transparent;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    
+}
+#comboclasslist:hover 
+{
+    -fx-border-color: #ffbf00;
+    
+}
+
+#searchfield
+{
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+    
+#statuslabel
+{
+    -fx-background-color: 
+    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        #428bca,
+        #dfe3ee,
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-text-fill: white;
+    -fx-padding: 2 0 2 10;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#counterlabel
+{
+    -fx-background-color: 
+    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        #428bca,
+        #dfe3ee,
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-text-fill: white;
+    -fx-padding: 10 0 2 30;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#LoginButton
+{
+    
+    -fx-text-fill: rgb(17, 145, 213); 
+    -fx-border-color: transparent; 
+    -fx-border-radius: 15;
+    -fx-padding: 2 2 2 2;
+    -fx-font: bold italic 10pt "LucidaBrightDemiBold";
 }
 
 

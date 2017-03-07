@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -28,11 +28,11 @@
                         <Insets />
                     </BorderPane.margin>
                     <children>
-                        <ComboBox fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="175.0" promptText="Select Class">
-                            <VBox.margin>
-                                <Insets top="10.0" />
-                            </VBox.margin>
-                        </ComboBox>
+                  <Label id="classlistlabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="290.0">
+                     <graphic>
+                              <ComboBox id="comboclasslist" fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="175.0" promptText="Select Class" />
+                     </graphic>
+                  </Label>
                         <DatePicker fx:id="datePicker" prefWidth="175.0" promptText="mm/dd/yyyy">
                             <VBox.margin>
                                 <Insets top="75.0" />
@@ -48,72 +48,66 @@
                             <children>
                                 <ImageView fitHeight="40.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/logo.png" />
+                                        <Image url="file:/Users/Fjord82/NetBeansProjects/Attendance/myAttendance/logo.png" />
                                     </image>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="10.0" top="10.0" />
                                     </VBox.margin>
                                 </ImageView>
-                                <MenuBar prefHeight="37.0" prefWidth="275.0">
-                                    <menus>
-                                        
-                                    </menus>
-                                </MenuBar>
+                                <MenuBar minWidth="275.0" prefHeight="37.0" prefWidth="275.0" />
                             </children>
                         </VBox>
-                        <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" prefHeight="37.0" prefWidth="420.0">
-                            <buttons>
-                                <Button fx:id="btnAbsenceOverview" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="27.0" prefWidth="144.0" text="Attendance List" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="27.0" text="Statistics" />
-                                <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefWidth="81.0" text="Sign out" />
-                            </buttons>
-                            <HBox.margin>
-                                <Insets top="55.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets right="10.0" />
-                            </padding>
-                        </ButtonBar>
-                        <MenuBar prefHeight="37.0" prefWidth="250.0">
-                            <menus>
-                                <Menu mnemonicParsing="false">
-                                    <graphic>
-                                        <TextField fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="26.0" prefWidth="175.0" promptText="Search Student">
+                  <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" minWidth="450.0" prefHeight="37.0" prefWidth="450.0">
+                    <buttons>
+                      <Button fx:id="btnAbsenceOverview" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="34.0" prefWidth="175.0" text="Attendance List" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="27.0" text="Statistics" />
+                        <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="34.0" prefWidth="81.0" text="Sign out" />
+                    </buttons>
+                     <HBox.margin>
+                        <Insets top="55.0" />
+                     </HBox.margin>
+                  </ButtonBar>
+                  <MenuBar prefHeight="37.0" prefWidth="275.0">
+                    <menus>
+                      <Menu mnemonicParsing="false">
+                           <graphic>
+                                        <TextField id="searchfield" fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="10.0" prefWidth="174.0" promptText="Search student">
                                             <opaqueInsets>
-                                                <Insets right="50.0" />
+                                                <Insets right="40.0" />
                                             </opaqueInsets>
                                         </TextField>
-                                    </graphic>
-                                </Menu>
-                            </menus>
-                            <HBox.margin>
-                                <Insets top="55.0" />
-                            </HBox.margin>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <padding>
-                                <Insets left="55.0" />
-                            </padding>
-                        </MenuBar>
+                           </graphic>
+                      </Menu>
+                    </menus>
+                     <HBox.margin>
+                        <Insets top="55.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="60.0" top="5.0" />
+                     </padding>
+                  </MenuBar>
                     </children>
                 </HBox>
             </top>
             <right>
                 <VBox fx:id="vBoxStatus" prefHeight="419.0" prefWidth="275.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
                     <children>
+                  <Label id="statuslabel" prefHeight="37.0" prefWidth="275.0" text="Todays students attendance" />
                         <TableView fx:id="tblStatusView" onMouseReleased="#clickTableStudents" prefHeight="356.0" prefWidth="250.0">
                             <placeholder>
-                                <Label text="PLease select a class list" />
+                                <Label text="Please select a class list" />
                             </placeholder>
                             <columns>
-                                <TableColumn fx:id="tblViewName" prefWidth="167.0" resizable="false" text="Name" />
-                                <TableColumn fx:id="tblViewStatus" prefWidth="69.0" resizable="false" />
+                                <TableColumn fx:id="tblViewName" prefWidth="161.0" resizable="false" text="Name" />
+                                <TableColumn fx:id="tblViewStatus" prefWidth="67.0" resizable="false" text="Status" />
                             </columns>
                         </TableView>
-                        <Label fx:id="labelPresentCounter" contentDisplay="CENTER" text="Present: 0/0">
+                        <Label id="counterlabel" fx:id="labelPresentCounter" contentDisplay="CENTER" prefHeight="54.0" prefWidth="275.0" text="Present: 0/0">
                             <VBox.margin>
-                                <Insets left="15.0" top="25.0" />
+                                <Insets />
                             </VBox.margin>
                         </Label>
                     </children>
