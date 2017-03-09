@@ -52,7 +52,7 @@ public class LoginViewController implements Initializable {
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         
-        System.out.println(iPParser.getIsMatchingBroadcasting());
+        //System.out.println(iPParser.getIsMatchingBroadcasting());
         
         if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password)) {
             attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
@@ -70,6 +70,7 @@ public class LoginViewController implements Initializable {
         } else {
             // Displays the "Wrong username or password" label
             wrongLoginLabel.setVisible(true);
+            usernameField.requestFocus();
         }
 
     }
