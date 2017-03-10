@@ -23,14 +23,14 @@ and open the template in the editor.
 #anchorpanelogin
 {
     -fx-background-color: 
-    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
         #428bca,
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
     -fx-text-fill: white;
     -fx-padding: 2 0 2 10;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    
+
 }
 
 .scroll-bar {
@@ -40,7 +40,7 @@ and open the template in the editor.
 }
 .scroll-bar .thumb {
     -fx-background-color: 
-    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
         #428bca,
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
@@ -60,8 +60,8 @@ and open the template in the editor.
 .text-field
 {
     /*-fx-background-radius: 15px;*/
-   /* -fx-background-color: rgb(79, 166, 175);*/
-   /* -fx-border-radius: 15px;*/
+    /* -fx-background-color: rgb(79, 166, 175);*/
+    /* -fx-border-radius: 15px;*/
     /*-fx-border-width: 2;*/
     /*-fx-border-color: rgb(173, 184, 209);*/
     -fx-text-fill: #a7adba;
@@ -113,16 +113,16 @@ and open the template in the editor.
 
 .table-row-cell {
     -fx-background-color: #f8f8fa;
-    
+
 }
 
 .table-row-cell:hover {
--fx-background-color: 
+    -fx-background-color: 
         linear-gradient(from 0% 93% to 0% 100%, #dfe3ee 0%, #dfe3ee 100%),
         #dfe3ee,
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #dfe3ee, #dfe3ee);
-        -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
+    -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
@@ -134,7 +134,7 @@ and open the template in the editor.
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-        
+
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -185,7 +185,7 @@ and open the template in the editor.
 .menu-bar .label:hover
 {
     /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
-    
+
 }
 
 
@@ -238,23 +238,23 @@ and open the template in the editor.
     -fx-background-radius: 8;
     -fx-border-radius: 8px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    
+
 }
 #comboclasslist:hover 
 {
     -fx-border-color: #ffbf00;
-    
+
 }
 
 #searchfield
 {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
-    
+
 #statuslabel
 {
     -fx-background-color: 
-    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
         #428bca,
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
@@ -266,7 +266,7 @@ and open the template in the editor.
 #counterlabel
 {
     -fx-background-color: 
-    linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
+        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
         #428bca,
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
@@ -277,7 +277,7 @@ and open the template in the editor.
 
 #LoginButton
 {
-    
+
     -fx-text-fill: rgb(17, 145, 213); 
     -fx-border-color: transparent; 
     -fx-border-radius: 15;
@@ -285,6 +285,10 @@ and open the template in the editor.
     -fx-font: bold italic 10pt "LucidaBrightDemiBold";
 }
 
+#wrongLoginLabel
+{
+    -fx-text-fill: rgb(255, 0, 0);
+}
 
 
 
