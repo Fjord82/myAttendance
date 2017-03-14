@@ -71,7 +71,7 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Students WHERE slog =? AND spass =?");
+            PreparedStatement ps = con.prepareStatement("USE CS2016B_12_Attendance GO SELECT * FROM Students WHERE slog =? AND spass =?");
             System.out.println("Creating query");
             ps.setString(1, login);
             ps.setString(2, pass);
