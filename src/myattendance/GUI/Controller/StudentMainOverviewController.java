@@ -49,7 +49,7 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
-    Student rasmus = studentParser.getRasmus();
+    Student student;
     @FXML
     private Label lblStudentName;
     @FXML
@@ -71,26 +71,26 @@ public class StudentMainOverviewController implements Initializable
         showConstantCalender();
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", rasmus.getAbsentClasses()));
-        pieChartData.add(new PieChart.Data("Presence", rasmus.getPresentClasses()));
+        pieChartData.add(new PieChart.Data("Absence", student.getAbsentClasses()));
+        pieChartData.add(new PieChart.Data("Presence", student.getPresentClasses()));
 
         PieChart absenceChart = new PieChart(pieChartData);
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
-        absenceLabel.setText("Student Attendance: " + rasmus.getPresentClasses() + "/" + Math.addExact(rasmus.getAbsentClasses(), rasmus.getPresentClasses()));
+        absenceLabel.setText("Student Attendance: " + student.getPresentClasses() + "/" + Math.addExact(student.getAbsentClasses(), student.getPresentClasses()));
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
 
-        lblStudentName.setText(rasmus.getName());
+        lblStudentName.setText(student.getName());
         lblStudentClass.setText("CS2016B");
     }
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml");
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();
@@ -123,6 +123,11 @@ public class StudentMainOverviewController implements Initializable
     {
         present = false;
         System.out.println("Are you present: " + present);
+    }
+    
+    public void setStudent(Student student)
+    {
+        this.student = student;
     }
 
 }

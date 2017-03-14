@@ -20,6 +20,16 @@ public class Student
     private final StringProperty sClass = new SimpleStringProperty();
     private int absentClasses = 0;
     private int presentClasses = 0;
+    
+    
+    public Student()
+    {
+        
+    }
+    public Student(String name)
+    {
+        this.name.set(name);
+    }
 
     public Student(String name, String sClass)
     {

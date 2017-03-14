@@ -6,12 +6,15 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import myattendance.BE.Student;
+import myattendance.BLL.LoginCheckManager;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.IPParser;
 
@@ -20,12 +23,16 @@ public class LoginViewController implements Initializable {
     private final String studentUsername = "student";
     private final String teacherUsername = "teacher";
     private final String password = "pass";
+    
+    Student student = new Student();
 
     /**
      * Gets the singleton instance of AttendanceParser.java.
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     IPParser iPParser = IPParser.getInstance();
+    
+    LoginCheckManager logIncheck = new LoginCheckManager();
 
     @FXML
     private Button loginButton;
@@ -37,6 +44,10 @@ public class LoginViewController implements Initializable {
     private CheckBox rememberMeCheckBox;
     @FXML
     private Label wrongLoginLabel;
+    
+    private Scene scene;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -46,6 +57,7 @@ public class LoginViewController implements Initializable {
 
         // Hides the "Wrong username or password" label
         wrongLoginLabel.setVisible(false);
+        scene = loginButton.getScene();
     }
        
 
@@ -54,6 +66,7 @@ public class LoginViewController implements Initializable {
         
         //System.out.println(iPParser.getIsMatchingBroadcasting());
         
+        /*
         if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password)) {
             attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
 
@@ -72,7 +85,9 @@ public class LoginViewController implements Initializable {
             wrongLoginLabel.setVisible(true);
             usernameField.requestFocus();
         }
+         */
+        attendanceParser.getStudent(usernameField.getText(), passwordField.getText(), scene);
+
+        }
 
     }
-
-}

@@ -2,6 +2,7 @@ package myattendance.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,7 +31,7 @@ public class DatabaseAccess
     private DatabaseAccess()
     {
         setupDataSource();
-        printStudents();
+        //printStudents();
     }
 
     private static void setupDataSource()
@@ -66,18 +67,35 @@ public class DatabaseAccess
         }
     }
 
-    private static Student getStudent(String login, String pass)
+    public static Student getStudent(String login, String pass)
     {
         try (Connection con = ds.getConnection())
         {
-            String query = "SELECT * FROM Students WHERE slog = " + login + ", spass = " + pass+", ";
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Students WHERE slog =? AND spass =?");
+            System.out.println("Creating query");
+            ps.setString(1, login);
+            ps.setString(2, pass);
+            System.out.println("Sending query");
+            ResultSet rs; 
+            rs = ps.executeQuery();
+            System.out.println(rs.getRow());
+            System.out.println(rs.getString("fname"));
+            /*String query = "SELECT * FROM Students WHERE slog = '" + login + "' AND spass = '" + pass + "'";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            
-            Student student = new Student(rs.getString("fname"+" "+"mname"+" "+"lname"), pass);
+*/
+
+            String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+            Student student = new Student(fullName);
+            System.out.println(student.getName());
+
+            return student;
+
         } catch (SQLException sqle)
         {
             System.err.println(sqle);
+            return null;
         }
+
     }
 }
