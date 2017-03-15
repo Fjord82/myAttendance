@@ -52,13 +52,14 @@ public class AttendanceParser
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MyAttendance.class.getResource(path));
 
+        AnchorPane page = (AnchorPane) loader.load();
+
         if (student != null)
         {
-            StudentMainOverviewController controller = loader.getController();
+            StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
             controller.setStudent(student);
-        }
 
-        AnchorPane page = (AnchorPane) loader.load();
+        }
 
         Stage dialogStage = new Stage();
         dialogStage.initOwner(stage);

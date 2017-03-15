@@ -1,6 +1,7 @@
 package myattendance.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.sun.rowset.CachedRowSetImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ public class DatabaseAccess
     private DatabaseAccess()
     {
         setupDataSource();
-        //printStudents();
+        printStudents();
     }
 
     private static void setupDataSource()
@@ -48,18 +49,18 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            String query = "SELECT * FROM Students WHERE classid = 2";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next())
-            {
-                System.out.print(rs.getString("sid") + " ");
-                System.out.print(rs.getString("fname") + " ");
-                System.out.print(rs.getString("mname") + " ");
-                System.out.print(rs.getString("lname") + " ");
-                System.out.print(rs.getString("classid") + " ");
-                System.out.println("");
-            }
+            String query = "SELECT * FROM Students WHERE slog=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, "S1");
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+            System.out.print(rs.getString("sid") + " ");
+            System.out.print(rs.getString("fname") + " ");
+            System.out.print(rs.getString("mname") + " ");
+            System.out.print(rs.getString("lname") + " ");
+            System.out.print(rs.getString("classid") + " ");
+            System.out.println("");
 
         } catch (SQLException sqle)
         {
@@ -71,23 +72,16 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Students WHERE slog =? AND spass =?");
-            System.out.println("Creating query");
+            PreparedStatement ps = con.prepareStatement("SELECT fname, mname, lname FROM Students WHERE slog =? AND spass =?");
             ps.setString(1, login);
             ps.setString(2, pass);
-            System.out.println("Sending query");
-            ResultSet rs; 
-            rs = ps.executeQuery();
-            System.out.println(rs.getRow());
-            System.out.println(rs.getString("fname"));
-            /*String query = "SELECT * FROM Students WHERE slog = '" + login + "' AND spass = '" + pass + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-*/
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
 
             String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+
             Student student = new Student(fullName);
-            System.out.println(student.getName());
 
             return student;
 
