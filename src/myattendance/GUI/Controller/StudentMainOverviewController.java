@@ -49,7 +49,7 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
-    Student student;
+    Student student = new Student("");
     @FXML
     private Label lblStudentName;
     @FXML
@@ -70,6 +70,11 @@ public class StudentMainOverviewController implements Initializable
         // TODO
         showConstantCalender();
 
+        
+    }
+    
+    private void updateView()
+    {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         pieChartData.add(new PieChart.Data("Absence", student.getAbsentClasses()));
         pieChartData.add(new PieChart.Data("Presence", student.getPresentClasses()));
@@ -128,6 +133,7 @@ public class StudentMainOverviewController implements Initializable
     public void setStudent(Student student)
     {
         this.student = student;
+        updateView();
     }
 
 }
