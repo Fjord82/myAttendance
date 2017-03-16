@@ -12,14 +12,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import myattendance.BE.Student;
-import myattendance.BLL.LoginCheckManager;
+import myattendance.BLL.BLLFacade;
 import myattendance.GUI.Controller.StudentMainOverviewController;
 import myattendance.MyAttendance;
 
 public class AttendanceParser
 {
 
-    LoginCheckManager loginCheckManager = new LoginCheckManager();
+    BLLFacade bllFacade = BLLFacade.getInstance();
 
     private static AttendanceParser instance;
 
@@ -70,16 +70,18 @@ public class AttendanceParser
 
         dialogStage.show();
     }
+    
 
-    public void getStudent(String login, String pass, Scene scene)
+    public void getStudent(String login, String pass, Stage stage)
     {
-        Student student = loginCheckManager.getStudent(login, pass);
+        Student student = bllFacade.getStudent(login, pass);
 
         if (student != null)
         {
             try
             {
                 changeView("Homepage", "GUI/View/StudentMainOverview.fxml", student);
+                stage.close();
             } catch (IOException ex)
             {
                 Logger.getLogger(AttendanceParser.class.getName()).log(Level.SEVERE, null, ex);

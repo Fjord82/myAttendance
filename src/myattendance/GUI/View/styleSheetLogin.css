@@ -90,6 +90,16 @@ and open the template in the editor.
     -fx-font: bold italic 12pt "LucidaBrightDemiBold";
 }
 
+#arrowButton
+{
+    -fx-background-color: transparent;
+}
+
+#arrowButton:hover
+{
+    -fx-border-color: #ffbf00;
+}
+
 .table-view
 {
     -fx-background-color: #f8f8fa;
@@ -187,8 +197,6 @@ and open the template in the editor.
     /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
 
 }
-
-
 
 .menu:hover
 {

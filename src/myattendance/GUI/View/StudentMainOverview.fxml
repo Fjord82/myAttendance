@@ -48,7 +48,7 @@
                             <children>
                                 <ImageView fitHeight="40.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="file:/Users/Fjord82/NetBeansProjects/Attendance/myAttendance/logo.png" />
+                                        <Image url="@Resource/logo.png" />
                                     </image>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="10.0" top="10.0" />
@@ -76,8 +76,37 @@
                     <children>
                         <VBox id="vboxmiddle" fx:id="vBoxMiddle" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;">
                      <children>
-                        <Button fx:id="presentButton" mnemonicParsing="false" onAction="#handlePresent" text="Present" />
-                        <Button fx:id="absentButton" mnemonicParsing="false" onAction="#handleAbsent" text="Absent" />
+                        <HBox maxWidth="100.0" prefHeight="53.0" prefWidth="100.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <children>
+                              <Button id="arrowButton" fx:id="leftArrowBtn" mnemonicParsing="false" prefHeight="28.0" prefWidth="49.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="56.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="file:/Users/Fjord82/Downloads/007358-blue-jelly-icon-arrows-arrow-thick-left.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button id="arrowButton" fx:id="rightArrowBtn" mnemonicParsing="false" prefHeight="19.0" prefWidth="49.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="file:/Users/Fjord82/Downloads/007359-blue-jelly-icon-arrows-arrow-thick-right.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children></VBox>
                     </children>
                 </StackPane>
