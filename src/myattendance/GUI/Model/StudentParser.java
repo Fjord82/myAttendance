@@ -7,7 +7,7 @@ package myattendance.GUI.Model;
 
 import java.util.List;
 import myattendance.BE.Student;
-import myattendance.BLL.StudentManager;
+import myattendance.BLL.BLLFacade;
 
 /**
  *
@@ -15,9 +15,9 @@ import myattendance.BLL.StudentManager;
  */
 public class StudentParser
 {
-    
+
     private static StudentParser instance;
-    
+
     public static StudentParser getInstance()
     {
         if (instance == null)
@@ -26,27 +26,26 @@ public class StudentParser
         }
         return instance;
     }
-    
+
     private StudentParser()
     {
-        
     }
     
-    StudentManager studentManager = StudentManager.getInstance();
-    
+    BLLFacade bllFacade = BLLFacade.getInstance();
+
     public List<Student> getDanishClassList()
     {
-        return studentManager.getDanishClassList();
+        return bllFacade.getDanishClassList();
     }
-    
+
     public List<Student> getInternationalClassList()
     {
-        return studentManager.getInternationalClassList();
+        return bllFacade.getInternationalClassList();
     }
-    
+
     public Student getRasmus()
     {
-        return studentManager.getRasmus();
+        return bllFacade.getRasmus();
     }
-    
+
 }

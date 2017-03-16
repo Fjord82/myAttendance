@@ -18,21 +18,10 @@ public class DatabaseAccess
 
     private static SQLServerDataSource ds = new SQLServerDataSource();
 
-    private static DatabaseAccess instance;
-
-    public static DatabaseAccess getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new DatabaseAccess();
-        }
-        return instance;
-    }
-
-    private DatabaseAccess()
+    public DatabaseAccess()
     {
         setupDataSource();
-        printStudents();
+        //printStudents();
     }
 
     private static void setupDataSource()
