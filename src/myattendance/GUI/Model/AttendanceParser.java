@@ -70,8 +70,9 @@ public class AttendanceParser
 
         dialogStage.show();
     }
+    
 
-    public void getStudent(String login, String pass, Scene scene)
+    public void getStudent(String login, String pass)
     {
         Student student = loginCheckManager.getStudent(login, pass);
 
