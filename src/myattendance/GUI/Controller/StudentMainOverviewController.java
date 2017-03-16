@@ -54,10 +54,6 @@ public class StudentMainOverviewController implements Initializable
     private Label lblStudentName;
     @FXML
     private Label lblStudentClass;
-    @FXML
-    private Button presentButton;
-    @FXML
-    private Button absentButton;
 
     public boolean present = false;
 
@@ -114,20 +110,6 @@ public class StudentMainOverviewController implements Initializable
 
         vBoxSelectionContent.getChildren().add(popupContent);
 
-    }
-
-    @FXML
-    private void handlePresent(ActionEvent event)
-    {
-        present = true;
-        System.out.println("Are you present: " + present);
-    }
-
-    @FXML
-    private void handleAbsent(ActionEvent event)
-    {
-        present = false;
-        System.out.println("Are you present: " + present);
     }
     
     public void setStudent(Student student)
