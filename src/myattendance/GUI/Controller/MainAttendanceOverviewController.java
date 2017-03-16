@@ -105,7 +105,7 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml");
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();
@@ -115,7 +115,7 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml");
+        attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();

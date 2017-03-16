@@ -17,13 +17,24 @@ public class Student
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private final StringProperty sClass = new SimpleStringProperty();
     private int absentClasses = 0;
     private int presentClasses = 0;
-
-    public Student(String name, String status)
+    
+    
+    public Student()
+    {
+        
+    }
+    public Student(String name)
     {
         this.name.set(name);
-        this.status.set(status);
+    }
+
+    public Student(String name, String sClass)
+    {
+        this.name.set(name);
+        this.status.set(sClass);
     }
 
     public Student(String name, String status, int absence, int presence)
