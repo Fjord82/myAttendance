@@ -43,7 +43,7 @@ public class StatisticAttendanceOverviewController implements Initializable
     @FXML
     private void handleHomepage(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
+        attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) overviewButton.getScene().getWindow();

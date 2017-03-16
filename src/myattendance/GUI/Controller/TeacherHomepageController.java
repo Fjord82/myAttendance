@@ -43,7 +43,7 @@ public class TeacherHomepageController implements Initializable
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml");
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) logoutButton.getScene().getWindow();
