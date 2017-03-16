@@ -18,9 +18,10 @@
         <Label id="labellogin" layoutX="83.0" layoutY="74.0" prefHeight="32.0" prefWidth="162.0" text="Sign in:" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <image>
-            <Image url="@../../../../logo.png" />
+            <Image url="@Resource/logo.png" />
          </image>
         </ImageView>
       <Label id="wrongLoginLabel" fx:id="wrongLoginLabel" alignment="CENTER" disable="true" layoutX="39.0" layoutY="210.0" prefWidth="247.0" text="Wrong username or password" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+      <Label fx:id="LabelConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="235.0" prefHeight="25.0" prefWidth="252.0" />
     </children>
 </AnchorPane>
