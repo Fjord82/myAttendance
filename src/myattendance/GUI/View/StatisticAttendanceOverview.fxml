@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <image>
-            <Image url="@logo.png" />
+            <Image url="@Resource/logo.png" />
          </image>
       </ImageView>
       <Button fx:id="overviewButton" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleHomepage" text="Homepage" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="70.0" />
