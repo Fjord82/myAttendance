@@ -86,7 +86,7 @@ public class LoginViewController implements Initializable {
             usernameField.requestFocus();
         }
          */
-        attendanceParser.getStudent(usernameField.getText(), passwordField.getText(), scene);
+        attendanceParser.getStudent(usernameField.getText(), passwordField.getText());
 
         }
 
