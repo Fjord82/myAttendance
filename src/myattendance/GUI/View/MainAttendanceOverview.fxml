@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -19,7 +20,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.MainAttendanceOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -117,10 +118,24 @@
                 </VBox>
             </right>
             <center>
-                <StackPane prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <StackPane maxHeight="502.0" prefHeight="502.0" prefWidth="433.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox fx:id="vBoxMiddle" prefHeight="306.0" prefWidth="406.0" style="-fx-border-width: 1;" />
+                  <HBox maxWidth="200.0" prefHeight="65.0" prefWidth="200.0">
+                     <StackPane.margin>
+                        <Insets bottom="435.0" />
+                     </StackPane.margin>
+                     <children>
+                        <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
+                     </children>
+                  </HBox>
+                        <VBox fx:id="vBoxMiddle" maxHeight="499.0" prefHeight="499.0" prefWidth="433.0" style="-fx-border-width: 1;">
+                     <StackPane.margin>
+                        <Insets top="50.0" />
+                     </StackPane.margin></VBox>
                     </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
                 </StackPane>
             </center>
         </BorderPane>
