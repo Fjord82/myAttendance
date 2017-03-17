@@ -18,12 +18,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -86,6 +88,8 @@ public class MainAttendanceOverviewController implements Initializable
     private Button btnAbsenceOverview;
     @FXML
     private Button btnLogout;
+    @FXML
+    private Pagination paginationBtn;
 
     /**
      * Initializes the controller class.
@@ -100,6 +104,7 @@ public class MainAttendanceOverviewController implements Initializable
         updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
+        paginationBtn.setVisible(false);
     }
 
     @FXML
@@ -264,6 +269,8 @@ public class MainAttendanceOverviewController implements Initializable
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
+        vBoxMiddle.setAlignment(Pos.CENTER);
+        paginationBtn.setVisible(true);
     }
 
     @FXML
@@ -280,6 +287,7 @@ public class MainAttendanceOverviewController implements Initializable
                     + lastSelectedStudent.getPresentClasses()
                     + "/"
                     + Math.addExact(lastSelectedStudent.getAbsentClasses(), lastSelectedStudent.getPresentClasses()));
+            
         }
     }
 
