@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
     <children>
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -74,7 +75,17 @@
             <center>
                 <StackPane prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox id="vboxmiddle" fx:id="vBoxMiddle" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;" />
+                        <VBox id="vboxmiddle" fx:id="vBoxMiddle" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;">
+                     <children>
+                        <HBox maxWidth="202.0" prefHeight="65.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <children>
+                              <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                     </children></VBox>
                     </children>
                 </StackPane>
             </center>

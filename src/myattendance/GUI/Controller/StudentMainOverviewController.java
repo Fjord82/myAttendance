@@ -16,11 +16,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Student;
@@ -55,6 +58,8 @@ public class StudentMainOverviewController implements Initializable
     private Label lblStudentClass;
 
     public boolean present = false;
+    @FXML
+    private Pagination paginationBtn;
 
     /**
      * Initializes the controller class.
@@ -79,9 +84,10 @@ public class StudentMainOverviewController implements Initializable
 
         Label absenceLabel = new Label();
         absenceLabel.setText("Student Attendance: " + student.getPresentClasses() + "/" + Math.addExact(student.getAbsentClasses(), student.getPresentClasses()));
-
+        
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
+        vBoxMiddle.setAlignment(Pos.CENTER);
 
         lblStudentName.setText(student.getName());
         lblStudentClass.setText("CS2016B");
