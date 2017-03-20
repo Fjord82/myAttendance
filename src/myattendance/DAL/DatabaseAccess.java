@@ -61,7 +61,10 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT fname, mname, lname FROM Students WHERE slog =? AND spass =?");
+            PreparedStatement ps = con.prepareStatement(""
+                    + "SELECT s.fname, s.mname, s.lname, c.ClassName "
+                    + "FROM Students s, Classes c "
+                    + "WHERE s.ClassID = c.ClassID AND s.slog=? AND s.spass=?");
             ps.setString(1, login);
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
@@ -69,14 +72,16 @@ public class DatabaseAccess
             rs.next();
 
             String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+            String className = rs.getString("classname");
 
-            Student student = new Student(fullName);
+            Student student = new Student(fullName, className);
 
             return student;
 
         } catch (SQLException sqle)
         {
             System.err.println(sqle);
+            System.out.println("Error");
             return null;
         }
 

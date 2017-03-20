@@ -34,7 +34,7 @@ public class Student
     public Student(String name, String sClass)
     {
         this.name.set(name);
-        this.status.set(sClass);
+        this.sClass.set(sClass);
     }
 
     public Student(String name, String status, int absence, int presence)
@@ -94,4 +94,11 @@ public class Student
     {
         return name;
     }
+
+    public String getsClass()
+    {
+        return sClass.get();
+    }
+    
+    
 }
