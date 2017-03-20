@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -76,35 +77,12 @@
                     <children>
                         <VBox id="vboxmiddle" fx:id="vBoxMiddle" prefHeight="449.0" prefWidth="631.0" style="-fx-border-width: 1;">
                      <children>
-                        <HBox maxWidth="100.0" prefHeight="53.0" prefWidth="100.0">
+                        <HBox maxWidth="202.0" prefHeight="65.0" prefWidth="200.0">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                            <children>
-                              <Button id="arrowButton" fx:id="leftArrowBtn" mnemonicParsing="false" prefHeight="28.0" prefWidth="49.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <graphic>
-                                    <ImageView fitHeight="56.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="file:/Users/Fjord82/Downloads/007358-blue-jelly-icon-arrows-arrow-thick-left.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button id="arrowButton" fx:id="rightArrowBtn" mnemonicParsing="false" prefHeight="19.0" prefWidth="49.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <graphic>
-                                    <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="file:/Users/Fjord82/Downloads/007359-blue-jelly-icon-arrows-arrow-thick-right.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
+                              <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
                            </children>
                         </HBox>
                      </children></VBox>
