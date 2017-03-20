@@ -21,6 +21,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -266,11 +267,25 @@ public class MainAttendanceOverviewController implements Initializable
     {
 
         vBoxMiddle.getChildren().clear();
+        
+        if(tblStatusView.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setContentText("Please select a class and then point on a student inside the studentlist");
+
+            alert.showAndWait();
+            
+            paginationBtn.setVisible(false);
+        }
+        else
+        {
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
         paginationBtn.setVisible(true);
+        }
     }
 
     @FXML
