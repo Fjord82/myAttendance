@@ -61,7 +61,10 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT s.fname, s.mname, s.lname, c.ClassName FROM Students s, Classes c WHERE s.ClassID = c.ClassID AND s.slog=? AND s.spass=?");
+            PreparedStatement ps = con.prepareStatement(""
+                    + "SELECT s.fname, s.mname, s.lname, c.ClassName "
+                    + "FROM Students s, Classes c "
+                    + "WHERE s.ClassID = c.ClassID AND s.slog=? AND s.spass=?");
             ps.setString(1, login);
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
