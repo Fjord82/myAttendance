@@ -22,5 +22,6 @@
          </image>
         </ImageView>
       <Label id="wrongLoginLabel" fx:id="wrongLoginLabel" alignment="CENTER" disable="true" layoutX="39.0" layoutY="210.0" prefWidth="247.0" text="Wrong username or password" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+      <Label fx:id="LabelConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="235.0" prefHeight="25.0" prefWidth="252.0" />
     </children>
 </AnchorPane>

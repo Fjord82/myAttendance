@@ -16,20 +16,7 @@ import myattendance.BE.Student;
 public class FileManager
 {
 
-    DatabaseAccess databaseAccess = DatabaseAccess.getInstance();
-    
-    private static FileManager instance;
-
-    public static FileManager getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new FileManager();
-        }
-        return instance;
-    }
-
-    private FileManager()
+    public FileManager()
     {
 
     }
@@ -72,7 +59,7 @@ public class FileManager
         return danishStudents;
     }
     
-    public List<Student> getInternaionalClassList()
+    public List<Student> getInternationalClassList()
     {
     List<Student> internationalStudents = new ArrayList<>();
         
