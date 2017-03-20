@@ -90,7 +90,7 @@ public class StudentMainOverviewController implements Initializable
         vBoxMiddle.setAlignment(Pos.CENTER);
 
         lblStudentName.setText(student.getName());
-        lblStudentClass.setText("CS2016B");
+        lblStudentClass.setText(student.getsClass());
     }
 
     @FXML
