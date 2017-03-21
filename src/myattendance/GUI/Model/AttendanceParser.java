@@ -70,7 +70,6 @@ public class AttendanceParser
 
         dialogStage.show();
     }
-    
 
     public void getStudent(String login, String pass, Stage stage)
     {

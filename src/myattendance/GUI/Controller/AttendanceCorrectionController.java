@@ -20,7 +20,7 @@ import myattendance.GUI.Model.AttendanceParser;
  *
  * @author Kristoffers
  */
-public class StatisticAttendanceOverviewController implements Initializable
+public class AttendanceCorrectionController implements Initializable
 {
 
     /**
