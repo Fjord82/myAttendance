@@ -1,8 +1,18 @@
 package myattendance.GUI.Controller;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import myattendance.BE.Student;
+import myattendance.DAL.DatabaseAccess;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.IPParser;
 

@@ -2,6 +2,7 @@ package myattendance.DAL;
 
 import java.util.List;
 import myattendance.BE.Student;
+import myattendance.BLL.DateManager;
 
 /**
  *
@@ -51,17 +52,15 @@ public class DALFacade
     {
         return fileManager.getInternationalClassList();
     }
-    
+
     public List<Student> getDanishClassList()
     {
         return fileManager.getDanishClassList();
     }
-    
+
     public static Student getStudent(String login, String pass)
     {
         return DatabaseAccess.getStudent(login, pass);
     }
-    
-    
 
 }
