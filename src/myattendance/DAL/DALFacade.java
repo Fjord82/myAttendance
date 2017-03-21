@@ -1,5 +1,6 @@
 package myattendance.DAL;
 
+import java.sql.Date;
 import java.util.List;
 import myattendance.BE.Student;
 import myattendance.BLL.DateManager;
@@ -61,6 +62,10 @@ public class DALFacade
     public static Student getStudent(String login, String pass)
     {
         return DatabaseAccess.getStudent(login, pass);
+    }
+    
+    public Date getStartDate(){
+        return databaseAccess.getStartDate();
     }
 
 }
