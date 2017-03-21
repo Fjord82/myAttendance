@@ -26,7 +26,7 @@ import javafx.scene.control.Pagination;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.StudentParser;
 
@@ -51,7 +51,7 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
-    Student student = new Student("");
+    User student = new User();
     @FXML
     private Label lblStudentName;
     @FXML
@@ -117,7 +117,7 @@ public class StudentMainOverviewController implements Initializable
 
     }
     
-    public void setStudent(Student student)
+    public void setStudent(User student)
     {
         this.student = student;
         updateView();

@@ -1,7 +1,8 @@
 package myattendance.DAL;
 
+import java.sql.ResultSet;
 import java.util.List;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 
 /**
  *
@@ -42,26 +43,25 @@ public class DALFacade
     FileManager fileManager = new FileManager();
     DatabaseAccess databaseAccess = new DatabaseAccess();
 
-    public Student getRasmus()
-    {
-        return fileManager.getRasmus();
-    }
-
-    public List<Student> getInternationalClassList()
-    {
-        return fileManager.getInternationalClassList();
-    }
+//    public User getRasmus()
+//    {
+//        return fileManager.getRasmus();
+//    }
+//
+//    public List<User> getInternationalClassList()
+//    {
+//        return fileManager.getInternationalClassList();
+//    }
+//    
+//    public List<User> getDanishClassList()
+//    {
+//        return fileManager.getDanishClassList();
+//    }
     
-    public List<Student> getDanishClassList()
+    public User loginQuery(String login, String pass)
     {
-        return fileManager.getDanishClassList();
+        return databaseAccess.loginQuery(login, pass);
     }
-    
-    public static Student getStudent(String login, String pass)
-    {
-        return DatabaseAccess.getStudent(login, pass);
-    }
-    
     
 
 }

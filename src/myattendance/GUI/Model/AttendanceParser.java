@@ -11,8 +11,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
+import myattendance.GUI.Controller.MainAttendanceOverviewController;
 import myattendance.GUI.Controller.StudentMainOverviewController;
 import myattendance.MyAttendance;
 
@@ -46,7 +47,7 @@ public class AttendanceParser
      * @param path
      * @throws IOException
      */
-    public void changeView(String title, String path, Student student) throws IOException
+    public void changeView(String title, String path, User user) throws IOException
     {
 
         FXMLLoader loader = new FXMLLoader();
@@ -54,11 +55,19 @@ public class AttendanceParser
 
         AnchorPane page = (AnchorPane) loader.load();
 
-        if (student != null)
+        if (user != null)
+        {
+        if (!user.IsTeacher())
         {
             StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
-            controller.setStudent(student);
+            controller.setStudent(user);
 
+        }
+        else if (user.IsTeacher())
+        {
+            MainAttendanceOverviewController controller = loader.<MainAttendanceOverviewController>getController();
+            controller.setUser(user);
+        }
         }
 
         Stage dialogStage = new Stage();
@@ -72,18 +81,26 @@ public class AttendanceParser
     }
     
 
-    public void getStudent(String login, String pass, Stage stage)
+    public void getUser(String login, String pass, Stage stage)
     {
-        Student student = bllFacade.getStudent(login, pass);
+        User user = bllFacade.getUser(login, pass);
 
-        if (student != null)
+        if (user != null)
         {
             try
             {
-                changeView("Homepage", "GUI/View/StudentMainOverview.fxml", student);
+                if (! user.IsTeacher())
+                {
+                changeView("Homepage", "GUI/View/StudentMainOverview.fxml", user);
+                }
+                else
+                {
+                changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml", user); 
+                }
                 stage.close();
             } catch (IOException ex)
             {
+                System.out.println("getUser error");
                 Logger.getLogger(AttendanceParser.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else

@@ -1,6 +1,8 @@
 package myattendance.BLL;
 
-import myattendance.BE.Student;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 
 /**
@@ -9,22 +11,7 @@ import myattendance.DAL.DALFacade;
  */
 public class LoginCheckManager
 {
-    
 
     DALFacade dalFacade = DALFacade.getInstance();
-
-    public boolean CheckValidLogin(Student student)
-    {
-
-        if (student != null)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
-    }
-
-
 
 }

@@ -1,7 +1,7 @@
 package myattendance.BLL;
 
 import java.util.List;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 
 /**
@@ -48,24 +48,24 @@ public class BLLFacade
         return ipMatching.matchingBroadcastingAddress();
     }
 
-    public List<Student> getDanishClassList()
-    {
-        return dalFacade.getDanishClassList();
-    }
+//    public List<User> getDanishClassList()
+//    {
+//        return dalFacade.getDanishClassList();
+//    }
+//
+//    public List<User> getInternationalClassList()
+//    {
+//        return dalFacade.getInternationalClassList();
+//    }
+//
+//    public User getRasmus()
+//    {
+//        return dalFacade.getRasmus();
+//    }
 
-    public List<Student> getInternationalClassList()
+    public User getUser(String login, String pass)
     {
-        return dalFacade.getInternationalClassList();
-    }
-
-    public Student getRasmus()
-    {
-        return dalFacade.getRasmus();
-    }
-
-    public Student getStudent(String login, String pass)
-    {
-        return dalFacade.getStudent(login, pass);
+        return dalFacade.loginQuery(login, pass);
     }
 
 }

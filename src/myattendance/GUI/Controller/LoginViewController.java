@@ -13,14 +13,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.IPParser;
 
 public class LoginViewController implements Initializable
 {
 
-    Student student = new Student();
+    User student = new User();
 
     /**
      * Gets the singleton instance of AttendanceParser.java.
@@ -63,7 +63,7 @@ public class LoginViewController implements Initializable
         {
             Stage stage = (Stage) loginButton.getScene().getWindow();
 
-            attendanceParser.getStudent(usernameField.getText(), passwordField.getText(), stage);
+            attendanceParser.getUser(usernameField.getText(), passwordField.getText(), stage);
 
             // Closes the primary stage
         } else

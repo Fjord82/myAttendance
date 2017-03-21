@@ -12,37 +12,34 @@ import javafx.beans.property.StringProperty;
  *
  * @author Fjord82
  */
-public class Student
+public class User
 {
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
+    
+    private final boolean isTeacher;
+    
     private int absentClasses = 0;
     private int presentClasses = 0;
     
-    
-    public Student()
+    public User()
     {
-        
+        isTeacher = false;
     }
-    public Student(String name)
+    
+    public User(String name, boolean isTeacher)
     {
         this.name.set(name);
+        this.isTeacher = isTeacher;
     }
 
-    public Student(String name, String sClass)
+    public User(String name, String sClass, boolean isTeacher)
     {
         this.name.set(name);
         this.sClass.set(sClass);
-    }
-
-    public Student(String name, String status, int absence, int presence)
-    {
-        this.name.set(name);
-        this.status.set(status);
-        this.absentClasses = absence;
-        this.presentClasses = presence;
+        this.isTeacher = isTeacher;
     }
 
     public int getAbsentClasses()
@@ -99,6 +96,10 @@ public class Student
     {
         return sClass.get();
     }
-    
+
+    public boolean IsTeacher()
+    {
+        return isTeacher;
+    }
     
 }
