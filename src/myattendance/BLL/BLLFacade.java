@@ -3,6 +3,7 @@ package myattendance.BLL;
 import java.util.List;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
+import myattendance.GUI.Model.AttendanceParser;
 
 /**
  *
@@ -42,7 +43,7 @@ public class BLLFacade
     DALFacade dalFacade = DALFacade.getInstance();
     IPMatching ipMatching = new IPMatching();
     LoginCheckManager loginCheckManager = new LoginCheckManager();
-
+    
     public boolean matchingBroadcastingAddress()
     {
         return ipMatching.matchingBroadcastingAddress();
@@ -67,5 +68,5 @@ public class BLLFacade
     {
         return dalFacade.loginQuery(login, pass);
     }
-
+        
 }

@@ -63,7 +63,7 @@ public class LoginViewController implements Initializable
         {
             Stage stage = (Stage) loginButton.getScene().getWindow();
 
-            attendanceParser.getUser(usernameField.getText(), passwordField.getText(), stage);
+            attendanceParser.tryLogin(usernameField.getText(), passwordField.getText(), stage);
 
             // Closes the primary stage
         } else

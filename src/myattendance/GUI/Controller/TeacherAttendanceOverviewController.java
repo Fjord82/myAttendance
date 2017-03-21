@@ -44,7 +44,7 @@ import myattendance.GUI.Model.StudentParser;
  *
  * @author Kristoffers
  */
-public class MainAttendanceOverviewController implements Initializable
+public class TeacherAttendanceOverviewController implements Initializable
 {
 
     /**
@@ -302,13 +302,13 @@ public class MainAttendanceOverviewController implements Initializable
         {
             lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
             pieChartData.clear();
-            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
-            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
+            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentDates()));
+            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentDates()));
             absenceLabel.setText(
                     "Student Attendance: "
-                    + lastSelectedStudent.getPresentClasses()
+                    + lastSelectedStudent.getPresentDates()
                     + "/"
-                    + Math.addExact(lastSelectedStudent.getAbsentClasses(), lastSelectedStudent.getPresentClasses()));
+                    + Math.addExact(lastSelectedStudent.getAbsentDates(), lastSelectedStudent.getPresentDates()));
             
         }
     }

@@ -51,7 +51,7 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
-    User student = new User();
+    User user = new User();
     @FXML
     private Label lblStudentName;
     @FXML
@@ -76,21 +76,21 @@ public class StudentMainOverviewController implements Initializable
     private void updateView()
     {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", student.getAbsentClasses()));
-        pieChartData.add(new PieChart.Data("Presence", student.getPresentClasses()));
+        pieChartData.add(new PieChart.Data("Absence", user.getAbsentDates()));
+        pieChartData.add(new PieChart.Data("Presence", user.getPresentDates()));
 
         PieChart absenceChart = new PieChart(pieChartData);
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
-        absenceLabel.setText("Student Attendance: " + student.getPresentClasses() + "/" + Math.addExact(student.getAbsentClasses(), student.getPresentClasses()));
+        absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
         
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
 
-        lblStudentName.setText(student.getName());
-        lblStudentClass.setText(student.getsClass());
+        lblStudentName.setText(user.getName());
+        lblStudentClass.setText(user.getsClass());
     }
 
     @FXML
@@ -117,9 +117,9 @@ public class StudentMainOverviewController implements Initializable
 
     }
     
-    public void setStudent(User student)
+    public void setUser(User user)
     {
-        this.student = student;
+        this.user = user;
         updateView();
     }
 

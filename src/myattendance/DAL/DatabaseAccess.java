@@ -4,11 +4,9 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import myattendance.BE.User;
+
 
 /**
  *
@@ -97,4 +95,6 @@ public class DatabaseAccess
             return null;
         }
     }
+
+
 }

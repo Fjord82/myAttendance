@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
-import myattendance.GUI.Controller.MainAttendanceOverviewController;
 import myattendance.GUI.Controller.StudentMainOverviewController;
+import myattendance.GUI.Controller.TeacherAttendanceOverviewController;
 import myattendance.MyAttendance;
 
 public class AttendanceParser
@@ -52,36 +52,35 @@ public class AttendanceParser
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MyAttendance.class.getResource(path));
-
         AnchorPane page = (AnchorPane) loader.load();
 
         if (user != null)
         {
-        if (!user.IsTeacher())
-        {
-            StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
-            controller.setStudent(user);
+            if (!user.IsTeacher())
+            {
+                StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
+                controller.setUser(user);
 
-        }
-        else if (user.IsTeacher())
-        {
-            MainAttendanceOverviewController controller = loader.<MainAttendanceOverviewController>getController();
-            controller.setUser(user);
-        }
+            } else
+            {
+                TeacherAttendanceOverviewController controller = loader.<TeacherAttendanceOverviewController>getController();
+                controller.setUser(user);
+            }
         }
 
         Stage dialogStage = new Stage();
         dialogStage.initOwner(stage);
         dialogStage.initModality(Modality.WINDOW_MODAL);
+        
+
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
         dialogStage.setTitle(title);
 
         dialogStage.show();
     }
-    
 
-    public void getUser(String login, String pass, Stage stage)
+    public void tryLogin(String login, String pass, Stage stage)
     {
         User user = bllFacade.getUser(login, pass);
 
@@ -89,18 +88,16 @@ public class AttendanceParser
         {
             try
             {
-                if (! user.IsTeacher())
+                if (!user.IsTeacher())
                 {
-                changeView("Homepage", "GUI/View/StudentMainOverview.fxml", user);
-                }
-                else
+                    changeView("Homepage", "GUI/View/StudentMainOverview.fxml", user);
+                } else
                 {
-                changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml", user); 
+                    changeView("Homepage", "GUI/View/TeacherAttendanceOverview.fxml", user);
                 }
                 stage.close();
             } catch (IOException ex)
             {
-                System.out.println("getUser error");
                 Logger.getLogger(AttendanceParser.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else

@@ -5,6 +5,8 @@
  */
 package myattendance.BE;
 
+import java.util.Calendar;
+import java.util.Date;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -23,6 +25,7 @@ public class User
     
     private int absentClasses = 0;
     private int presentClasses = 0;
+    Date date = Calendar.getInstance().getTime();
     
     public User()
     {
@@ -51,7 +54,7 @@ public class User
         this.isTeacher = false;
     }
 
-    public int getAbsentClasses()
+    public int getAbsentDates()
     {
         return absentClasses;
     }
@@ -61,7 +64,7 @@ public class User
         this.absentClasses = absentClasses;
     }
 
-    public int getPresentClasses()
+    public int getPresentDates()
     {
         return presentClasses;
     }

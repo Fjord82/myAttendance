@@ -1,6 +1,5 @@
 package myattendance.DAL;
 
-import java.sql.ResultSet;
 import java.util.List;
 import myattendance.BE.User;
 
@@ -62,6 +61,5 @@ public class DALFacade
     {
         return databaseAccess.loginQuery(login, pass);
     }
-    
 
 }
