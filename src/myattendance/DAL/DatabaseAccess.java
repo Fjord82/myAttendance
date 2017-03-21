@@ -2,11 +2,13 @@ package myattendance.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import myattendance.BE.User;
-
 
 /**
  *
@@ -20,7 +22,7 @@ public class DatabaseAccess
     public DatabaseAccess()
     {
         setupDataSource();
-        //printStudents();
+
     }
 
     private static void setupDataSource()
@@ -96,5 +98,49 @@ public class DatabaseAccess
         }
     }
 
+    public Date getStartDate()
+    {
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE dateID=1");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            Date startDate = rs.getDate("dateInTime");
+            return startDate;
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+
+    }
+
+    public Integer totalSchoolDays()
+    {
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isschoolday=1");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+
+            int dayNumber = 1;
+            while (rs.next())
+            {
+                // Process the row.
+                dayNumber++;
+            }
+
+                //Integer totalNoOfDays = rs.getRow();
+            return dayNumber;
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
 }
