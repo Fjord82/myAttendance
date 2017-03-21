@@ -1,5 +1,6 @@
 package myattendance.DAL;
 
+import java.sql.Date;
 import java.util.List;
 import myattendance.BE.User;
 
@@ -60,6 +61,10 @@ public class DALFacade
     public User loginQuery(String login, String pass)
     {
         return databaseAccess.loginQuery(login, pass);
+    }
+    
+    public Date getStartDate(){
+        return databaseAccess.getStartDate();
     }
 
 }
