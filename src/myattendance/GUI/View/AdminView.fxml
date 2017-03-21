@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="myattendance.GUI.View.AdminViewController">
+   <children>
+      <TextField layoutX="40.0" layoutY="104.0" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" promptText="First Name" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="105.0" />
+      <TextField layoutX="40.0" layoutY="146.0" promptText="Middle Name" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="40.0" />
+      <TextField layoutX="40.0" layoutY="188.0" promptText="Last Name" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="40.0" />
+      <TextField layoutX="40.0" layoutY="265.0" promptText="Student Login " AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="40.0" />
+      <TextField layoutX="40.0" layoutY="304.0" promptText="Student Password" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="40.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@Resource/logo.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="506.0" layoutY="348.0" mnemonicParsing="false" text="Logout" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="40.0" />
+      <ComboBox layoutX="40.0" layoutY="224.0" prefWidth="150.0" promptText="Choose class " AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="40.0" />
+      <Button layoutX="440.0" layoutY="348.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="440.0" />
+      <Text layoutX="40.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a student" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="40.0" />
+      <Button layoutX="40.0" layoutY="348.0" mnemonicParsing="false" text="Add" AnchorPane.bottomAnchor="30.0" />
+      <TableView layoutX="315.0" layoutY="80.0" prefHeight="251.0" prefWidth="246.0">
+        <columns>
+          <TableColumn prefWidth="82.0" text="C1" />
+          <TableColumn prefWidth="163.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
