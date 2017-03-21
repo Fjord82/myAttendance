@@ -1,7 +1,6 @@
 package myattendance.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 
 /**
  *
@@ -40,7 +39,7 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            String query = "SELECT * FROM Students WHERE slog=?";
+            String query = "SELECT * FROM People WHERE slog=?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, "S1");
             ResultSet rs = ps.executeQuery();
@@ -59,34 +58,44 @@ public class DatabaseAccess
         }
     }
 
-    public static Student getStudent(String login, String pass)
+    public User loginQuery(String login, String pass)
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement(""
-                    + "SELECT s.fname, s.mname, s.lname, c.ClassName "
-                    + "FROM Students s, Classes c "
-                    + "WHERE s.ClassID = c.ClassID AND s.slog=? AND s.spass=?");
+            PreparedStatement ps = con.prepareStatement("SELECT People.fname, People.mname, People.lname, People.Teacher, Classes.ClassName FROM People, Classes, ClassRelation WHERE People.PID = ClassRelation.PID AND Classes.ClassID = ClassRelation.ClassID AND People.slog=? AND People.spass=?");
             ps.setString(1, login);
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
 
+            System.out.println("Loop start");
             rs.next();
+            
+                System.out.println("Loop Started");
+                User user;
+                boolean isTeacher = rs.getBoolean("Teacher");
+                String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+                System.out.println("Conditions start");
 
-            String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
-            String className = rs.getString("classname");
+                if (!isTeacher)
+                {
 
-            Student student = new Student(fullName, className);
+                    String className = rs.getString("classname");
 
-            return student;
+                    user = new User(fullName, className, isTeacher);
+                } else
+                {
 
-        } catch (SQLException sqle)
+                    user = new User(fullName, isTeacher);
+                }
+                return user;
+            
+
+        } catch (SQLException ex)
         {
-            System.err.println(sqle);
-            System.out.println("Error");
+            System.out.println(ex);
+            System.out.println("Connection Error");
             return null;
         }
-
     }
 
     public Date getStartDate()

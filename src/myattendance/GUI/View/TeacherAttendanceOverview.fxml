@@ -34,6 +34,11 @@
                               <ComboBox id="comboclasslist" fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="175.0" promptText="Select Class" />
                      </graphic>
                   </Label>
+                  <Label fx:id="lblName">
+                     <VBox.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
                         <DatePicker fx:id="datePicker" prefWidth="175.0" promptText="mm/dd/yyyy">
                             <VBox.margin>
                                 <Insets top="75.0" />
