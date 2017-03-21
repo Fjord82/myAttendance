@@ -48,20 +48,20 @@ public class BLLFacade
         return ipMatching.matchingBroadcastingAddress();
     }
 
-//    public List<User> getDanishClassList()
-//    {
-//        return dalFacade.getDanishClassList();
-//    }
-//
-//    public List<User> getInternationalClassList()
-//    {
-//        return dalFacade.getInternationalClassList();
-//    }
-//
-//    public User getRasmus()
-//    {
-//        return dalFacade.getRasmus();
-//    }
+    public List<User> getDanishClassList()
+    {
+        return dalFacade.getDanishClassList();
+    }
+
+    public List<User> getInternationalClassList()
+    {
+        return dalFacade.getInternationalClassList();
+    }
+
+    public User getRasmus()
+    {
+        return dalFacade.getRasmus();
+    }
 
     public User getUser(String login, String pass)
     {

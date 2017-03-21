@@ -33,19 +33,19 @@ public class StudentParser
     
     BLLFacade bllFacade = BLLFacade.getInstance();
 
-//    public List<User> getDanishClassList()
-//    {
-//        return bllFacade.getDanishClassList();
-//    }
-//
-//    public List<User> getInternationalClassList()
-//    {
-//        return bllFacade.getInternationalClassList();
-//    }
-//
-//    public User getRasmus()
-//    {
-//        return bllFacade.getRasmus();
-//    }
+    public List<User> getDanishClassList()
+    {
+        return bllFacade.getDanishClassList();
+    }
+
+    public List<User> getInternationalClassList()
+    {
+        return bllFacade.getInternationalClassList();
+    }
+
+    public User getRasmus()
+    {
+        return bllFacade.getRasmus();
+    }
 
 }

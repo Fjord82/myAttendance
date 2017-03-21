@@ -43,20 +43,20 @@ public class DALFacade
     FileManager fileManager = new FileManager();
     DatabaseAccess databaseAccess = new DatabaseAccess();
 
-//    public User getRasmus()
-//    {
-//        return fileManager.getRasmus();
-//    }
-//
-//    public List<User> getInternationalClassList()
-//    {
-//        return fileManager.getInternationalClassList();
-//    }
-//    
-//    public List<User> getDanishClassList()
-//    {
-//        return fileManager.getDanishClassList();
-//    }
+    public User getRasmus()
+    {
+        return fileManager.getRasmus();
+    }
+
+    public List<User> getInternationalClassList()
+    {
+        return fileManager.getInternationalClassList();
+    }
+    
+    public List<User> getDanishClassList()
+    {
+        return fileManager.getDanishClassList();
+    }
     
     public User loginQuery(String login, String pass)
     {

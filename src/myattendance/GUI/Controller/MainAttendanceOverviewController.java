@@ -102,7 +102,7 @@ public class MainAttendanceOverviewController implements Initializable
         fillComboBox();
 
         showConstantCalender();
-        //populateOnlineList();
+        populateOnlineList();
         updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
@@ -157,72 +157,72 @@ public class MainAttendanceOverviewController implements Initializable
 
     }
 
-//    private void populateOnlineList()
-//    {
-//        vBoxStatus.setPadding(new Insets(10));
-//
-//        if (txtFldSearchStudent.getText().equals(""))
-//        {
-//            if (cBoxClassSelection.getValue().equals("CS2016A"))
-//            {
-//                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
-//
-//                tblStatusView.setItems(studentList);
-//
-//            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
-//            {
-//                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
-//                tblStatusView.setItems(studentList);
-//
-//            } else if (cBoxClassSelection.getValue().equals("Select Class"))
-//            {
-//
-//                tblStatusView.getItems().clear();
-//            }
-//        } else
-//        {
-//            List<User> filteredList = new ArrayList<>();
-//            List<User> unFilteredList = new ArrayList<>();
-//            if (cBoxClassSelection.getValue().equals("CS2016A"))
-//            {
-//                unFilteredList = studentParser.getDanishClassList();
-//
-//                for (User s : unFilteredList)
-//                {
-//                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
-//                    {
-//                        filteredList.add(s);
-//                    }
-//                }
-//
-//                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
-//                tblStatusView.setItems(studentList);
-//
-//            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
-//            {
-//                unFilteredList = studentParser.getInternationalClassList();
-//
-//                for (User s : unFilteredList)
-//                {
-//                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
-//                    {
-//                        filteredList.add(s);
-//                    }
-//                }
-//
-//                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
-//                tblStatusView.setItems(studentList);
-//
-//            } else if (cBoxClassSelection.getValue().equals("Select Class"))
-//            {
-//
-//                tblStatusView.getItems().clear();
-//            }
-//        }
-//        tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-//        tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-//        updatePresentCounter();
-//    }
+    private void populateOnlineList()
+    {
+        vBoxStatus.setPadding(new Insets(10));
+
+        if (txtFldSearchStudent.getText().equals(""))
+        {
+            if (cBoxClassSelection.getValue().equals("CS2016A"))
+            {
+                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
+
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
+            {
+                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("Select Class"))
+            {
+
+                tblStatusView.getItems().clear();
+            }
+        } else
+        {
+            List<User> filteredList = new ArrayList<>();
+            List<User> unFilteredList = new ArrayList<>();
+            if (cBoxClassSelection.getValue().equals("CS2016A"))
+            {
+                unFilteredList = studentParser.getDanishClassList();
+
+                for (User s : unFilteredList)
+                {
+                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
+                    {
+                        filteredList.add(s);
+                    }
+                }
+
+                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
+            {
+                unFilteredList = studentParser.getInternationalClassList();
+
+                for (User s : unFilteredList)
+                {
+                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
+                    {
+                        filteredList.add(s);
+                    }
+                }
+
+                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
+                tblStatusView.setItems(studentList);
+
+            } else if (cBoxClassSelection.getValue().equals("Select Class"))
+            {
+
+                tblStatusView.getItems().clear();
+            }
+        }
+        tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        updatePresentCounter();
+    }
 
     private void sortStudentStatus()
     {
@@ -257,7 +257,7 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private void clickCBox(ActionEvent event)
     {
-        //populateOnlineList();
+        populateOnlineList();
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
 
@@ -266,7 +266,7 @@ public class MainAttendanceOverviewController implements Initializable
     @FXML
     private void keyReleaseSearchField(KeyEvent event)
     {
-        //populateOnlineList();
+        populateOnlineList();
     }
 
     @FXML

@@ -41,6 +41,15 @@ public class User
         this.sClass.set(sClass);
         this.isTeacher = isTeacher;
     }
+    
+        public User(String name,String status, int absentClasses, int presentClasses)
+    {
+        this.name.set(name);
+        this.status.set(status);
+        this.absentClasses = absentClasses;
+        this.presentClasses = presentClasses;
+        this.isTeacher = false;
+    }
 
     public int getAbsentClasses()
     {
