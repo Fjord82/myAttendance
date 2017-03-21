@@ -90,6 +90,16 @@ and open the template in the editor.
     -fx-font: bold italic 12pt "LucidaBrightDemiBold";
 }
 
+#arrowButton
+{
+    -fx-background-color: transparent;
+}
+
+#arrowButton:hover
+{
+    -fx-border-color: #ffbf00;
+}
+
 .table-view
 {
     -fx-background-color: #f8f8fa;
@@ -187,8 +197,6 @@ and open the template in the editor.
     /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
 
 }
-
-
 
 .menu:hover
 {
@@ -290,5 +298,42 @@ and open the template in the editor.
     -fx-text-fill: rgb(255, 0, 0);
 }
 
+#viewnumberbox
+{
+    -fx-padding:0 5 10 5;
+    -fx-background-color: transparent;
+}
 
+#numberlabel
+{
+    -fx-background-color:white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );  
+}
 
+#numberlabel:focused
+{
+    -fx-background-color: greenyellow;
+    
+}
+
+.pagination{
+	-fx-base:#f7f7f7;
+        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
+        
+}
+.pagination .toggle-button , .pagination.button{
+	-fx-background-radius:10px;
+	-fx-padding: 0px;
+        -fx-text-fill: transparent;
+}
+.pagination .button{
+	-fx-padding: 5 15 5 16px;
+        -fx-background-color: #f7f7f7;
+        -fx-text-fill: #3b5998;
+        -fx-background-radius:10px;
+         -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
+}
+.pagination .label {
+	-fx-text-fill:transparent;
+}

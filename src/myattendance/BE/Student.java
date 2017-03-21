@@ -5,6 +5,8 @@
  */
 package myattendance.BE;
 
+import java.util.Calendar;
+import java.util.Date;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -20,6 +22,7 @@ public class Student
     private final StringProperty sClass = new SimpleStringProperty();
     private int absentClasses = 0;
     private int presentClasses = 0;
+    Date date = Calendar.getInstance().getTime();
     
     
     public Student()
@@ -34,7 +37,7 @@ public class Student
     public Student(String name, String sClass)
     {
         this.name.set(name);
-        this.status.set(sClass);
+        this.sClass.set(sClass);
     }
 
     public Student(String name, String status, int absence, int presence)
@@ -45,7 +48,7 @@ public class Student
         this.presentClasses = presence;
     }
 
-    public int getAbsentClasses()
+    public int getAbsentDates()
     {
         return absentClasses;
     }
@@ -55,7 +58,7 @@ public class Student
         this.absentClasses = absentClasses;
     }
 
-    public int getPresentClasses()
+    public int getPresentDates()
     {
         return presentClasses;
     }
@@ -94,4 +97,11 @@ public class Student
     {
         return name;
     }
+
+    public String getsClass()
+    {
+        return sClass.get();
+    }
+    
+    
 }

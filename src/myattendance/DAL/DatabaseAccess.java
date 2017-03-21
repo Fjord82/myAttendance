@@ -3,10 +3,13 @@ package myattendance.DAL;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.sun.rowset.CachedRowSetImpl;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import myattendance.BE.Student;
 
 /**
@@ -18,21 +21,10 @@ public class DatabaseAccess
 
     private static SQLServerDataSource ds = new SQLServerDataSource();
 
-    private static DatabaseAccess instance;
-
-    public static DatabaseAccess getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new DatabaseAccess();
-        }
-        return instance;
-    }
-
-    private DatabaseAccess()
+    public DatabaseAccess()
     {
         setupDataSource();
-        printStudents();
+        //printStudents();
     }
 
     private static void setupDataSource()
@@ -72,7 +64,10 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT fname, mname, lname FROM Students WHERE slog =? AND spass =?");
+            PreparedStatement ps = con.prepareStatement(""
+                    + "SELECT s.fname, s.mname, s.lname, c.ClassName "
+                    + "FROM Students s, Classes c "
+                    + "WHERE s.ClassID = c.ClassID AND s.slog=? AND s.spass=?");
             ps.setString(1, login);
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
@@ -80,16 +75,20 @@ public class DatabaseAccess
             rs.next();
 
             String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+            String className = rs.getString("classname");
 
-            Student student = new Student(fullName);
+            Student student = new Student(fullName, className);
 
             return student;
 
         } catch (SQLException sqle)
         {
             System.err.println(sqle);
+            System.out.println("Error");
             return null;
         }
 
     }
+
+
 }

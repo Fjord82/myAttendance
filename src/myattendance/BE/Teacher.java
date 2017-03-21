@@ -5,11 +5,26 @@
  */
 package myattendance.BE;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author Fjord82
  */
 public class Teacher
 {
+    
+    private final StringProperty name = new SimpleStringProperty();
+
+    public StringProperty getName()
+    {
+        return name;
+    }
+    
+    public void setName(String name)
+    {
+        this.name.set(name);
+    }
     
 }

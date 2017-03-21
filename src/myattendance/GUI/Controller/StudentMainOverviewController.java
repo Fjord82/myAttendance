@@ -22,6 +22,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Student;
@@ -54,12 +56,10 @@ public class StudentMainOverviewController implements Initializable
     private Label lblStudentName;
     @FXML
     private Label lblStudentClass;
-    @FXML
-    private Button presentButton;
-    @FXML
-    private Button absentButton;
 
     public boolean present = false;
+    @FXML
+    private Pagination paginationBtn;
 
     /**
      * Initializes the controller class.
@@ -76,20 +76,21 @@ public class StudentMainOverviewController implements Initializable
     private void updateView()
     {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", student.getAbsentClasses()));
-        pieChartData.add(new PieChart.Data("Presence", student.getPresentClasses()));
+        pieChartData.add(new PieChart.Data("Absence", student.getAbsentDates()));
+        pieChartData.add(new PieChart.Data("Presence", student.getPresentDates()));
 
         PieChart absenceChart = new PieChart(pieChartData);
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
-        absenceLabel.setText("Student Attendance: " + student.getPresentClasses() + "/" + Math.addExact(student.getAbsentClasses(), student.getPresentClasses()));
-
+        absenceLabel.setText("Student Attendance: " + student.getPresentDates() + "/" + Math.addExact(student.getAbsentDates(), student.getPresentDates()));
+        
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
+        vBoxMiddle.setAlignment(Pos.CENTER);
 
         lblStudentName.setText(student.getName());
-        lblStudentClass.setText("CS2016B");
+        lblStudentClass.setText(student.getsClass());
     }
 
     @FXML
@@ -114,20 +115,6 @@ public class StudentMainOverviewController implements Initializable
 
         vBoxSelectionContent.getChildren().add(popupContent);
 
-    }
-
-    @FXML
-    private void handlePresent(ActionEvent event)
-    {
-        present = true;
-        System.out.println("Are you present: " + present);
-    }
-
-    @FXML
-    private void handleAbsent(ActionEvent event)
-    {
-        present = false;
-        System.out.println("Are you present: " + present);
     }
     
     public void setStudent(Student student)
