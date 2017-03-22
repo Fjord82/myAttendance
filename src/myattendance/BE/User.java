@@ -7,6 +7,8 @@ package myattendance.BE;
 
 import java.util.Calendar;
 import java.util.Date;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -17,6 +19,7 @@ import javafx.beans.property.StringProperty;
 public class User
 {
 
+    private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
@@ -32,14 +35,16 @@ public class User
         isTeacher = false;
     }
     
-    public User(String name, boolean isTeacher)
+    public User(int id, String name, boolean isTeacher)
     {
+        this.id.set(id);
         this.name.set(name);
         this.isTeacher = isTeacher;
     }
 
-    public User(String name, String sClass, boolean isTeacher)
+    public User(int id, String name, String sClass, boolean isTeacher)
     {
+        this.id.set(id);
         this.name.set(name);
         this.sClass.set(sClass);
         this.isTeacher = isTeacher;
