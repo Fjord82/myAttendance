@@ -1,27 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance.BLL;
 
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
+import java.sql.Date;
 import myattendance.DAL.DALFacade;
-
+import org.joda.time.Days;
+import org.joda.time.DateTime;
 
 /**
  *
- * @author Kristoffers
+ * @author meng
  */
 public class DateManager
 {
+
     DALFacade dalFacade = DALFacade.getInstance();
-    
-    
-    public int daysDiff(String startDate, String currentDate)
+
+    public int daysBetween()
+
     {
-        String startDate = 
+        Date startDate = dalFacade.getStartDate();
+        DateTime startDateTime = new DateTime(startDate);
+        DateTime todaysDateTime = new DateTime();
+
+        int daysBetween = Days.daysBetween(startDateTime, todaysDateTime).getDays();
+        return daysBetween;
+        
     }
-    
+
 }

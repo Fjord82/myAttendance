@@ -1,8 +1,8 @@
 package myattendance.DAL;
 
+import java.sql.Date;
 import java.util.List;
-import myattendance.BE.Student;
-import myattendance.BLL.DateManager;
+import myattendance.BE.User;
 
 /**
  *
@@ -43,24 +43,28 @@ public class DALFacade
     FileManager fileManager = new FileManager();
     DatabaseAccess databaseAccess = new DatabaseAccess();
 
-    public Student getRasmus()
+    public User getRasmus()
     {
         return fileManager.getRasmus();
     }
 
-    public List<Student> getInternationalClassList()
+    public List<User> getInternationalClassList()
     {
         return fileManager.getInternationalClassList();
     }
-
-    public List<Student> getDanishClassList()
+    
+    public List<User> getDanishClassList()
     {
         return fileManager.getDanishClassList();
     }
-
-    public static Student getStudent(String login, String pass)
+    
+    public User loginQuery(String login, String pass)
     {
-        return DatabaseAccess.getStudent(login, pass);
+        return databaseAccess.loginQuery(login, pass);
+    }
+    
+    public Date getStartDate(){
+        return databaseAccess.getStartDate();
     }
 
 }
