@@ -35,7 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.StudentParser;
 
@@ -44,7 +44,7 @@ import myattendance.GUI.Model.StudentParser;
  *
  * @author Kristoffers
  */
-public class MainAttendanceOverviewController implements Initializable
+public class TeacherAttendanceOverviewController implements Initializable
 {
 
     /**
@@ -53,7 +53,8 @@ public class MainAttendanceOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
-    Student lastSelectedStudent;
+    User user;
+    User lastSelectedStudent;
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     PieChart absenceChart = new PieChart(pieChartData);
@@ -73,14 +74,12 @@ public class MainAttendanceOverviewController implements Initializable
 
     @FXML
     private Label labelPresentCounter;
-
-    Student student;
     @FXML
-    private TableColumn<Student, String> tblViewName;
+    private TableColumn<User, String> tblViewName;
     @FXML
-    private TableColumn<Student, String> tblViewStatus;
+    private TableColumn<User, String> tblViewStatus;
     @FXML
-    private TableView<Student> tblStatusView;
+    private TableView<User> tblStatusView;
     @FXML
     private VBox vBoxStatus;
     @FXML
@@ -91,6 +90,8 @@ public class MainAttendanceOverviewController implements Initializable
     private Button btnLogout;
     @FXML
     private Pagination paginationBtn;
+    @FXML
+    private Label lblName;
 
     /**
      * Initializes the controller class.
@@ -106,6 +107,12 @@ public class MainAttendanceOverviewController implements Initializable
 
         absenceChart.setTitle("Student Absence");
         paginationBtn.setVisible(false);
+    }
+    
+    public void setUser(User user)
+    {
+        this.user = user;
+        updateView();
     }
 
     @FXML
@@ -158,13 +165,13 @@ public class MainAttendanceOverviewController implements Initializable
         {
             if (cBoxClassSelection.getValue().equals("CS2016A"))
             {
-                ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
+                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
 
                 tblStatusView.setItems(studentList);
 
             } else if (cBoxClassSelection.getValue().equals("CS2016B"))
             {
-                ObservableList<Student> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
+                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
                 tblStatusView.setItems(studentList);
 
             } else if (cBoxClassSelection.getValue().equals("Select Class"))
@@ -174,13 +181,13 @@ public class MainAttendanceOverviewController implements Initializable
             }
         } else
         {
-            List<Student> filteredList = new ArrayList<>();
-            List<Student> unFilteredList = new ArrayList<>();
+            List<User> filteredList = new ArrayList<>();
+            List<User> unFilteredList = new ArrayList<>();
             if (cBoxClassSelection.getValue().equals("CS2016A"))
             {
                 unFilteredList = studentParser.getDanishClassList();
 
-                for (Student s : unFilteredList)
+                for (User s : unFilteredList)
                 {
                     if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
                     {
@@ -188,14 +195,14 @@ public class MainAttendanceOverviewController implements Initializable
                     }
                 }
 
-                ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
+                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
                 tblStatusView.setItems(studentList);
 
             } else if (cBoxClassSelection.getValue().equals("CS2016B"))
             {
                 unFilteredList = studentParser.getInternationalClassList();
 
-                for (Student s : unFilteredList)
+                for (User s : unFilteredList)
                 {
                     if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
                     {
@@ -203,7 +210,7 @@ public class MainAttendanceOverviewController implements Initializable
                     }
                 }
 
-                ObservableList<Student> studentList = FXCollections.observableArrayList(filteredList);
+                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
                 tblStatusView.setItems(studentList);
 
             } else if (cBoxClassSelection.getValue().equals("Select Class"))
@@ -235,7 +242,7 @@ public class MainAttendanceOverviewController implements Initializable
         int maxPresent = tblStatusView.getItems().size();
         int currentlyPresent = 0;
 
-        for (Student s : tblStatusView.getItems())
+        for (User s : tblStatusView.getItems())
         {
             if (s.getStatus().equals("Online"))
             {
@@ -295,15 +302,20 @@ public class MainAttendanceOverviewController implements Initializable
         {
             lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
             pieChartData.clear();
-            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentClasses()));
-            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentClasses()));
+            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentDates()));
+            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentDates()));
             absenceLabel.setText(
                     "Student Attendance: "
-                    + lastSelectedStudent.getPresentClasses()
+                    + lastSelectedStudent.getPresentDates()
                     + "/"
-                    + Math.addExact(lastSelectedStudent.getAbsentClasses(), lastSelectedStudent.getPresentClasses()));
+                    + Math.addExact(lastSelectedStudent.getAbsentDates(), lastSelectedStudent.getPresentDates()));
             
         }
+    }
+    
+    private void updateView()
+    {
+        lblName.setText(user.getName());
     }
 
 }

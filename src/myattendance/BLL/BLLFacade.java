@@ -1,8 +1,9 @@
 package myattendance.BLL;
 
 import java.util.List;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
+import myattendance.GUI.Model.AttendanceParser;
 
 /**
  *
@@ -42,30 +43,30 @@ public class BLLFacade
     DALFacade dalFacade = DALFacade.getInstance();
     IPMatching ipMatching = new IPMatching();
     LoginCheckManager loginCheckManager = new LoginCheckManager();
-
+    
     public boolean matchingBroadcastingAddress()
     {
         return ipMatching.matchingBroadcastingAddress();
     }
 
-    public List<Student> getDanishClassList()
+    public List<User> getDanishClassList()
     {
         return dalFacade.getDanishClassList();
     }
 
-    public List<Student> getInternationalClassList()
+    public List<User> getInternationalClassList()
     {
         return dalFacade.getInternationalClassList();
     }
 
-    public Student getRasmus()
+    public User getRasmus()
     {
         return dalFacade.getRasmus();
     }
 
-    public Student getStudent(String login, String pass)
+    public User getUser(String login, String pass)
     {
-        return dalFacade.getStudent(login, pass);
+        return dalFacade.loginQuery(login, pass);
     }
-
+        
 }

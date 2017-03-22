@@ -25,7 +25,7 @@ public class MyAttendance extends Application
     @Override
     public void start(Stage primaryStage) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/View/MainAttendanceOverview.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/View/LoginView.fxml"));
 
         Scene scene = new Scene(root);
         //scene.getStylesheets().add("file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/styleSheetLogin.css");
@@ -43,8 +43,7 @@ public class MyAttendance extends Application
     public static void main(String[] args)
     {
         launch(args);
-        
-        
+
     }
 
 }
