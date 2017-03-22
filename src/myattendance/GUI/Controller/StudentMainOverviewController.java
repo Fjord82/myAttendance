@@ -26,7 +26,7 @@ import javafx.scene.control.Pagination;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import myattendance.BE.Student;
+import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.StudentParser;
 
@@ -51,7 +51,7 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
 
-    Student student = new Student("");
+    User user = new User();
     @FXML
     private Label lblStudentName;
     @FXML
@@ -76,21 +76,21 @@ public class StudentMainOverviewController implements Initializable
     private void updateView()
     {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", student.getAbsentDates()));
-        pieChartData.add(new PieChart.Data("Presence", student.getPresentDates()));
+        pieChartData.add(new PieChart.Data("Absence", user.getAbsentDates()));
+        pieChartData.add(new PieChart.Data("Presence", user.getPresentDates()));
 
         PieChart absenceChart = new PieChart(pieChartData);
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
-        absenceLabel.setText("Student Attendance: " + student.getPresentDates() + "/" + Math.addExact(student.getAbsentDates(), student.getPresentDates()));
+        absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
         
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
 
-        lblStudentName.setText(student.getName());
-        lblStudentClass.setText(student.getsClass());
+        lblStudentName.setText(user.getName());
+        lblStudentClass.setText(user.getsClass());
     }
 
     @FXML
@@ -117,9 +117,9 @@ public class StudentMainOverviewController implements Initializable
 
     }
     
-    public void setStudent(Student student)
+    public void setUser(User user)
     {
-        this.student = student;
+        this.user = user;
         updateView();
     }
 
