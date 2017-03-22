@@ -67,4 +67,9 @@ public class DALFacade
         return databaseAccess.getStartDate();
     }
 
+    public void getLastLoginDate(int PID)
+    {
+        databaseAccess.getLastLoginDate(PID);
+    }
+
 }

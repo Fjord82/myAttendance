@@ -69,26 +69,25 @@ public class DatabaseAccess
 
             System.out.println("Loop start");
             rs.next();
-            
-                System.out.println("Loop Started");
-                User user;
-                boolean isTeacher = rs.getBoolean("Teacher");
-                String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
-                System.out.println("Conditions start");
 
-                if (!isTeacher)
-                {
+            System.out.println("Loop Started");
+            User user;
+            boolean isTeacher = rs.getBoolean("Teacher");
+            String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+            System.out.println("Conditions start");
 
-                    String className = rs.getString("classname");
+            if (!isTeacher)
+            {
 
-                    user = new User(fullName, className, isTeacher);
-                } else
-                {
+                String className = rs.getString("classname");
 
-                    user = new User(fullName, isTeacher);
-                }
-                return user;
-            
+                user = new User(fullName, className, isTeacher);
+            } else
+            {
+
+                user = new User(fullName, isTeacher);
+            }
+            return user;
 
         } catch (SQLException ex)
         {
@@ -117,6 +116,24 @@ public class DatabaseAccess
 
     }
 
+    public Date getLastLoginDate(int PID)
+    {
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID="+PID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            Date lastLogin = rs.getDate("lastlogin");
+            return lastLogin;
+            
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+
     public Integer totalSchoolDays()
     {
         try (Connection con = ds.getConnection())
@@ -125,7 +142,6 @@ public class DatabaseAccess
             ResultSet rs = ps.executeQuery();
             rs.next();
 
-
             int dayNumber = 1;
             while (rs.next())
             {
@@ -133,7 +149,7 @@ public class DatabaseAccess
                 dayNumber++;
             }
 
-                //Integer totalNoOfDays = rs.getRow();
+            //Integer totalNoOfDays = rs.getRow();
             return dayNumber;
 
         } catch (SQLException ex)

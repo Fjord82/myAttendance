@@ -14,16 +14,31 @@ public class DateManager
 
     DALFacade dalFacade = DALFacade.getInstance();
 
-    public int daysBetween()
+    public int daysBetween(DateTime startDateTime, DateTime endDateTime)
+    {
 
+        int daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
+        return daysBetween;
+
+    }
+
+    public DateTime getTodaysDate()
+    {
+        DateTime todaysDateTime = new DateTime();
+        return todaysDateTime;
+    }
+
+    public int daysBetweenStartAndToday()
     {
         Date startDate = dalFacade.getStartDate();
         DateTime startDateTime = new DateTime(startDate);
-        DateTime todaysDateTime = new DateTime();
-
-        int daysBetween = Days.daysBetween(startDateTime, todaysDateTime).getDays();
-        return daysBetween;
-        
+        int daysBetweenStartAndToday = daysBetween(startDateTime,getTodaysDate());
+        return daysBetweenStartAndToday;
+    }
+    
+    public int daysBetweenLastLoginAndToday(){
+        int bla =0;
+        return bla;
     }
 
 }

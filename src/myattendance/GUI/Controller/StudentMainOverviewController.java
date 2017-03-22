@@ -23,11 +23,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
+import myattendance.GUI.Model.DateParser;
 import myattendance.GUI.Model.StudentParser;
 
 /**
@@ -50,6 +50,7 @@ public class StudentMainOverviewController implements Initializable
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
+    DateParser dateParser = DateParser.getInstance();
 
     User user = new User();
     @FXML
@@ -67,7 +68,8 @@ public class StudentMainOverviewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        dateParser.getTodaysDate();
+        dateParser.getLastLoginDate(user.);
         showConstantCalender();
 
         
