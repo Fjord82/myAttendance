@@ -11,6 +11,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -28,7 +29,8 @@ public class User
     
     private int absentClasses = 0;
     private int presentClasses = 0;
-    Date date = Calendar.getInstance().getTime();
+    DateTime date = new DateTime();
+    DateTime lastLogin;
     
     public User()
     {
@@ -58,6 +60,12 @@ public class User
         this.presentClasses = presentClasses;
         this.isTeacher = false;
     }
+
+    public int getId()
+    {
+        return id.get();
+    }
+        
 
     public int getAbsentDates()
     {
@@ -117,6 +125,22 @@ public class User
     public boolean IsTeacher()
     {
         return isTeacher;
+    }  
+
+    public DateTime getLastLogin()
+    {
+        return lastLogin;
+    }
+
+    public void setLastLogin(DateTime lastLogin)
+    {
+        this.lastLogin = lastLogin;
+        if (lastLogin.dayOfYear().equals(date.dayOfYear()))
+        {
+            setStatus("Online");
+        }
+        else
+            setStatus("Offline");
     }
     
 }
