@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import myattendance.BE.Course;
 import myattendance.BE.User;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -64,13 +65,18 @@ public class DALFacade
         return databaseAccess.loginQuery(login, pass);
     }
     
-    public Date getStartDate(){
+    public DateTime getStartDate(){
         return databaseAccess.getStartDate();
     }
     
         public List<Course> getCourses(int PID)
     {
         return databaseAccess.getCourses(PID);
+    }
+
+    public DateTime getLastLoginDate(int PID)
+    {
+        return databaseAccess.getLastLoginDate(PID);
     }
 
 }

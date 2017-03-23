@@ -3,7 +3,7 @@ package myattendance.BLL;
 import java.util.List;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
-import myattendance.GUI.Model.AttendanceParser;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -43,6 +43,7 @@ public class BLLFacade
     DALFacade dalFacade = DALFacade.getInstance();
     IPMatching ipMatching = new IPMatching();
     LoginCheckManager loginCheckManager = new LoginCheckManager();
+    DateManager dateManager = new DateManager();
     
     public boolean matchingBroadcastingAddress()
     {
@@ -68,5 +69,23 @@ public class BLLFacade
     {
         return dalFacade.loginQuery(login, pass);
     }
-        
+
+    public DateTime getTodaysDate()
+    {
+        return dateManager.getTodaysDate();
+    }
+
+    public DateTime getLastLoginDate(int PID)
+    {
+        return dalFacade.getLastLoginDate(PID);
+    }
+    
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate){
+        return dateManager.daysBetweenSpecificDateAndToday(specificDate);
+    }
+    
+    public DateTime getStartDate(){
+        return dalFacade.getStartDate();
+    }
+    
 }

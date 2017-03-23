@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import myattendance.BE.Course;
 import myattendance.BE.User;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -52,21 +53,25 @@ public class DatabaseAccess
 
             rs.next();
 
+
             User user;
             boolean isTeacher = rs.getBoolean("Teacher");
             String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
             int id = rs.getInt("PID");
+
 
             if (!isTeacher)
             {
 
                 String className = rs.getString("classname");
 
+
                 user = new User(id, fullName, className, isTeacher);
             } else
             {
 
                 user = new User(id, fullName, isTeacher);
+
             }
             return user;
 
@@ -78,7 +83,7 @@ public class DatabaseAccess
         }
     }
 
-    public Date getStartDate()
+    public DateTime getStartDate()
     {
         try (Connection con = ds.getConnection())
         {
@@ -86,7 +91,8 @@ public class DatabaseAccess
             ResultSet rs = ps.executeQuery();
             rs.next();
             Date startDate = rs.getDate("dateInTime");
-            return startDate;
+            DateTime startDateTime = new DateTime(startDate);
+            return startDateTime;
 
         } catch (SQLException ex)
         {
@@ -95,6 +101,25 @@ public class DatabaseAccess
 
         return null;
 
+    }
+
+    public DateTime getLastLoginDate(int PID)
+    {
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID="+PID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            Date lastLogin = rs.getDate("lastlogin");
+            DateTime lastLoginDateTime = new DateTime(lastLogin);
+            return lastLoginDateTime;
+            
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
 
     public Integer totalSchoolDays()
