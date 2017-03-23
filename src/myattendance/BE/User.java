@@ -59,6 +59,12 @@ public class User
         this.isTeacher = false;
     }
 
+    public int getId()
+    {
+        return id.get();
+    }
+        
+
     public int getAbsentDates()
     {
         return absentClasses;
@@ -117,13 +123,5 @@ public class User
     public boolean IsTeacher()
     {
         return isTeacher;
-    }
-
-    public int getId()
-    {
-        return id.get();
-    }
-    
-    
-    
+    }  
 }
