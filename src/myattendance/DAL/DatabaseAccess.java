@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import myattendance.BE.Course;
 import myattendance.BE.User;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -52,37 +53,25 @@ public class DatabaseAccess
 
             rs.next();
 
-<<<<<<< HEAD
-            System.out.println("Loop Started");
-            User user;
-            boolean isTeacher = rs.getBoolean("Teacher");
-            String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
-            System.out.println("Conditions start");
-=======
+
             User user;
             boolean isTeacher = rs.getBoolean("Teacher");
             String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
             int id = rs.getInt("PID");
->>>>>>> Development
+
 
             if (!isTeacher)
             {
 
                 String className = rs.getString("classname");
 
-<<<<<<< HEAD
-                user = new User(fullName, className, isTeacher);
-            } else
-            {
 
-                user = new User(fullName, isTeacher);
-=======
                 user = new User(id, fullName, className, isTeacher);
             } else
             {
 
                 user = new User(id, fullName, isTeacher);
->>>>>>> Development
+
             }
             return user;
 
@@ -94,7 +83,7 @@ public class DatabaseAccess
         }
     }
 
-    public Date getStartDate()
+    public DateTime getStartDate()
     {
         try (Connection con = ds.getConnection())
         {
@@ -102,7 +91,8 @@ public class DatabaseAccess
             ResultSet rs = ps.executeQuery();
             rs.next();
             Date startDate = rs.getDate("dateInTime");
-            return startDate;
+            DateTime startDateTime = new DateTime(startDate);
+            return startDateTime;
 
         } catch (SQLException ex)
         {
@@ -113,7 +103,7 @@ public class DatabaseAccess
 
     }
 
-    public Date getLastLoginDate(int PID)
+    public DateTime getLastLoginDate(int PID)
     {
         try (Connection con = ds.getConnection())
         {
@@ -121,7 +111,8 @@ public class DatabaseAccess
             ResultSet rs = ps.executeQuery();
             rs.next();
             Date lastLogin = rs.getDate("lastlogin");
-            return lastLogin;
+            DateTime lastLoginDateTime = new DateTime(lastLogin);
+            return lastLoginDateTime;
             
         } catch (SQLException ex)
         {

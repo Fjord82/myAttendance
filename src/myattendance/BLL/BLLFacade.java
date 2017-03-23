@@ -3,6 +3,7 @@ package myattendance.BLL;
 import java.util.List;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -69,14 +70,22 @@ public class BLLFacade
         return dalFacade.loginQuery(login, pass);
     }
 
-    public void getTodaysDate()
+    public DateTime getTodaysDate()
     {
-        dateManager.getTodaysDate();
+        return dateManager.getTodaysDate();
     }
 
-    public void getLastLoginDate(int PID)
+    public DateTime getLastLoginDate(int PID)
     {
-        dalFacade.getLastLoginDate(PID);
+        return dalFacade.getLastLoginDate(PID);
     }
-        
+    
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate){
+        return dateManager.daysBetweenSpecificDateAndToday(specificDate);
+    }
+    
+    public DateTime getStartDate(){
+        return dalFacade.getStartDate();
+    }
+    
 }

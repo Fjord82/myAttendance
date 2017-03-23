@@ -1,6 +1,7 @@
 package myattendance.GUI.Model;
 
 import myattendance.BLL.BLLFacade;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -8,22 +9,23 @@ import myattendance.BLL.BLLFacade;
  */
 public class DateParser
 {
+
     BLLFacade bllFacade = BLLFacade.getInstance();
-    
+
     private static DateParser instance;
-    
+
     public static DateParser getInstance()
     {
-        if(instance == null)
+        if (instance == null)
         {
-            instance = new DateParser();     
+            instance = new DateParser();
         }
         return instance;
     }
-    
+
     private DateParser()
     {
-        
+
     }
 
     public void getTodaysDate()
@@ -31,10 +33,18 @@ public class DateParser
         bllFacade.getTodaysDate();
     }
 
-    public void getLastLoginDate(int PID)
+    public DateTime getLastLoginDate(int PID)
     {
-        bllFacade.getLastLoginDate(PID);
+        return bllFacade.getLastLoginDate(PID);
+    }
+
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
+    {
+        return bllFacade.daysBetweenSpecificDateAndToday(specificDate);
     }
     
-    
+    public DateTime getStartDate(){
+        return bllFacade.getStartDate();
+    }
+
 }

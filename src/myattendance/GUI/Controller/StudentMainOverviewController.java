@@ -29,6 +29,7 @@ import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
 import myattendance.GUI.Model.StudentParser;
+import org.joda.time.DateTime;
 
 /**
  * FXML Controller class
@@ -67,12 +68,12 @@ public class StudentMainOverviewController implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
+            
     {
-        dateParser.getTodaysDate();
-        dateParser.getLastLoginDate(5);
-        showConstantCalender();
+       dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
+       dateParser.daysBetweenSpecificDateAndToday(dateParser.getLastLoginDate(user.getId()));
+       showConstantCalender();
 
-        
     }
     
     private void updateView()

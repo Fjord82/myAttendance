@@ -59,6 +59,12 @@ public class User
         this.isTeacher = false;
     }
 
+    public int getId()
+    {
+        return id.get();
+    }
+        
+
     public int getAbsentDates()
     {
         return absentClasses;

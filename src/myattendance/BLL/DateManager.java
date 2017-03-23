@@ -28,17 +28,20 @@ public class DateManager
         return todaysDateTime;
     }
 
+    //This method needs tidying up - combine with the one below
     public int daysBetweenStartAndToday()
     {
-        Date startDate = dalFacade.getStartDate();
+        DateTime startDate = dalFacade.getStartDate();
         DateTime startDateTime = new DateTime(startDate);
         int daysBetweenStartAndToday = daysBetween(startDateTime,getTodaysDate());
         return daysBetweenStartAndToday;
     }
     
-    public int daysBetweenLastLoginAndToday(){
-        int bla =0;
-        return bla;
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate){
+
+        DateTime today = getTodaysDate();
+        int daysBetweenLastLoginAndToday = daysBetween(specificDate, today);
+        return daysBetweenLastLoginAndToday;
     }
 
 }
