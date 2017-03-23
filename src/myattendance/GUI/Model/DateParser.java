@@ -46,5 +46,9 @@ public class DateParser
     public DateTime getStartDate(){
         return bllFacade.getStartDate();
     }
+    
+    public boolean isAbsent(int PID){
+        return bllFacade.isAbsent(PID);
+    }
 
 }

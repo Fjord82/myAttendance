@@ -98,4 +98,10 @@ public class BLLFacade
     public DateTime getStartDate(){
         return dalFacade.getStartDate();
     }
+
+    
+    public boolean isAbsent(int PID){
+        return dateManager.isAbsent(PID);
+    }
+
 }
