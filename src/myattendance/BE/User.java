@@ -123,6 +123,5 @@ public class User
     public boolean IsTeacher()
     {
         return isTeacher;
-    }
-    
+    }  
 }

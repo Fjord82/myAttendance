@@ -35,9 +35,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import myattendance.BE.Course;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.StudentParser;
+import myattendance.GUI.Model.TeacherViewModel;
 
 /**
  * FXML Controller class
@@ -52,9 +54,14 @@ public class TeacherAttendanceOverviewController implements Initializable
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     StudentParser studentParser = StudentParser.getInstance();
+    TeacherViewModel model = new TeacherViewModel();
 
     User user;
-    User lastSelectedStudent;
+    User lastSelectedUser;
+    
+    Course lastSelectedCourse;
+    
+    String filter = "";
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     PieChart absenceChart = new PieChart(pieChartData);
@@ -67,7 +74,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private DatePicker datePicker;
     @FXML
-    private ComboBox<String> cBoxClassSelection;
+    private ComboBox<Course> cBoxClassSelection;
     private Button btnLogOut;
     @FXML
     private VBox vBoxSelectionContent;
@@ -99,20 +106,22 @@ public class TeacherAttendanceOverviewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        fillComboBox();
 
         showConstantCalender();
-        populateOnlineList();
-        updatePresentCounter();
+        //populateOnlineList();
+        //updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
         paginationBtn.setVisible(false);
+        tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
     }
-    
+
     public void setUser(User user)
     {
         this.user = user;
-        updateView();
+        lblName.setText(user.getName());
+        fillComboBox();
     }
 
     @FXML
@@ -137,10 +146,8 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     private void fillComboBox()
     {
-        ObservableList<String> comboItems
-                = FXCollections.observableArrayList("Select Class", "CS2016A", "CS2016B");
-        cBoxClassSelection.setItems(comboItems);
-        cBoxClassSelection.getSelectionModel().selectFirst();
+
+        cBoxClassSelection.setItems(model.comboBoxContentGet(user.getId()));
     }
 
     private void showConstantCalender()
@@ -224,11 +231,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         updatePresentCounter();
     }
 
-    private void sortStudentStatus()
-    {
-
-    }
-
     /**
      * Updates the counter for how many students are currently present, out of
      * the total amount.
@@ -257,7 +259,10 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void clickCBox(ActionEvent event)
     {
-        populateOnlineList();
+        lastSelectedCourse = cBoxClassSelection.getSelectionModel().getSelectedItem();
+        
+        updateView();
+
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
 
@@ -266,7 +271,9 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void keyReleaseSearchField(KeyEvent event)
     {
-        populateOnlineList();
+        //populateOnlineList();
+        filter = txtFldSearchStudent.getText();
+        updateView();
     }
 
     @FXML
@@ -274,25 +281,23 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
 
         vBoxMiddle.getChildren().clear();
-        
-        if(tblStatusView.getSelectionModel().getSelectedItem() == null)
+
+        if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setContentText("Please select a class and then point on a student inside the studentlist");
 
             alert.showAndWait();
-            
+
             paginationBtn.setVisible(false);
         }
-        else
-        {
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
         paginationBtn.setVisible(true);
-        }
+
     }
 
     @FXML
@@ -300,22 +305,34 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         if (!tblStatusView.getItems().isEmpty())
         {
-            lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
-            pieChartData.clear();
-            pieChartData.add(new PieChart.Data("Absence", lastSelectedStudent.getAbsentDates()));
-            pieChartData.add(new PieChart.Data("Presence", lastSelectedStudent.getPresentDates()));
-            absenceLabel.setText(
-                    "Student Attendance: "
-                    + lastSelectedStudent.getPresentDates()
-                    + "/"
-                    + Math.addExact(lastSelectedStudent.getAbsentDates(), lastSelectedStudent.getPresentDates()));
-            
+            lastSelectedUser = tblStatusView.getSelectionModel().getSelectedItem();
+            chartData();
+
         }
     }
-    
+
+    private void chartData()
+    {
+        pieChartData.clear();
+        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
+        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
+        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
+                + lastSelectedUser.getPresentDates()
+                + "/"
+                + Math.addExact(lastSelectedUser.getAbsentDates(), lastSelectedUser.getPresentDates()));
+    }
+
     private void updateView()
     {
-        lblName.setText(user.getName());
+        model.updateList(filter, lastSelectedCourse);
+        tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
+
+    }
+
+    @FXML
+    private void AnchorPaneActionEvent(MouseEvent event)
+    {
+        model.getClassList();
     }
 
 }

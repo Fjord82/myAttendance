@@ -180,24 +180,36 @@ public class DatabaseAccess
         }
 
     }
-    
-//    private Course getStudent(Course course)
-//    {
-//     
-//        try (Connection con = ds.getConnection())
-//        {
-//            PreparedStatement ps = con.prepareStatement(""
-//                    + "SELECT People.fname, People.mname, People.lname, People.Teacher "
-//                    + "FROM People, Classes, ClassRelation "
-//                    + "WHERE People.PID = ClassRelation.PID AND Classes.ClassID = ClassRelation.ClassID AND People.slog=? AND People.spass=?");
-//            ps.setInt(1, PID);
-//            ResultSet rs = ps.executeQuery();
-//
-//            rs.next();
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+
+    public Course fillUsersInCourse(Course course)
+    {
+
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement(""
+                    + "SELECT p.fname, p.mname, p.lname, p.PID, p.Teacher "
+                    + "FROM People p, Classes c, ClassRelation cr "
+                    + "WHERE p.PID = cr.PID AND c.ClassID = cr.ClassID AND p.Teacher = 0 AND c.ClassID=?");
+            ps.setInt(1, course.getId());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                int id = rs.getInt("PID");
+                String name = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
+                boolean isTeacher = rs.getBoolean("Teacher");
+
+                User user = new User(id, name, isTeacher);
+                course.addToUserList(user);
+                
+
+            }
+            return course;
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 
 }
