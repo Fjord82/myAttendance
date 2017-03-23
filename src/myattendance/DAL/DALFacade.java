@@ -2,6 +2,7 @@ package myattendance.DAL;
 
 import java.sql.Date;
 import java.util.List;
+import myattendance.BE.Course;
 import myattendance.BE.User;
 
 /**
@@ -65,6 +66,11 @@ public class DALFacade
     
     public Date getStartDate(){
         return databaseAccess.getStartDate();
+    }
+    
+        public List<Course> getCourses(int PID)
+    {
+        return databaseAccess.getCourses(PID);
     }
 
 }
