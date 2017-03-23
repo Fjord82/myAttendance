@@ -88,7 +88,6 @@ public class DatabaseAccess
         DateTime dateTime = new DateTime();
         java.sql.Date date = new java.sql.Date(dateTime.getMillis());
         String sql = "UPDATE People SET LastLogin = ? WHERE PID = ?";
-        System.out.println(date);
 
         try (Connection con = ds.getConnection())
         {
@@ -136,7 +135,6 @@ public class DatabaseAccess
                 Date lastLogin = rs.getDate("lastlogin");
                 returnDate = new DateTime(lastLogin);
             }
-            System.out.println(returnDate);
             return returnDate;
 
         } catch (SQLException ex)

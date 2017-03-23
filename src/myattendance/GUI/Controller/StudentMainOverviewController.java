@@ -29,7 +29,6 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
-import myattendance.GUI.Model.StudentParser;
 import org.joda.time.DateTime;
 
 /**
@@ -51,7 +50,6 @@ public class StudentMainOverviewController implements Initializable
     private VBox vBoxMiddle;
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
-    StudentParser studentParser = StudentParser.getInstance();
     DateParser dateParser = DateParser.getInstance();
 
     User user = new User();
@@ -74,8 +72,8 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
 
     {
-        attendenceChecks();
 
+        attendenceChecks();
         showConstantCalender();
 
     }

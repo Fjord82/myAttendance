@@ -44,27 +44,11 @@ public class BLLFacade
 
     DALFacade dalFacade = DALFacade.getInstance();
     IPMatching ipMatching = new IPMatching();
-    LoginCheckManager loginCheckManager = new LoginCheckManager();
     DateManager dateManager = new DateManager();
 
     public boolean matchingBroadcastingAddress()
     {
         return ipMatching.matchingBroadcastingAddress();
-    }
-
-    public List<User> getDanishClassList()
-    {
-        return dalFacade.getDanishClassList();
-    }
-
-    public List<User> getInternationalClassList()
-    {
-        return dalFacade.getInternationalClassList();
-    }
-
-    public User getRasmus()
-    {
-        return dalFacade.getRasmus();
     }
 
     public User getUser(String login, String pass)
