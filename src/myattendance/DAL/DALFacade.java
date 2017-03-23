@@ -69,7 +69,7 @@ public class DALFacade
         return databaseAccess.getStartDate();
     }
     
-        public List<Course> getCourses(int PID)
+    public List<Course> getCourses(int PID)
     {
         return databaseAccess.getCourses(PID);
     }

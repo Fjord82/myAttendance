@@ -88,4 +88,8 @@ public class BLLFacade
         return dalFacade.getStartDate();
     }
     
+    public boolean isAbsent(int PID){
+        return dateManager.isAbsent(PID);
+    }
+    
 }

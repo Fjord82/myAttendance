@@ -71,7 +71,7 @@ public class StudentMainOverviewController implements Initializable
             
     {
        dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-       dateParser.daysBetweenSpecificDateAndToday(dateParser.getLastLoginDate(user.getId()));
+       System.out.println(dateParser.isAbsent(user.getId()));
        showConstantCalender();
 
     }
