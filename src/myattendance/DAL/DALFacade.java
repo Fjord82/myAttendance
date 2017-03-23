@@ -53,24 +53,30 @@ public class DALFacade
     {
         return fileManager.getInternationalClassList();
     }
-    
+
     public List<User> getDanishClassList()
     {
         return fileManager.getDanishClassList();
     }
-    
+
     public User loginQuery(String login, String pass)
     {
         return databaseAccess.loginQuery(login, pass);
     }
-    
-    public Date getStartDate(){
+
+    public Date getStartDate()
+    {
         return databaseAccess.getStartDate();
     }
-    
-        public List<Course> getCourses(int PID)
+
+    public List<Course> getCourses(int PID)
     {
         return databaseAccess.getCourses(PID);
+    }
+
+    public Course fillUsersInCourse(Course course)
+    {
+        return databaseAccess.fillUsersInCourse(course);
     }
 
 }

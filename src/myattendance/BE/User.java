@@ -118,5 +118,12 @@ public class User
     {
         return isTeacher;
     }
+
+    public int getId()
+    {
+        return id.get();
+    }
+    
+    
     
 }
