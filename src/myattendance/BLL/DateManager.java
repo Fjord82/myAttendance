@@ -1,6 +1,7 @@
 package myattendance.BLL;
 
 import java.sql.Date;
+import myattendance.BE.Day;
 import myattendance.DAL.DALFacade;
 import org.joda.time.Days;
 import org.joda.time.DateTime;
@@ -33,15 +34,35 @@ public class DateManager
     {
         DateTime startDate = dalFacade.getStartDate();
         DateTime startDateTime = new DateTime(startDate);
-        int daysBetweenStartAndToday = daysBetween(startDateTime,getTodaysDate());
+        int daysBetweenStartAndToday = daysBetween(startDateTime, getTodaysDate());
         return daysBetweenStartAndToday;
     }
-    
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate){
+
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
+    {
 
         DateTime today = getTodaysDate();
         int daysBetweenLastLoginAndToday = daysBetween(specificDate, today);
         return daysBetweenLastLoginAndToday;
     }
 
+    public boolean isAbsent(int PID, Day day)
+    {
+        //Number of days between today and last login
+        int lLAndToday = daysBetweenSpecificDateAndToday(dalFacade.getLastLoginDate(PID));
+
+        if (lLAndToday == 1)
+        {
+            return false;
+        } else
+        {
+            return true;
+            //Further checks for weekends and public holidays
+        }
+
+    }
+    
+
+    
+    
 }

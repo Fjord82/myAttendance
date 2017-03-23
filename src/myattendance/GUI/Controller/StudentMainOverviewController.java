@@ -25,9 +25,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
+import org.joda.time.DateTime;
 
 /**
  * FXML Controller class
@@ -51,6 +53,9 @@ public class StudentMainOverviewController implements Initializable
     DateParser dateParser = DateParser.getInstance();
 
     User user = new User();
+    
+    Day day;
+
     @FXML
     private Label lblStudentName;
     @FXML
@@ -67,10 +72,22 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
 
     {
-        dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-        dateParser.daysBetweenSpecificDateAndToday(dateParser.getLastLoginDate(user.getId()));
+
+        attendenceChecks();
         showConstantCalender();
 
+    }
+
+    public void attendenceChecks()
+    {
+        day = dateParser.getDay(new DateTime());
+        
+        dateParser.isAbsent(user.getId(), day);
+        
+        //this needs fixing
+        dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
+        
+       
     }
 
     private void updateView()

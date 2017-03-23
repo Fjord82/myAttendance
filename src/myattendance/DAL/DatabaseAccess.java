@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
@@ -233,6 +234,55 @@ public class DatabaseAccess
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    public boolean isSchoolDay(Day day)
+    {
+        
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
+            ps.setInt(1, day.getDateID());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            if (rs.getBoolean("isSchoolDay"))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public Day getDay(DateTime dateTime){
+        
+        java.sql.Date date = new java.sql.Date(dateTime.getMillis());
+        
+         try (Connection con = ds.getConnection())
+         {
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM Calender WHERE dateIntTime=?");
+             ps.setDate(1,date);
+             ResultSet rs =ps.executeQuery();
+             while(rs.next()){
+                 int dateID = rs.getInt("dateID");
+                 int weekdayNumber = rs.getInt("weekdayNumber");
+                 String weekdayName = rs.getString("weekdayName");
+                 boolean isSchoolDay = rs.getBoolean("isSchoolDay");
+  
+                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
+                 return day;
+             }
+         } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return null;
     }
 
 }

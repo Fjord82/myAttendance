@@ -3,6 +3,7 @@ package myattendance.DAL;
 import java.sql.Date;
 import java.util.List;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
@@ -67,5 +68,9 @@ public class DALFacade
     {
         return databaseAccess.getLastLoginDate(PID);
     }
+    
 
+      public Day getDay(DateTime dateTime){
+          return databaseAccess.getDay(dateTime);
+      }
 }
