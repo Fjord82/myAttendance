@@ -14,10 +14,10 @@ public class IPMatching
 {
 
     private String EASVIP = "10.176.167.255";
+    private String wtfmeng = "172.17.176.165";
 
     private InetAddress retrieveBroadcastingAddressOfIndividual()
     {
-
         try
         {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -42,6 +42,7 @@ public class IPMatching
                         continue;
                     }
                     return broadcastingAddress;
+                    
 
                 }
 
@@ -59,7 +60,7 @@ public class IPMatching
 
         try
         {
-            InetAddress hBroadcast = InetAddress.getByName(EASVIP);
+            InetAddress hBroadcast = InetAddress.getByName(wtfmeng);
 
             if (hBroadcast.equals(retrieveBroadcastingAddressOfIndividual()))
             {
