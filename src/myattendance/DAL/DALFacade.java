@@ -68,11 +68,7 @@ public class DALFacade
     public DateTime getStartDate(){
         return databaseAccess.getStartDate();
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> Development
     public List<Course> getCourses(int PID)
     {
         return databaseAccess.getCourses(PID);
