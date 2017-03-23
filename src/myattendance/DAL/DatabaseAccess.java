@@ -41,6 +41,7 @@ public class DatabaseAccess
 
     public User loginQuery(String login, String pass)
     {
+
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(""
@@ -53,20 +54,18 @@ public class DatabaseAccess
 
             rs.next();
 
-
             User user;
             boolean isTeacher = rs.getBoolean("Teacher");
             String fullName = rs.getString("fname") + " " + rs.getString("mname") + " " + rs.getString("lname");
             int id = rs.getInt("PID");
-
 
             if (!isTeacher)
             {
 
                 String className = rs.getString("classname");
 
-
                 user = new User(id, fullName, className, isTeacher);
+                updateLastLogin(id);
             } else
             {
 
@@ -81,6 +80,27 @@ public class DatabaseAccess
             System.out.println("Connection Error");
             return null;
         }
+    }
+
+    public void updateLastLogin(int PID)
+    {
+        DateTime dateTime = new DateTime();
+        java.sql.Date date = new java.sql.Date(dateTime.getMillis());
+        String sql = "UPDATE People SET LastLogin = ? WHERE PID = ?";
+        System.out.println(date);
+
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1, date);
+            ps.setInt(2, PID);
+            
+            ps.execute();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public DateTime getStartDate()
@@ -105,20 +125,24 @@ public class DatabaseAccess
 
     public DateTime getLastLoginDate(int PID)
     {
+        DateTime returnDate = new DateTime();
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID="+PID);
+            PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID=" + PID);
             ResultSet rs = ps.executeQuery();
-            rs.next();
+            while(rs.next())
+            {
             Date lastLogin = rs.getDate("lastlogin");
-            DateTime lastLoginDateTime = new DateTime(lastLogin);
-            return lastLoginDateTime;
-            
+            returnDate = new DateTime(lastLogin);
+            }
+            System.out.println(returnDate);
+            return returnDate;
+
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
 
@@ -187,7 +211,7 @@ public class DatabaseAccess
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(""
-                    + "SELECT p.fname, p.mname, p.lname, p.PID, p.Teacher "
+                    + "SELECT p.fname, p.mname, p.lname, p.PID, p.Teacher, LastLogin "
                     + "FROM People p, Classes c, ClassRelation cr "
                     + "WHERE p.PID = cr.PID AND c.ClassID = cr.ClassID AND p.Teacher = 0 AND c.ClassID=?");
             ps.setInt(1, course.getId());
@@ -200,8 +224,9 @@ public class DatabaseAccess
                 boolean isTeacher = rs.getBoolean("Teacher");
 
                 User user = new User(id, name, isTeacher);
+                user.setLastLogin(new DateTime(rs.getDate("lastlogin")));
+
                 course.addToUserList(user);
-                
 
             }
             return course;

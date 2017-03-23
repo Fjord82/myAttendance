@@ -58,9 +58,9 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     User user;
     User lastSelectedUser;
-    
+
     Course lastSelectedCourse;
-    
+
     String filter = "";
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -108,8 +108,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
 
         showConstantCalender();
-        //populateOnlineList();
-        //updatePresentCounter();
+        updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
         paginationBtn.setVisible(false);
@@ -164,73 +163,6 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     }
 
-    private void populateOnlineList()
-    {
-        vBoxStatus.setPadding(new Insets(10));
-
-        if (txtFldSearchStudent.getText().equals(""))
-        {
-            if (cBoxClassSelection.getValue().equals("CS2016A"))
-            {
-                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getDanishClassList());
-
-                tblStatusView.setItems(studentList);
-
-            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
-            {
-                ObservableList<User> studentList = FXCollections.observableArrayList(studentParser.getInternationalClassList());
-                tblStatusView.setItems(studentList);
-
-            } else if (cBoxClassSelection.getValue().equals("Select Class"))
-            {
-
-                tblStatusView.getItems().clear();
-            }
-        } else
-        {
-            List<User> filteredList = new ArrayList<>();
-            List<User> unFilteredList = new ArrayList<>();
-            if (cBoxClassSelection.getValue().equals("CS2016A"))
-            {
-                unFilteredList = studentParser.getDanishClassList();
-
-                for (User s : unFilteredList)
-                {
-                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
-                    {
-                        filteredList.add(s);
-                    }
-                }
-
-                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
-                tblStatusView.setItems(studentList);
-
-            } else if (cBoxClassSelection.getValue().equals("CS2016B"))
-            {
-                unFilteredList = studentParser.getInternationalClassList();
-
-                for (User s : unFilteredList)
-                {
-                    if (s.getName().toLowerCase().contains(txtFldSearchStudent.getText().toLowerCase()))
-                    {
-                        filteredList.add(s);
-                    }
-                }
-
-                ObservableList<User> studentList = FXCollections.observableArrayList(filteredList);
-                tblStatusView.setItems(studentList);
-
-            } else if (cBoxClassSelection.getValue().equals("Select Class"))
-            {
-
-                tblStatusView.getItems().clear();
-            }
-        }
-        tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        updatePresentCounter();
-    }
-
     /**
      * Updates the counter for how many students are currently present, out of
      * the total amount.
@@ -241,14 +173,19 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void updatePresentCounter()
     {
         String labelText = "";
-        int maxPresent = tblStatusView.getItems().size();
+        int maxPresent = 0;
         int currentlyPresent = 0;
 
-        for (User s : tblStatusView.getItems())
+        if (lastSelectedCourse != null)
         {
-            if (s.getStatus().equals("Online"))
+            maxPresent = lastSelectedCourse.getUserList().size();
+
+            for (User u : lastSelectedCourse.getUserList())
             {
-                currentlyPresent++;
+                if (u.getStatus().equals("Online"))
+                {
+                    currentlyPresent++;
+                }
             }
         }
 
@@ -260,7 +197,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void clickCBox(ActionEvent event)
     {
         lastSelectedCourse = cBoxClassSelection.getSelectionModel().getSelectedItem();
-        
+
         updateView();
 
         txtFldSearchStudent.clear();
@@ -271,7 +208,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void keyReleaseSearchField(KeyEvent event)
     {
-        //populateOnlineList();
         filter = txtFldSearchStudent.getText();
         updateView();
     }
@@ -326,6 +262,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         model.updateList(filter, lastSelectedCourse);
         tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
+        updatePresentCounter();
 
     }
 
