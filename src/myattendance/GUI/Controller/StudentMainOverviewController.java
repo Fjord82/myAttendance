@@ -28,8 +28,6 @@ import javafx.stage.Stage;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
-import myattendance.GUI.Model.StudentParser;
-import org.joda.time.DateTime;
 
 /**
  * FXML Controller class
@@ -50,7 +48,6 @@ public class StudentMainOverviewController implements Initializable
     private VBox vBoxMiddle;
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
-    StudentParser studentParser = StudentParser.getInstance();
     DateParser dateParser = DateParser.getInstance();
 
     User user = new User();
@@ -68,14 +65,14 @@ public class StudentMainOverviewController implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
-            
+
     {
-       dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-       dateParser.daysBetweenSpecificDateAndToday(dateParser.getLastLoginDate(user.getId()));
-       showConstantCalender();
+        dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
+        dateParser.daysBetweenSpecificDateAndToday(dateParser.getLastLoginDate(user.getId()));
+        showConstantCalender();
 
     }
-    
+
     private void updateView()
     {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -87,7 +84,7 @@ public class StudentMainOverviewController implements Initializable
 
         Label absenceLabel = new Label();
         absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
-        
+
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
@@ -119,7 +116,7 @@ public class StudentMainOverviewController implements Initializable
         vBoxSelectionContent.getChildren().add(popupContent);
 
     }
-    
+
     public void setUser(User user)
     {
         this.user = user;

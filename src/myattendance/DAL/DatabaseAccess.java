@@ -87,14 +87,13 @@ public class DatabaseAccess
         DateTime dateTime = new DateTime();
         java.sql.Date date = new java.sql.Date(dateTime.getMillis());
         String sql = "UPDATE People SET LastLogin = ? WHERE PID = ?";
-        System.out.println(date);
 
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1, date);
             ps.setInt(2, PID);
-            
+
             ps.execute();
         } catch (SQLException ex)
         {
@@ -130,12 +129,11 @@ public class DatabaseAccess
         {
             PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID=" + PID);
             ResultSet rs = ps.executeQuery();
-            while(rs.next())
+            while (rs.next())
             {
-            Date lastLogin = rs.getDate("lastlogin");
-            returnDate = new DateTime(lastLogin);
+                Date lastLogin = rs.getDate("lastlogin");
+                returnDate = new DateTime(lastLogin);
             }
-            System.out.println(returnDate);
             return returnDate;
 
         } catch (SQLException ex)
