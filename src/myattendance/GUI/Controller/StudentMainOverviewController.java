@@ -69,7 +69,7 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         dateParser.getTodaysDate();
-        dateParser.getLastLoginDate(user.);
+        dateParser.getLastLoginDate(5);
         showConstantCalender();
 
         
