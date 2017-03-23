@@ -2,6 +2,7 @@ package myattendance.BLL;
 
 import java.util.List;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 import org.joda.time.DateTime;
@@ -90,18 +91,25 @@ public class BLLFacade
     {
         return dalFacade.getLastLoginDate(PID);
     }
-    
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate){
+
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
+    {
         return dateManager.daysBetweenSpecificDateAndToday(specificDate);
     }
-    
-    public DateTime getStartDate(){
+
+    public DateTime getStartDate()
+    {
         return dalFacade.getStartDate();
     }
 
-    
-    public boolean isAbsent(int PID){
-        return dateManager.isAbsent(PID);
+    public boolean isAbsent(int PID, Day day)
+    {
+        return dateManager.isAbsent(PID, day);
+    }
+
+    public Day getDay(DateTime dateTime)
+    {
+        return dalFacade.getDay(dateTime);
     }
 
 }

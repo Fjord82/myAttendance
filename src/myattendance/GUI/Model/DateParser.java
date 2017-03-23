@@ -1,5 +1,6 @@
 package myattendance.GUI.Model;
 
+import myattendance.BE.Day;
 import myattendance.BLL.BLLFacade;
 import org.joda.time.DateTime;
 
@@ -47,8 +48,14 @@ public class DateParser
         return bllFacade.getStartDate();
     }
     
-    public boolean isAbsent(int PID){
-        return bllFacade.isAbsent(PID);
+    public boolean isAbsent(int PID, Day day){
+        return bllFacade.isAbsent(PID, day);
     }
+
+  public Day getDay(DateTime dateTime){
+      return bllFacade.getDay(dateTime);
+  }
+    
+
 
 }

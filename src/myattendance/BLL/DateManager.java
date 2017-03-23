@@ -1,6 +1,7 @@
 package myattendance.BLL;
 
 import java.sql.Date;
+import myattendance.BE.Day;
 import myattendance.DAL.DALFacade;
 import org.joda.time.Days;
 import org.joda.time.DateTime;
@@ -45,7 +46,7 @@ public class DateManager
         return daysBetweenLastLoginAndToday;
     }
 
-    public boolean isAbsent(int PID)
+    public boolean isAbsent(int PID, Day day)
     {
         //Number of days between today and last login
         int lLAndToday = daysBetweenSpecificDateAndToday(dalFacade.getLastLoginDate(PID));
@@ -56,7 +57,12 @@ public class DateManager
         } else
         {
             return true;
+            //Further checks for weekends and public holidays
         }
 
     }
+    
+
+    
+    
 }
