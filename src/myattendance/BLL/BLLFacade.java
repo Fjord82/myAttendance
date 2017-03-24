@@ -71,10 +71,6 @@ public class BLLFacade
         return dateManager.getTodaysDate();
     }
 
-    public DateTime getLastLoginDate(int PID)
-    {
-        return dalFacade.getLastLoginDate(PID);
-    }
 
     public int daysBetweenSpecificDateAndToday(DateTime specificDate)
     {
@@ -86,14 +82,20 @@ public class BLLFacade
         return dalFacade.getStartDate();
     }
 
-    public boolean isAbsent(int PID, Day day)
+    public void recordAbsence(User user, Day today)
     {
-        return dateManager.isAbsent(PID, day);
+        dateManager.recordAbsence(user, today);
     }
 
     public Day getDay(DateTime dateTime)
     {
         return dalFacade.getDay(dateTime);
     }
+    
+     public void updateLastLogin(User user)
+      {
+          dalFacade.updateLastLogin(user);
+      }
+
 
 }
