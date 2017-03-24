@@ -1,8 +1,10 @@
 package myattendance.DAL;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
@@ -42,24 +44,8 @@ public class DALFacade
 
     }
 
-    FileManager fileManager = new FileManager();
     DatabaseAccess databaseAccess = new DatabaseAccess();
-
-    public User getRasmus()
-    {
-        return fileManager.getRasmus();
-    }
-
-    public List<User> getInternationalClassList()
-    {
-        return fileManager.getInternationalClassList();
-    }
-
-    public List<User> getDanishClassList()
-    {
-        return fileManager.getDanishClassList();
-    }
-
+    
     public User loginQuery(String login, String pass)
     {
         return databaseAccess.loginQuery(login, pass);
@@ -78,10 +64,19 @@ public class DALFacade
     {
         return databaseAccess.fillUsersInCourse(course);
     }
+    
 
-    public DateTime getLastLoginDate(int PID)
-    {
-        return databaseAccess.getLastLoginDate(PID);
-    }
+      public Day getDay(DateTime dateTime){
+          return databaseAccess.getDay(dateTime);
+      }
+      
+      public void updateLastLogin(User user)
+      {
+          databaseAccess.updateLastLogin(user);
+      }
+      
+      public void writeAbsencesIntoDB (int userID, DateTime startDate, DateTime endDate){
+          databaseAccess.writeAbsencesIntoDB(userID, startDate, endDate);
+      }
 
 }

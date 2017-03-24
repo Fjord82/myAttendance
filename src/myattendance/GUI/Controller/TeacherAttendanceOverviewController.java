@@ -38,7 +38,6 @@ import javafx.stage.Stage;
 import myattendance.BE.Course;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
-import myattendance.GUI.Model.StudentParser;
 import myattendance.GUI.Model.TeacherViewModel;
 
 /**
@@ -53,7 +52,6 @@ public class TeacherAttendanceOverviewController implements Initializable
      * Gets the singleton instance of AttendanceParser.java.
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
-    StudentParser studentParser = StudentParser.getInstance();
     TeacherViewModel model = new TeacherViewModel();
 
     User user;
@@ -111,9 +109,11 @@ public class TeacherAttendanceOverviewController implements Initializable
         updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
+
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+
     }
 
     public void setUser(User user)
@@ -154,7 +154,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         //Install JFxtra from the internet!!!
         DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-
+        
         Node popupContent = datePickerSkin.getPopupContent();
 
         vBoxSelectionContent.setPadding(new Insets(10));

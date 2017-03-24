@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
@@ -45,7 +46,7 @@ public class DatabaseAccess
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(""
-                    + "SELECT People.PID, People.fname, People.mname, People.lname, People.Teacher, Classes.ClassName "
+                    + "SELECT People.PID, People.fname, People.mname, People.lname, People.Teacher, People.lastLogin, Classes.ClassName "
                     + "FROM People, Classes, ClassRelation "
                     + "WHERE People.PID = ClassRelation.PID AND Classes.ClassID = ClassRelation.ClassID AND People.slog=? AND People.spass=?");
             ps.setString(1, login);
@@ -63,9 +64,10 @@ public class DatabaseAccess
             {
 
                 String className = rs.getString("classname");
+                DateTime lastLogin = (new DateTime(rs.getDate("lastLogin")));
 
-                user = new User(id, fullName, className, isTeacher);
-                updateLastLogin(id);
+                user = new User(id, fullName, className, isTeacher, lastLogin);
+
             } else
             {
 
@@ -82,19 +84,18 @@ public class DatabaseAccess
         }
     }
 
-    public void updateLastLogin(int PID)
+    public void updateLastLogin(User user)
     {
         DateTime dateTime = new DateTime();
         java.sql.Date date = new java.sql.Date(dateTime.getMillis());
         String sql = "UPDATE People SET LastLogin = ? WHERE PID = ?";
-        System.out.println(date);
 
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1, date);
-            ps.setInt(2, PID);
-            
+            ps.setInt(2, user.getId());
+
             ps.execute();
         } catch (SQLException ex)
         {
@@ -123,34 +124,11 @@ public class DatabaseAccess
 
     }
 
-    public DateTime getLastLoginDate(int PID)
-    {
-        DateTime returnDate = new DateTime();
-        try (Connection con = ds.getConnection())
-        {
-            PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID=" + PID);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next())
-            {
-            Date lastLogin = rs.getDate("lastlogin");
-            returnDate = new DateTime(lastLogin);
-            }
-            System.out.println(returnDate);
-            return returnDate;
-
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
-    }
-
     public Integer totalSchoolDays()
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isschoolday=1");
+            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isSchoolDay=1");
             ResultSet rs = ps.executeQuery();
             rs.next();
 
@@ -235,6 +213,81 @@ public class DatabaseAccess
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    public Day getDay(DateTime dateTime)
+    {
+
+        java.sql.Date date = new java.sql.Date(dateTime.getMillis());
+
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE dateIntTime=?");
+            ps.setDate(1, date);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                int dateID = rs.getInt("dateID");
+                int weekdayNumber = rs.getInt("weekdayNumber");
+                String weekdayName = rs.getString("weekdayName");
+                boolean isSchoolDay = rs.getBoolean("isSchoolDay");
+
+                Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
+                return day;
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList getDatesBetweenDays(DateTime startDate, DateTime endDate)
+    {
+        ArrayList<Integer> datesAbsent = new ArrayList();
+        java.sql.Date sDate = new java.sql.Date(startDate.getMillis());
+        java.sql.Date eDate = new java.sql.Date(endDate.getMillis());
+
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT dateID FROM calendar WHERE isSchoolDay =? AND dateInTime BETWEEN ? AND ?");
+            ps.setBoolean(1, true);
+            ps.setDate(2, sDate);
+            ps.setDate(3, eDate);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                datesAbsent.add(rs.getInt("dateID"));
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datesAbsent;
+    }
+
+    public void writeAbsencesIntoDB(int userID, DateTime startDate, DateTime endDate)
+    {
+        ArrayList<Integer> datesAbsent = new ArrayList(getDatesBetweenDays(startDate,endDate));
+        
+        try (Connection con = ds.getConnection())
+        {
+            for (int i = 0; i < datesAbsent.size()-1; i++)
+            {
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Absence (PID, dateID) VALUES (?, ?)");
+                ps.setInt(1, userID);
+                ps.setInt(2,datesAbsent.get(i));
+                ps.execute();
+                
+            }
+            
+
+            } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

@@ -2,6 +2,7 @@ package myattendance.BLL;
 
 import java.util.List;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 import org.joda.time.DateTime;
@@ -43,27 +44,11 @@ public class BLLFacade
 
     DALFacade dalFacade = DALFacade.getInstance();
     IPMatching ipMatching = new IPMatching();
-    LoginCheckManager loginCheckManager = new LoginCheckManager();
     DateManager dateManager = new DateManager();
 
     public boolean matchingBroadcastingAddress()
     {
         return ipMatching.matchingBroadcastingAddress();
-    }
-
-    public List<User> getDanishClassList()
-    {
-        return dalFacade.getDanishClassList();
-    }
-
-    public List<User> getInternationalClassList()
-    {
-        return dalFacade.getInternationalClassList();
-    }
-
-    public User getRasmus()
-    {
-        return dalFacade.getRasmus();
     }
 
     public User getUser(String login, String pass)
@@ -86,16 +71,31 @@ public class BLLFacade
         return dateManager.getTodaysDate();
     }
 
-    public DateTime getLastLoginDate(int PID)
+
+    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
     {
-        return dalFacade.getLastLoginDate(PID);
-    }
-    
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate){
         return dateManager.daysBetweenSpecificDateAndToday(specificDate);
     }
-    
-    public DateTime getStartDate(){
+
+    public DateTime getStartDate()
+    {
         return dalFacade.getStartDate();
     }
+
+    public void recordAbsence(User user, Day today)
+    {
+        dateManager.recordAbsence(user, today);
+    }
+
+    public Day getDay(DateTime dateTime)
+    {
+        return dalFacade.getDay(dateTime);
+    }
+    
+     public void updateLastLogin(User user)
+      {
+          dalFacade.updateLastLogin(user);
+      }
+
+
 }
