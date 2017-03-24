@@ -55,8 +55,10 @@ public class AttendanceParser
 
         if (user != null)
         {
+
             if (!user.IsTeacher())
             {
+
                 StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
                 controller.setUser(user);
 
@@ -70,7 +72,6 @@ public class AttendanceParser
         Stage dialogStage = new Stage();
         dialogStage.initOwner(stage);
         dialogStage.initModality(Modality.WINDOW_MODAL);
-        
 
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
