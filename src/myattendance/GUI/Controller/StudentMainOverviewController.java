@@ -45,7 +45,7 @@ public class StudentMainOverviewController implements Initializable
     StudentViewModel model = new StudentViewModel();
 
     User user = new User();
-    
+
     Day today;
 
     @FXML
@@ -65,7 +65,6 @@ public class StudentMainOverviewController implements Initializable
 
     {
 
-        attendenceChecks();
         showConstantCalender();
         model.updateLastLogin(user);
     }
@@ -73,13 +72,12 @@ public class StudentMainOverviewController implements Initializable
     public void attendenceChecks()
     {
         today = dateParser.getDay(new DateTime());
-        
+
         dateParser.recordAbsence(user, today);
-        
+
         //this needs fixing
         dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-        
-        
+
     }
 
     private void updateView()
@@ -130,6 +128,7 @@ public class StudentMainOverviewController implements Initializable
     {
         this.user = user;
         updateView();
+        attendenceChecks();
     }
 
 }
