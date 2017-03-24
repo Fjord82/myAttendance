@@ -1,6 +1,7 @@
 package myattendance.GUI.Model;
 
 import myattendance.BE.Day;
+import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
 import org.joda.time.DateTime;
 
@@ -34,11 +35,6 @@ public class DateParser
         bllFacade.getTodaysDate();
     }
 
-    public DateTime getLastLoginDate(int PID)
-    {
-        return bllFacade.getLastLoginDate(PID);
-    }
-
     public int daysBetweenSpecificDateAndToday(DateTime specificDate)
     {
         return bllFacade.daysBetweenSpecificDateAndToday(specificDate);
@@ -48,8 +44,8 @@ public class DateParser
         return bllFacade.getStartDate();
     }
     
-    public boolean isAbsent(int PID, Day day){
-        return bllFacade.isAbsent(PID, day);
+    public void recordAbsence(User user, Day today){
+        bllFacade.recordAbsence(user, today);
     }
 
   public Day getDay(DateTime dateTime){
