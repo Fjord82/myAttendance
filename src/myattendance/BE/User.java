@@ -1,12 +1,22 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package myattendance.BE;
 
+import java.util.Calendar;
+import java.util.Date;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.joda.time.DateTime;
 
+/**
+ *
+ * @author Fjord82
+ */
 public class User
 {
 
@@ -34,15 +44,22 @@ public class User
         this.isTeacher = isTeacher;
     }
 
-    public User(int id, String name, String sClass, boolean isTeacher, DateTime lastLogin)
+    public User(int id, String name, String sClass, boolean isTeacher)
     {
         this.id.set(id);
         this.name.set(name);
         this.sClass.set(sClass);
         this.isTeacher = isTeacher;
-        this.lastLogin=lastLogin;
     }
     
+        public User(String name,String status, int absentClasses, int presentClasses)
+    {
+        this.name.set(name);
+        this.status.set(status);
+        this.absentClasses = absentClasses;
+        this.presentClasses = presentClasses;
+        this.isTeacher = false;
+    }
 
     public int getId()
     {
