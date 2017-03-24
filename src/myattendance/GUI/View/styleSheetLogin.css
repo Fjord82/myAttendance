@@ -28,7 +28,7 @@ and open the template in the editor.
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
     -fx-text-fill: white;
-    -fx-padding: 2 0 2 10;
+    -fx-padding: 0 0 0 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 
 }
@@ -76,8 +76,8 @@ and open the template in the editor.
     -fx-text-fill: rgb(17, 145, 213); 
     -fx-border-color: rgba(255, 255, 255, .80); 
     -fx-border-radius: 8;
-    -fx-padding: 2 2 2 2;
-    -fx-font: bold italic 8pt "LucidaBrightDemiBold";
+    -fx-padding: 0 0 0 0;
+    -fx-font: bold italic 9pt "LucidaBrightDemiBold";
 }
 
 
@@ -184,24 +184,38 @@ and open the template in the editor.
 {
     -fx-background-color: #3b5998; 
     -fx-text-fill: white;
+    -fx-padding: 0 0 0 0;
 }
 
-.menu-bar .label 
+#menubarsignout
 {
-    /*-fx-background-color: #3b5998;*/
-    -fx-text-fill: white; 
+    -fx-padding: 0 0 0 150;
+    
 }
 
-.menu-bar .label:hover
+#menusignout
 {
-    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
-
+    -fx-background-color:transparent;
 }
 
-.menu:hover
+#menusignout:hover .button:hover
 {
-    /*-fx-background-color: #dfe3ee;*/
-    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
+    -fx-text-fill: #ffbf00;
+    -fx-background-color:#fb2e01; 
+    -fx-background-radius: 15px;
+}
+
+#logoutbutton:hover
+{
+    -fx-text-fill: #428bca;
+    -fx-background-color:#fb2e01; 
+    -fx-background-radius: 15px;
+}
+
+.menu-bar .button
+{
+    -fx-background-color:transparent;
+    -fx-text-fill:white; 
 }
 
 .label
@@ -261,14 +275,22 @@ and open the template in the editor.
 
 #statuslabel
 {
-    -fx-background-color: 
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 2 0 2 10;
+}
+
+#vboxstatus
+{
+    -fx-background-color:
         linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
         #428bca,
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-font-family:"Verdana";
     -fx-text-fill: white;
-    -fx-padding: 2 0 2 10;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-padding: 2 0 2 0;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
 }
 
 #counterlabel
@@ -290,6 +312,7 @@ and open the template in the editor.
     -fx-border-color: transparent; 
     -fx-border-radius: 15;
     -fx-padding: 2 2 2 2;
+    -fx-margin: 0 0 30 0;
     -fx-font: bold italic 10pt "LucidaBrightDemiBold";
 }
 

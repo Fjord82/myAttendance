@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
@@ -24,9 +29,13 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
-import myattendance.GUI.Model.StudentViewModel;
 import org.joda.time.DateTime;
 
+/**
+ * FXML Controller class
+ *
+ * @author Fjord82
+ */
 public class StudentMainOverviewController implements Initializable
 {
 
@@ -42,11 +51,11 @@ public class StudentMainOverviewController implements Initializable
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     DateParser dateParser = DateParser.getInstance();
-    StudentViewModel model = new StudentViewModel();
 
     User user = new User();
 
     Day today;
+
 
     @FXML
     private Label lblStudentName;
@@ -66,7 +75,7 @@ public class StudentMainOverviewController implements Initializable
     {
 
         showConstantCalender();
-        model.updateLastLogin(user);
+
     }
 
     public void attendenceChecks()
@@ -77,6 +86,7 @@ public class StudentMainOverviewController implements Initializable
 
         //this needs fixing
         dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
+
 
     }
 

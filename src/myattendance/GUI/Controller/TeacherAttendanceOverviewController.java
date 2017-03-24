@@ -109,9 +109,11 @@ public class TeacherAttendanceOverviewController implements Initializable
         updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
+
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+
     }
 
     public void setUser(User user)
@@ -152,7 +154,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         //Install JFxtra from the internet!!!
         DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-
+        
         Node popupContent = datePickerSkin.getPopupContent();
 
         vBoxSelectionContent.setPadding(new Insets(10));
