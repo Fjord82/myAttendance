@@ -53,8 +53,9 @@ public class StudentMainOverviewController implements Initializable
     DateParser dateParser = DateParser.getInstance();
 
     User user = new User();
-    
-    Day day;
+
+    Day today;
+
 
     @FXML
     private Label lblStudentName;
@@ -73,21 +74,20 @@ public class StudentMainOverviewController implements Initializable
 
     {
 
-        attendenceChecks();
         showConstantCalender();
 
     }
 
     public void attendenceChecks()
     {
-        day = dateParser.getDay(new DateTime());
-        
-        dateParser.isAbsent(user.getId(), day);
-        
+        today = dateParser.getDay(new DateTime());
+
+        dateParser.recordAbsence(user, today);
+
         //this needs fixing
         dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-        
-       
+
+
     }
 
     private void updateView()
@@ -138,6 +138,7 @@ public class StudentMainOverviewController implements Initializable
     {
         this.user = user;
         updateView();
+        attendenceChecks();
     }
 
 }

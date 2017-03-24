@@ -60,7 +60,7 @@ public class IPMatching
 
         try
         {
-            InetAddress hBroadcast = InetAddress.getByName(wtfmeng);
+            InetAddress hBroadcast = InetAddress.getByName(EASVIP);
 
             if (hBroadcast.equals(retrieveBroadcastingAddressOfIndividual()))
             {

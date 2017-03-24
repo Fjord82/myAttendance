@@ -241,8 +241,10 @@ public class DatabaseAccess
         
         try (Connection con = ds.getConnection())
         {
+
             PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
             ps.setInt(1, day.getDateID());
+          
             ResultSet rs = ps.executeQuery();
             rs.next();
             if (rs.getBoolean("isSchoolDay"))
