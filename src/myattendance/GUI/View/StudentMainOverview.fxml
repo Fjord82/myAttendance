@@ -60,7 +60,7 @@
                         </VBox>
                   <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" prefHeight="37.0" prefWidth="500.0">
                      <buttons>
-                        <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefWidth="81.0" text="Sign out" />
+                        <Button id="logoutbutton" fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="33.0" prefWidth="89.0" text="Sign out" />
                      </buttons>
                      <padding>
                         <Insets right="10.0" />
