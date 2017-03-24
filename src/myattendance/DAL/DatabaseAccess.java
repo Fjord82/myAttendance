@@ -222,7 +222,7 @@ public class DatabaseAccess
 
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE dateIntTime=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE dateInTime=?");
             ps.setDate(1, date);
             ResultSet rs = ps.executeQuery();
             while (rs.next())
