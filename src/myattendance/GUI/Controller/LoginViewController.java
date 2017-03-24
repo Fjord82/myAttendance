@@ -76,7 +76,7 @@ public class LoginViewController implements Initializable
     }
 
     private void checkConnection()
-    {
+    { 
         if (iPParser.MatchingBroadcasting())
         {
             LabelConnection.setTextFill(Color.GREEN);
