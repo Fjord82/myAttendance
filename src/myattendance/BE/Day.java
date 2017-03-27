@@ -2,12 +2,10 @@ package myattendance.BE;
 
 import org.joda.time.DateTime;
 
-/**
- *
- * @author meng
- */
+
 public class Day
 {
+
     private final int DateID;
     private final DateTime dateInTime;
     private final int weekdayNumber;
@@ -23,7 +21,6 @@ public class Day
         this.isSchoolDay = isSchoolDay;
     }
 
-    
     public int getDateID()
     {
         return DateID;
@@ -53,7 +50,5 @@ public class Day
     {
         this.isSchoolDay = isSchoolDay;
     }
-    
-    
-}
 
+}
