@@ -18,6 +18,13 @@ and open the template in the editor.
     -fx-border-width: 1;
     -fx-border-color: rgb(173, 184, 209);
     -fx-font-family: 'Taviraj', serif;
+    -fx-background-color: white;
+}
+
+#anchorMain
+{
+    -fx-background-color: white;
+    
 }
 
 #anchorpanelogin
@@ -28,7 +35,7 @@ and open the template in the editor.
         #dfe3ee,
         radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
     -fx-text-fill: white;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 2 0 2 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 
 }
@@ -40,10 +47,10 @@ and open the template in the editor.
 }
 .scroll-bar .thumb {
     -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
-        #428bca,
+        linear-gradient(from 0% 93% to 0% 100%, #ff0000 0%, #dfe3ee 100%),
+        #ff0000,
         #dfe3ee,
-        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+        radial-gradient(center 50% 50%, radius 100%, #ff0000, #dfe3ee);
     -fx-background-insets: 0;
     -fx-background-radius: 0.5em;
 }
@@ -76,8 +83,8 @@ and open the template in the editor.
     -fx-text-fill: rgb(17, 145, 213); 
     -fx-border-color: rgba(255, 255, 255, .80); 
     -fx-border-radius: 8;
-    -fx-padding: 0 0 0 0;
-    -fx-font: bold italic 9pt "LucidaBrightDemiBold";
+    -fx-padding: 2 2 2 2;
+    -fx-font: bold italic 8pt "LucidaBrightDemiBold";
 }
 
 
@@ -102,12 +109,12 @@ and open the template in the editor.
 
 .table-view
 {
-    -fx-background-color: #f8f8fa;
+    -fx-background-color: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-border-width: 1;
-    -fx-border-color: #428bca;
+    -fx-border-color: black;
 }
 
 .table-view .column-header {
@@ -118,7 +125,7 @@ and open the template in the editor.
 
 .table-view .column-header .label:hover
 {
-    -fx-text-fill: #ffbf00;
+    -fx-text-fill: #428bca;
 }
 
 .table-row-cell {
@@ -128,15 +135,17 @@ and open the template in the editor.
 
 .table-row-cell:hover {
     -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #dfe3ee 0%, #dfe3ee 100%),
+        linear-gradient(from 0% 93% to 0% 100%, #ff6f69 0%, #dfe3ee 100%),
+        #ff6f69,
         #dfe3ee,
-        #dfe3ee,
-        radial-gradient(center 50% 50%, radius 100%, #dfe3ee, #dfe3ee);
+        radial-gradient(center 50% 50%, radius 100%, #ff6f69, #dfe3ee);
     -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
+    
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
+    -fx-background-color: #ff6f69;
+    -fx-text-fill:white;
 }
 
 .table-view .column-header, table-view .filler {
@@ -144,13 +153,12 @@ and open the template in the editor.
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-
     -fx-border-insets: 0 10 1 0;
 }
 
 .table-view .column-header .label
 {
-    -fx-text-fill: rgb(17, 145, 213);
+    -fx-text-fill: black;
 }
 
 
@@ -164,32 +172,44 @@ and open the template in the editor.
 
 .button-bar 
 {
-    -fx-background-color: #3b5998; 
-    -fx-text-fill: white;
+    -fx-background-color: #f7f7f7; 
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 0, 0.0 , 0 , 1 );
+    -fx-text-fill: black;
 }
 
 .button-bar .button 
 {
-    -fx-background-color: #3b5998;
-    -fx-text-fill: white; 
+    -fx-background-color: #f7f7f7;
+    -fx-text-fill: black; 
 }
 
 .button-bar .button:hover
 {
     /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
-    -fx-text-fill: #ffbf00;
+    -fx-text-fill: #428bca;
+    -fx-backround-color: transparent; 
 }
+
+.button-bar .button:selected
+{
+    /*-fx-background-color: linear-gradient(#dfe3ee 0%, #dfe3ee 25%, #dfe3ee 100%);*/
+    -fx-text-fill: #428bca;
+    -fx-backround-color: transparent; 
+}
+
+
 
 .menu-bar 
 {
-    -fx-background-color: #3b5998; 
+    -fx-background-color: #f7f7f7; 
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 0, 0.0 , 0 , 1 );
     -fx-text-fill: white;
     -fx-padding: 0 0 0 0;
 }
 
 #menubarsignout
 {
-    -fx-padding: 0 0 0 150;
+    -fx-padding: 0 10 0 150;
     
 }
 
@@ -200,7 +220,7 @@ and open the template in the editor.
 
 #menusignout:hover .button:hover
 {
-    -fx-text-fill: #ffbf00;
+    -fx-text-fill: #428bca;
     -fx-background-color:#fb2e01; 
     -fx-background-radius: 15px;
 }
@@ -215,7 +235,8 @@ and open the template in the editor.
 .menu-bar .button
 {
     -fx-background-color:transparent;
-    -fx-text-fill:white; 
+    -fx-text-fill:black;
+    
 }
 
 .label
@@ -241,11 +262,8 @@ and open the template in the editor.
 
 #classlistlabel
 {
-    -fx-background-color:
-        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
-        #428bca,
-        #dfe3ee,
-        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-background-color: #ff0000;
+        
     -fx-text-fill: white;
     -fx-padding:5 10 5 10;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
@@ -262,10 +280,24 @@ and open the template in the editor.
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 
 }
-#comboclasslist:hover 
-{
-    -fx-border-color: #ffbf00;
 
+.combo-box-popup
+{
+    -fx-background-radius: 8;
+    
+    
+}
+
+.combo-box-popup .cell
+{
+    -fx-background-color:transparent;
+    -fx-text-fill: black;
+    
+}
+
+.combo-box-popup .cell:hover {
+    -fx-background-color: red;
+    -fx-text-fill: white;
 }
 
 #searchfield
@@ -275,18 +307,15 @@ and open the template in the editor.
 
 #statuslabel
 {
-    -fx-background-color: transparent;
+    -fx-background-color: transparent;   
     -fx-text-fill: white;
     -fx-padding: 2 0 2 10;
+    
 }
 
 #vboxstatus
 {
-    -fx-background-color:
-        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
-        #428bca,
-        #dfe3ee,
-        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-background-color: #ff0000;
     -fx-font-family:"Verdana";
     -fx-text-fill: white;
     -fx-padding: 2 0 2 0;
@@ -295,11 +324,7 @@ and open the template in the editor.
 
 #counterlabel
 {
-    -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #428bca 0%, #dfe3ee 100%),
-        #428bca,
-        #dfe3ee,
-        radial-gradient(center 50% 50%, radius 100%, #428bca, #dfe3ee);
+    -fx-background-color: #ff0000;
     -fx-text-fill: white;
     -fx-padding: 10 0 2 30;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
@@ -307,12 +332,10 @@ and open the template in the editor.
 
 #LoginButton
 {
-
     -fx-text-fill: rgb(17, 145, 213); 
     -fx-border-color: transparent; 
     -fx-border-radius: 15;
     -fx-padding: 2 2 2 2;
-    -fx-margin: 0 0 30 0;
     -fx-font: bold italic 10pt "LucidaBrightDemiBold";
 }
 
@@ -337,26 +360,41 @@ and open the template in the editor.
 #numberlabel:focused
 {
     -fx-background-color: greenyellow;
-    
+
 }
 
 .pagination{
-	-fx-base:#f7f7f7;
-        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
-        
+    -fx-base:#f7f7f7;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
 }
+
+
+.pagination .toggle-button:hover
+{
+    -fx-background-color: red;
+    
+}
+
 .pagination .toggle-button , .pagination.button{
-	-fx-background-radius:10px;
-	-fx-padding: 0px;
-        -fx-text-fill: transparent;
+    -fx-background-radius:10px;
+    -fx-padding: 0px;
+    -fx-text-fill: transparent;
 }
+
+.pagination .toggle-button:active {
+    -fx-background-color:#ff0000;
+}
+
 .pagination .button{
-	-fx-padding: 5 15 5 16px;
-        -fx-background-color: #f7f7f7;
-        -fx-text-fill: #3b5998;
-        -fx-background-radius:10px;
-         -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
+    -fx-padding: 5 15 5 16px;
+    -fx-background-color: #f7f7f7;
+    -fx-text-fill: #3b5998;
+    -fx-background-radius:10px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
 }
 .pagination .label {
-	-fx-text-fill:transparent;
+    -fx-text-fill:transparent;
+   
 }
+
+

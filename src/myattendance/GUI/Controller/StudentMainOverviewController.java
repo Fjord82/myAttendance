@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,11 +20,14 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import myattendance.BE.Student;
+import myattendance.BE.Day;
+import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
-import myattendance.GUI.Model.StudentParser;
+import myattendance.GUI.Model.DateParser;
+import org.joda.time.DateTime;
 
 /**
  * FXML Controller class
@@ -47,44 +48,65 @@ public class StudentMainOverviewController implements Initializable
     private VBox vBoxMiddle;
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
-    StudentParser studentParser = StudentParser.getInstance();
+    DateParser dateParser = DateParser.getInstance();
+<<<<<<< HEAD
+    StudentViewModel mdoel = new St
+=======
+>>>>>>> origin/Meng
 
-    Student student;
+    User user = new User();
+
+    Day today;
+
+
     @FXML
     private Label lblStudentName;
     @FXML
     private Label lblStudentClass;
-    @FXML
-    private Button presentButton;
-    @FXML
-    private Button absentButton;
 
     public boolean present = false;
+    @FXML
+    private Pagination paginationBtn;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
+
     {
-        // TODO
+
         showConstantCalender();
 
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", student.getAbsentClasses()));
-        pieChartData.add(new PieChart.Data("Presence", student.getPresentClasses()));
+    }
 
-        PieChart absenceChart = new PieChart(pieChartData);
+    public void attendenceChecks()
+    {
+        today = dateParser.getDay(new DateTime());
+
+        dateParser.recordAbsence(user, today);
+
+        //this needs fixing
+        dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
+
+
+    }
+
+    private void updateView()
+    {
+        
+        PieChart absenceChart = new PieChart(model.getPieChartData(user));
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
-        absenceLabel.setText("Student Attendance: " + student.getPresentClasses() + "/" + Math.addExact(student.getAbsentClasses(), student.getPresentClasses()));
+        absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
+        vBoxMiddle.setAlignment(Pos.CENTER);
 
-        lblStudentName.setText(student.getName());
-        lblStudentClass.setText("CS2016B");
+        lblStudentName.setText(user.getName());
+        lblStudentClass.setText(user.getsClass());
     }
 
     @FXML
@@ -111,23 +133,11 @@ public class StudentMainOverviewController implements Initializable
 
     }
 
-    @FXML
-    private void handlePresent(ActionEvent event)
+    public void setUser(User user)
     {
-        present = true;
-        System.out.println("Are you present: " + present);
-    }
-
-    @FXML
-    private void handleAbsent(ActionEvent event)
-    {
-        present = false;
-        System.out.println("Are you present: " + present);
-    }
-    
-    public void setStudent(Student student)
-    {
-        this.student = student;
+        this.user = user;
+        updateView();
+        attendenceChecks();
     }
 
 }

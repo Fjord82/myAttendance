@@ -7,19 +7,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import myattendance.BE.Student;
-import myattendance.BLL.LoginCheckManager;
+import myattendance.BE.User;
+import myattendance.BLL.BLLFacade;
 import myattendance.GUI.Controller.StudentMainOverviewController;
+import myattendance.GUI.Controller.TeacherAttendanceOverviewController;
 import myattendance.MyAttendance;
 
 public class AttendanceParser
 {
 
-    LoginCheckManager loginCheckManager = new LoginCheckManager();
+    BLLFacade bllFacade = BLLFacade.getInstance();
 
     private static AttendanceParser instance;
 
@@ -46,23 +46,32 @@ public class AttendanceParser
      * @param path
      * @throws IOException
      */
-    public void changeView(String title, String path, Student student) throws IOException
+    public void changeView(String title, String path, User user) throws IOException
     {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MyAttendance.class.getResource(path));
-
-        if (student != null)
-        {
-            StudentMainOverviewController controller = loader.getController();
-            controller.setStudent(student);
-        }
-
         AnchorPane page = (AnchorPane) loader.load();
+
+        if (user != null)
+        {
+            if (!user.IsTeacher())
+            {
+                StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
+                controller.setUser(user);
+
+            } else
+            {
+                TeacherAttendanceOverviewController controller = loader.<TeacherAttendanceOverviewController>getController();
+                controller.setUser(user);
+            }
+        }
 
         Stage dialogStage = new Stage();
         dialogStage.initOwner(stage);
         dialogStage.initModality(Modality.WINDOW_MODAL);
+        
+
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
         dialogStage.setTitle(title);
@@ -70,15 +79,22 @@ public class AttendanceParser
         dialogStage.show();
     }
 
-    public void getStudent(String login, String pass, Scene scene)
+    public void tryLogin(String login, String pass, Stage stage)
     {
-        Student student = loginCheckManager.getStudent(login, pass);
+        User user = bllFacade.getUser(login, pass);
 
-        if (student != null)
+        if (user != null)
         {
             try
             {
-                changeView("Homepage", "GUI/View/StudentMainOverview.fxml", student);
+                if (!user.IsTeacher())
+                {
+                    changeView("Homepage", "GUI/View/StudentMainOverview.fxml", user);
+                } else
+                {
+                    changeView("Homepage", "GUI/View/TeacherAttendanceOverview.fxml", user);
+                }
+                stage.close();
             } catch (IOException ex)
             {
                 Logger.getLogger(AttendanceParser.class.getName()).log(Level.SEVERE, null, ex);

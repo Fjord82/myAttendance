@@ -1,12 +1,12 @@
 package myattendance.GUI.Model;
 
-import myattendance.BLL.IPMatching;
+import myattendance.BLL.BLLFacade;
 
 public class IPParser {
 
     private static IPParser instance;
     
-    IPMatching iPMatching = IPMatching.getInstance();
+    BLLFacade bllFacade = BLLFacade.getInstance();
 
     public static IPParser getInstance()
     {
@@ -21,8 +21,8 @@ public class IPParser {
     private IPParser() {
     }
 
-    public boolean getIsMatchingBroadcasting() {
-        return iPMatching.isMatchingBroadcasting();
+    public boolean MatchingBroadcasting() {
+        return bllFacade.matchingBroadcastingAddress();
     }
 
     

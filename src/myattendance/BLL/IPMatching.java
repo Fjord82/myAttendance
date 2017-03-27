@@ -10,76 +10,69 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import myattendance.GUI.Controller.LoginViewController;
 
-public class IPMatching {
+public class IPMatching
+{
 
-    private static IPMatching instance; 
     private String EASVIP = "10.176.167.255";
-    
-    public static IPMatching getInstance()
+    private String wtfmeng = "172.17.176.165";
+
+    private InetAddress retrieveBroadcastingAddressOfIndividual()
     {
-        if (instance == null)
+        try
         {
-            instance = new IPMatching();
-        }
-        return instance;
-    }
-
-    private IPMatching() {
-    }
-    
-
-    private InetAddress retrieveBroadcastingAddressOfIndividual() {
-
-        try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 
-            while (interfaces.hasMoreElements()) {
+            while (interfaces.hasMoreElements())
+            {
 
                 NetworkInterface networkInterface = interfaces.nextElement();
 
-                if (networkInterface.isLoopback()) {
+                if (networkInterface.isLoopback())
+                {
                     continue;    // Don't want to broadcast to the loopback interface
                 }
 
-                for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+                for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses())
+                {
 
                     InetAddress broadcastingAddress = interfaceAddress.getBroadcast();
 
-                    if (broadcastingAddress == null) {
+                    if (broadcastingAddress == null)
+                    {
                         continue;
                     }
                     return broadcastingAddress;
+                    
 
                 }
 
             }
-        } catch (SocketException ex) {
+        } catch (SocketException ex)
+        {
             Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
     }
 
-    private boolean matchingBroadcastingAddress() {
+    public boolean matchingBroadcastingAddress()
+    {
 
-        try {
+        try
+        {
             InetAddress hBroadcast = InetAddress.getByName(EASVIP);
 
-            if (hBroadcast.equals(retrieveBroadcastingAddressOfIndividual())) {
+            if (hBroadcast.equals(retrieveBroadcastingAddressOfIndividual()))
+            {
 
-                return true;               
+                return true;
             }
 
-        } catch (UnknownHostException ex) {
+        } catch (UnknownHostException ex)
+        {
             Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
     }
-
-    public boolean isMatchingBroadcasting() {
-        return matchingBroadcastingAddress();
-    }
-
-  
 }
