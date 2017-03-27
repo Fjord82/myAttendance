@@ -29,6 +29,7 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
+import myattendance.GUI.Model.StudentViewModel;
 import org.joda.time.DateTime;
 
 /**
@@ -51,11 +52,11 @@ public class StudentMainOverviewController implements Initializable
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     DateParser dateParser = DateParser.getInstance();
+    StudentViewModel model = new StudentViewModel();
 
     User user = new User();
 
     Day today;
-
 
     @FXML
     private Label lblStudentName;
@@ -87,16 +88,11 @@ public class StudentMainOverviewController implements Initializable
         //this needs fixing
         dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
 
-
     }
 
     private void updateView()
     {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", user.getAbsentDates()));
-        pieChartData.add(new PieChart.Data("Presence", user.getPresentDates()));
-
-        PieChart absenceChart = new PieChart(pieChartData);
+        PieChart absenceChart = new PieChart(model.getPieChartData(user));
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();

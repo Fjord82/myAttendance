@@ -5,8 +5,6 @@
  */
 package myattendance.BE;
 
-import java.util.Calendar;
-import java.util.Date;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,19 +22,19 @@ public class User
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
-    
+
     private final boolean isTeacher;
-    
+
     private int absentClasses = 0;
     private int presentClasses = 0;
     DateTime date = new DateTime();
     DateTime lastLogin;
-    
+
     public User()
     {
         isTeacher = false;
     }
-    
+
     public User(int id, String name, boolean isTeacher)
     {
         this.id.set(id);
@@ -51,8 +49,8 @@ public class User
         this.sClass.set(sClass);
         this.isTeacher = isTeacher;
     }
-    
-        public User(String name,String status, int absentClasses, int presentClasses)
+
+    public User(String name, String status, int absentClasses, int presentClasses)
     {
         this.name.set(name);
         this.status.set(status);
@@ -65,7 +63,6 @@ public class User
     {
         return id.get();
     }
-        
 
     public int getAbsentDates()
     {
@@ -125,7 +122,7 @@ public class User
     public boolean IsTeacher()
     {
         return isTeacher;
-    }  
+    }
 
     public DateTime getLastLogin()
     {
@@ -138,9 +135,10 @@ public class User
         if (lastLogin.dayOfYear().equals(date.dayOfYear()))
         {
             setStatus("Online");
-        }
-        else
+        } else
+        {
             setStatus("Offline");
+        }
     }
-    
+
 }
