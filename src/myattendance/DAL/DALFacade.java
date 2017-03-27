@@ -7,10 +7,6 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author jeppe
- */
 public class DALFacade
 {
 
@@ -93,5 +89,10 @@ public class DALFacade
     public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
     {
         databaseAccess.writeAbsencesIntoDB(user, startDate, endDate);
+    }
+
+    public boolean establishServerConnection()
+    {
+        return databaseAccess.establishServerConnection();
     }
 }

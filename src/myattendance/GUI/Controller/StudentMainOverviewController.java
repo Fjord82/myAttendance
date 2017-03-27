@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
@@ -10,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,11 +25,6 @@ import myattendance.GUI.Model.DateParser;
 import myattendance.GUI.Model.StudentViewModel;
 import org.joda.time.DateTime;
 
-/**
- * FXML Controller class
- *
- * @author Fjord82
- */
 public class StudentMainOverviewController implements Initializable
 {
 
@@ -74,9 +62,7 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
 
     {
-
         showConstantCalender();
-
     }
 
     public void attendenceChecks()

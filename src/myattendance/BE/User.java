@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance.BE;
 
 import javafx.beans.property.IntegerProperty;
@@ -11,10 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author Fjord82
- */
 public class User
 {
 
@@ -27,7 +18,7 @@ public class User
 
     private int absentClasses = 0;
     private int presentClasses = 0;
-    DateTime date = new DateTime();
+    DateTime today = new DateTime();
     DateTime lastLogin;
 
     public User()
@@ -132,9 +123,10 @@ public class User
     public void setLastLogin(DateTime lastLogin)
     {
         this.lastLogin = lastLogin;
-        if (lastLogin.dayOfYear().equals(date.dayOfYear()))
+        if (lastLogin.dayOfYear().equals(today.dayOfYear()))
         {
             setStatus("Online");
+            
         } else
         {
             setStatus("Offline");

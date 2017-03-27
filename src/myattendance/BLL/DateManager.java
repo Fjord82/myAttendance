@@ -1,16 +1,11 @@
 package myattendance.BLL;
 
-import java.sql.Date;
 import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 import org.joda.time.Days;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author meng
- */
 public class DateManager
 {
 

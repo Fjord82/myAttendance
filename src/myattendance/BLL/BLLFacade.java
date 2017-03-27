@@ -7,14 +7,9 @@ import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author jeppe
- */
 public class BLLFacade
 {
     // Private field for the Facade singleton instance.
-
     private static BLLFacade instance;
 
     /**
@@ -43,13 +38,8 @@ public class BLLFacade
     }
     
     DALFacade dalFacade = DALFacade.getInstance();
-    IPMatching ipMatching = new IPMatching();
     DateManager dateManager = new DateManager();
     
-    public boolean matchingBroadcastingAddress()
-    {
-        return ipMatching.matchingBroadcastingAddress();
-    }
     
     public User getUser(String login, String pass)
     {
@@ -64,16 +54,6 @@ public class BLLFacade
     public Course fillUsersInCourse(Course course)
     {
         return dalFacade.fillUsersInCourse(course);
-    }
-    
-    public DateTime getTodaysDate()
-    {
-        return dateManager.getTodaysDate();
-    }
-    
-    public DateTime getLastLoginDate(User user)
-    {
-        return dalFacade.getLastLoginDate(user);
     }
     
     public int daysBetweenSpecificDateAndToday(DateTime specificDate)
@@ -119,6 +99,11 @@ public class BLLFacade
     public void recordAbsence(User user, Day today)
     {
         dateManager.recordAbsence(user, today);
+    }
+    
+    public boolean establishServerConnection()
+    {
+        return dalFacade.establishServerConnection();
     }
     
 }

@@ -1,7 +1,6 @@
 package myattendance.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,10 +15,6 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author jeppe
- */
 public class DatabaseAccess
 {
 
@@ -28,7 +23,6 @@ public class DatabaseAccess
     public DatabaseAccess()
     {
         setupDataSource();
-
     }
 
     private static void setupDataSource()
@@ -39,6 +33,16 @@ public class DatabaseAccess
 
         ds.setPortNumber(1433);
         ds.setServerName("10.176.111.31");
+    }
+    
+    public boolean establishServerConnection(){
+        try(Connection con = ds.getConnection()){
+            return true;
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public User loginQuery(String login, String pass)
@@ -272,7 +276,7 @@ public class DatabaseAccess
 
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calender WHERE dateIntTime=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE dateInTime=?");
             ps.setDate(1, date);
             ResultSet rs = ps.executeQuery();
             while (rs.next())

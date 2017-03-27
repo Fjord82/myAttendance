@@ -2,10 +2,7 @@ package myattendance.BE;
 
 import org.joda.time.DateTime;
 
-/**
- *
- * @author meng
- */
+
 public class Day
 {
 
