@@ -109,5 +109,10 @@ public class AttendanceParser
         }
 
     }
+    
+    public boolean establishServerConnection()
+    {
+        return bllFacade.establishServerConnection();
+    }
 
 }

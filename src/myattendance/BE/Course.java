@@ -7,17 +7,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- *
- * @author jeppe
- */
 public class Course
 {
-
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
     
     private List<User> userList = new ArrayList<>();
+    
+    @Override
+    public String toString()
+    {
+        return name.get();
+    }
     
     public Course(int id, String name)
     {
@@ -56,11 +57,7 @@ public class Course
     }
     
     
-    @Override
-    public String toString()
-    {
-        return name.get();
-    }
+    
     
     
 

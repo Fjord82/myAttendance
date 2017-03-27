@@ -7,14 +7,9 @@ import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author jeppe
- */
 public class BLLFacade
 {
     // Private field for the Facade singleton instance.
-
     private static BLLFacade instance;
 
     /**
@@ -41,59 +36,74 @@ public class BLLFacade
     private BLLFacade()
     {
     }
-
+    
     DALFacade dalFacade = DALFacade.getInstance();
-    IPMatching ipMatching = new IPMatching();
     DateManager dateManager = new DateManager();
-
-    public boolean matchingBroadcastingAddress()
-    {
-        return ipMatching.matchingBroadcastingAddress();
-    }
-
+    
+    
     public User getUser(String login, String pass)
     {
         return dalFacade.loginQuery(login, pass);
     }
-
+    
     public List<Course> getCourses(int PID)
     {
         return dalFacade.getCourses(PID);
     }
-
+    
     public Course fillUsersInCourse(Course course)
     {
         return dalFacade.fillUsersInCourse(course);
     }
-
-    public DateTime getTodaysDate()
-    {
-        return dateManager.getTodaysDate();
-    }
-
-    public DateTime getLastLoginDate(int PID)
-    {
-        return dalFacade.getLastLoginDate(PID);
-    }
-
+    
     public int daysBetweenSpecificDateAndToday(DateTime specificDate)
     {
         return dateManager.daysBetweenSpecificDateAndToday(specificDate);
     }
-
+    
     public DateTime getStartDate()
     {
         return dalFacade.getStartDate();
     }
-
-    public boolean isAbsent(int PID, Day day)
+    
+    public boolean isAbsent(User user, Day day)
     {
-        return dateManager.isAbsent(PID, day);
+        return dateManager.isAbsent(user, day);
     }
-
+    
     public Day getDay(DateTime dateTime)
     {
         return dalFacade.getDay(dateTime);
     }
-
+    
+    public void updateLastLogin(User user)
+    {
+        dalFacade.updateLastLogin(user);
+    }
+    
+    public List<Day> getAbsentDays(User user)
+    {
+        return dalFacade.getAbsentDays(user);
+    }
+    
+    public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
+    {
+        return dalFacade.getDaysBetweenDates(startDate, endDate);
+    }
+    
+    public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
+    {
+        dalFacade.writeAbsencesIntoDB(user, startDate, endDate);
+    }
+    
+    public void recordAbsence(User user, Day today)
+    {
+        dateManager.recordAbsence(user, today);
+    }
+    
+    public boolean establishServerConnection()
+    {
+        return dalFacade.establishServerConnection();
+    }
+    
 }
