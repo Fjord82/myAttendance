@@ -1,17 +1,12 @@
 package myattendance.DAL;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author jeppe
- */
 public class DALFacade
 {
 
@@ -45,13 +40,14 @@ public class DALFacade
     }
 
     DatabaseAccess databaseAccess = new DatabaseAccess();
-    
+
     public User loginQuery(String login, String pass)
     {
         return databaseAccess.loginQuery(login, pass);
     }
-    
-    public DateTime getStartDate(){
+
+    public DateTime getStartDate()
+    {
         return databaseAccess.getStartDate();
     }
 
@@ -64,19 +60,39 @@ public class DALFacade
     {
         return databaseAccess.fillUsersInCourse(course);
     }
-    
 
-      public Day getDay(DateTime dateTime){
-          return databaseAccess.getDay(dateTime);
-      }
-      
-      public void updateLastLogin(User user)
-      {
-          databaseAccess.updateLastLogin(user);
-      }
-      
-      public void writeAbsencesIntoDB (int userID, DateTime startDate, DateTime endDate){
-          databaseAccess.writeAbsencesIntoDB(userID, startDate, endDate);
-      }
+    public DateTime getLastLoginDate(User user)
+    {
+        return databaseAccess.getLastLoginDate(user);
+    }
 
+    public Day getDay(DateTime dateTime)
+    {
+        return databaseAccess.getDay(dateTime);
+    }
+
+    public void updateLastLogin(User user)
+    {
+        databaseAccess.updateLastLogin(user);
+    }
+
+    public List<Day> getAbsentDays(User user)
+    {
+        return databaseAccess.getAbsentDays(user);
+    }
+
+    public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
+    {
+        return databaseAccess.getDaysBetweenDates(startDate, endDate);
+    }
+
+    public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
+    {
+        databaseAccess.writeAbsencesIntoDB(user, startDate, endDate);
+    }
+
+    public boolean establishServerConnection()
+    {
+        return databaseAccess.establishServerConnection();
+    }
 }

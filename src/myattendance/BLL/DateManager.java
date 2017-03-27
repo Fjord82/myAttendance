@@ -6,10 +6,6 @@ import myattendance.DAL.DALFacade;
 import org.joda.time.Days;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author meng
- */
 public class DateManager
 {
 
@@ -49,33 +45,17 @@ public class DateManager
     public boolean isAbsent(User user, Day day)
     {
         //Number of days between today and last login
-        int lLAndToday = daysBetweenSpecificDateAndToday(user.getLastLogin());
+        int lLAndToday = daysBetweenSpecificDateAndToday(dalFacade.getLastLoginDate(user));
 
-        //Checks if today is a school day and whether it is a Monday
-        if (day.isIsSchoolDay() == true && day.getWeekdayNumber() != 2)
-        {
-            //Does not make the student if the difference between last login and today is 1
-            if (lLAndToday == 1)
-            {
-                return false;
-            } else
-            {
-                return true;
-            }
-        } else if (day.isIsSchoolDay() == true && day.getWeekdayNumber() == 2)
-        {
-            if (lLAndToday <= 3)
-            {
-                return false;
-            } else
-            {
-                return true;
-            }
-
-        } else
+        if (lLAndToday == 1)
         {
             return false;
+        } else
+        {
+            return true;
+            //Further checks for weekends and public holidays
         }
+
     }
 
     public void recordAbsence(User user, Day today)
@@ -83,8 +63,8 @@ public class DateManager
         if (isAbsent(user, today) == true)
         {
             daysBetweenSpecificDateAndToday(user.getLastLogin());
-            dalFacade.writeAbsencesIntoDB(user.getId(), user.getLastLogin(), today.getDateInTime());
-        } 
+            dalFacade.writeAbsencesIntoDB(user, user.getLastLogin(), today.getDateInTime());
+        }
     }
 
 }

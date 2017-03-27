@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,7 +43,7 @@ public class StudentMainOverviewController implements Initializable
     StudentViewModel model = new StudentViewModel();
 
     User user = new User();
-    
+
     Day today;
 
     @FXML
@@ -64,31 +62,23 @@ public class StudentMainOverviewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
 
     {
-
-        attendenceChecks();
         showConstantCalender();
-        model.updateLastLogin(user);
     }
 
     public void attendenceChecks()
     {
         today = dateParser.getDay(new DateTime());
-        
+
         dateParser.recordAbsence(user, today);
-        
+
         //this needs fixing
         dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-        
-        
+
     }
 
     private void updateView()
     {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", user.getAbsentDates()));
-        pieChartData.add(new PieChart.Data("Presence", user.getPresentDates()));
-
-        PieChart absenceChart = new PieChart(pieChartData);
+        PieChart absenceChart = new PieChart(model.getPieChartData(user));
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
@@ -130,6 +120,7 @@ public class StudentMainOverviewController implements Initializable
     {
         this.user = user;
         updateView();
+        attendenceChecks();
     }
 
 }

@@ -30,28 +30,28 @@ public class DateParser
 
     }
 
-    public void getTodaysDate()
-    {
-        bllFacade.getTodaysDate();
-    }
-
     public int daysBetweenSpecificDateAndToday(DateTime specificDate)
     {
         return bllFacade.daysBetweenSpecificDateAndToday(specificDate);
     }
-    
-    public DateTime getStartDate(){
+
+    public DateTime getStartDate()
+    {
         return bllFacade.getStartDate();
     }
-    
-    public void recordAbsence(User user, Day today){
-        bllFacade.recordAbsence(user, today);
+
+    public boolean isAbsent(User user, Day day)
+    {
+        return bllFacade.isAbsent(user, day);
     }
 
-  public Day getDay(DateTime dateTime){
-      return bllFacade.getDay(dateTime);
-  }
-    
+    public Day getDay(DateTime dateTime)
+    {
+        return bllFacade.getDay(dateTime);
+    }
 
-
+    public void recordAbsence(User user, Day today)
+    {
+        bllFacade.recordAbsence(user, today);
+    }
 }

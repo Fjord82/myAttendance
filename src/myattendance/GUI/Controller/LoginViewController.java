@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
-import myattendance.GUI.Model.IPParser;
 
 public class LoginViewController implements Initializable
 {
@@ -26,7 +25,6 @@ public class LoginViewController implements Initializable
      * Gets the singleton instance of AttendanceParser.java.
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
-    IPParser iPParser = IPParser.getInstance();
 
     @FXML
     private Button loginButton;
@@ -47,10 +45,8 @@ public class LoginViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-
         // Hides the "Wrong username or password" label
         wrongLoginLabel.setVisible(false);
-
         checkConnection();
     }
 
@@ -77,7 +73,7 @@ public class LoginViewController implements Initializable
 
     private void checkConnection()
     { 
-        if (iPParser.MatchingBroadcasting())
+        if (attendanceParser.establishServerConnection()==true)
         {
             LabelConnection.setTextFill(Color.GREEN);
             LabelConnection.setText("Connected to school network");

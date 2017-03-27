@@ -15,10 +15,6 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author jeppe
- */
 public class DatabaseAccess
 {
 
@@ -27,7 +23,6 @@ public class DatabaseAccess
     public DatabaseAccess()
     {
         setupDataSource();
-
     }
 
     private static void setupDataSource()
@@ -39,6 +34,16 @@ public class DatabaseAccess
         ds.setPortNumber(1433);
         ds.setServerName("10.176.111.31");
     }
+    
+    public boolean establishServerConnection(){
+        try(Connection con = ds.getConnection()){
+            return true;
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     public User loginQuery(String login, String pass)
     {
@@ -46,7 +51,7 @@ public class DatabaseAccess
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(""
-                    + "SELECT People.PID, People.fname, People.mname, People.lname, People.Teacher, People.lastLogin, Classes.ClassName "
+                    + "SELECT People.PID, People.fname, People.mname, People.lname, People.Teacher, Classes.ClassName "
                     + "FROM People, Classes, ClassRelation "
                     + "WHERE People.PID = ClassRelation.PID AND Classes.ClassID = ClassRelation.ClassID AND People.slog=? AND People.spass=?");
             ps.setString(1, login);
@@ -64,10 +69,9 @@ public class DatabaseAccess
             {
 
                 String className = rs.getString("classname");
-                DateTime lastLogin = (new DateTime(rs.getDate("lastLogin")));
 
-                user = new User(id, fullName, className, isTeacher, lastLogin);
-
+                user = new User(id, fullName, className, isTeacher);
+                updateLastLogin(user);
             } else
             {
 
@@ -124,11 +128,35 @@ public class DatabaseAccess
 
     }
 
+    public DateTime getLastLoginDate(User user)
+    {
+        DateTime returnDate = new DateTime();
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT lastlogin FROM people WHERE PID=?");
+            ps.setInt(1, user.getId());
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                Date lastLogin = rs.getDate("lastlogin");
+                returnDate = new DateTime(lastLogin);
+            }
+            return returnDate;
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
     public Integer totalSchoolDays()
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isSchoolDay=1");
+            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isschoolday=1");
             ResultSet rs = ps.executeQuery();
             rs.next();
 
@@ -215,6 +243,32 @@ public class DatabaseAccess
         }
     }
 
+    public boolean isSchoolDay(Day day)
+    {
+
+        try (Connection con = ds.getConnection())
+        {
+
+            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
+            ps.setInt(1, day.getDateID());
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            if (rs.getBoolean("isSchoolDay"))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public Day getDay(DateTime dateTime)
     {
 
@@ -222,7 +276,7 @@ public class DatabaseAccess
 
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE dateIntTime=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE dateInTime=?");
             ps.setDate(1, date);
             ResultSet rs = ps.executeQuery();
             while (rs.next())
@@ -242,52 +296,96 @@ public class DatabaseAccess
         return null;
     }
 
-    public ArrayList getDatesBetweenDays(DateTime startDate, DateTime endDate)
+    public List<Day> getAbsentDays(User user)
     {
-        ArrayList<Integer> datesAbsent = new ArrayList();
+        List<Day> absentDays = new ArrayList();
+
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement(""
+                    + "SELECT c.dateID, c.dateInTime, c.weekdayNumber, c.weekdayName, c.isSchoolDay "
+                    + "FROM Absence a, Calendar c, People p "
+                    + "WHERE a.PID = p.PID AND a.dateID = c.dateID AND p.PID =?");
+            ps.setInt(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                int dateID = rs.getInt("dateID");
+                DateTime dateTime = new DateTime(rs.getDate("dateInTime"));
+                int weekdayNumber = rs.getInt("weekdayNumber");
+                String weekdayName = rs.getString("weekdayName");
+                boolean isSchoolDay = rs.getBoolean("isSchoolDay");
+
+                Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
+                absentDays.add(day);
+            }
+
+            return absentDays;
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return absentDays;
+
+    }
+
+    public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
+    {
+        List<Day> datesAbsent = new ArrayList();
         java.sql.Date sDate = new java.sql.Date(startDate.getMillis());
         java.sql.Date eDate = new java.sql.Date(endDate.getMillis());
 
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT dateID FROM calendar WHERE isSchoolDay =? AND dateInTime BETWEEN ? AND ?");
-            ps.setBoolean(1, true);
-            ps.setDate(2, sDate);
-            ps.setDate(3, eDate);
+            PreparedStatement ps = con.prepareStatement(""
+                    + "SELECT c.dateID, c.dateInTime, c.weekdayNumber, c.weekdayName, c.isSchoolDay "
+                    + "FROM Absence a, Calendar c, People p "
+                    + "WHERE a.PID = p.PID AND a.dateID = c.dateID AND dateInTime BETWEEN ? AND ?");
+            ps.setDate(1, sDate);
+            ps.setDate(2, eDate);
+
             ResultSet rs = ps.executeQuery();
+
             while (rs.next())
             {
-                datesAbsent.add(rs.getInt("dateID"));
+                int dateID = rs.getInt("dateID");
+                DateTime dateTime = new DateTime(rs.getDate("dateInTime"));
+                int weekdayNumber = rs.getInt("weekdayNumber");
+                String weekdayName = rs.getString("weekdayName");
+                boolean isSchoolDay = rs.getBoolean("isSchoolDay");
+                Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
+                datesAbsent.add(day);
+            }
+
+            return datesAbsent;
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+            return datesAbsent;
+        }
+    }
+
+    public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
+    {
+        ArrayList<Day> datesAbsent = new ArrayList(getDaysBetweenDates(startDate, endDate));
+
+        try (Connection con = ds.getConnection())
+        {
+            for (int i = 0; i < datesAbsent.size() - 1; i++)
+            {
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Absence (PID, dateID) VALUES (?, ?)");
+                ps.setInt(1, user.getId());
+                ps.setInt(2, datesAbsent.get(i).getDateID());
+                ps.execute();
+
             }
 
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return datesAbsent;
-    }
-
-    public void writeAbsencesIntoDB(int userID, DateTime startDate, DateTime endDate)
-    {
-        ArrayList<Integer> datesAbsent = new ArrayList(getDatesBetweenDays(startDate,endDate));
-        
-        try (Connection con = ds.getConnection())
-        {
-            for (int i = 0; i < datesAbsent.size()-1; i++)
-            {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Absence (PID, dateID) VALUES (?, ?)");
-                ps.setInt(1, userID);
-                ps.setInt(2,datesAbsent.get(i));
-                ps.execute();
-                
-            }
-            
-
-            } catch (SQLException ex)
-        {
-            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
 }
