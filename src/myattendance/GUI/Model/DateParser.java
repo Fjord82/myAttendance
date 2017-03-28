@@ -30,11 +30,6 @@ public class DateParser
 
     }
 
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
-    {
-        return bllFacade.daysBetweenSpecificDateAndToday(specificDate);
-    }
-
     public DateTime getStartDate()
     {
         return bllFacade.getStartDate();
