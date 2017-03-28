@@ -71,7 +71,6 @@ public class StudentMainOverviewController implements Initializable
 
         dateParser.recordAbsence(user, today);
 
-
     }
 
     private void updateView()
@@ -117,8 +116,8 @@ public class StudentMainOverviewController implements Initializable
     public void setUser(User user)
     {
         this.user = user;
-        updateView();
         attendenceChecks();
+        updateView();
     }
 
 }

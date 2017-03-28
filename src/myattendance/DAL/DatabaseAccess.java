@@ -336,6 +336,7 @@ public class DatabaseAccess
 
     public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
     {
+        System.out.println("Get days between dates.");
         List<Day> datesAbsent = new ArrayList();
         java.sql.Date sDate = new java.sql.Date(startDate.getMillis());
         java.sql.Date eDate = new java.sql.Date(endDate.getMillis());
@@ -343,9 +344,9 @@ public class DatabaseAccess
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(""
-                    + "SELECT c.dateID, c.dateInTime, c.weekdayNumber, c.weekdayName, c.isSchoolDay "
-                    + "FROM Absence a, Calendar c, People p "
-                    + "WHERE a.PID = p.PID AND a.dateID = c.dateID AND dateInTime BETWEEN ? AND ?");
+                    + "SELECT dateID, dateInTime, weekdayNumber, weekdayName, isSchoolDay "
+                    + "FROM Calendar "
+                    + "WHERE dateInTime BETWEEN ? AND ?");
             ps.setDate(1, sDate);
             ps.setDate(2, eDate);
 
@@ -360,6 +361,7 @@ public class DatabaseAccess
                 boolean isSchoolDay = rs.getBoolean("isSchoolDay");
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
                 datesAbsent.add(day);
+                System.out.println("Add day " + day.getWeekdayName());
             }
 
             return datesAbsent;
@@ -380,6 +382,7 @@ public class DatabaseAccess
             ps.setInt(1, user.getId());
             ps.setInt(2, day.getDateID());
             ps.execute();
+            System.out.println("Registered attendance for " + user.getName() + " on " + day.getDateInTime());
 
         } catch (SQLException ex)
         {
