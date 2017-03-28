@@ -13,8 +13,12 @@ public class DateManager
 
     public int daysBetween(DateTime startDateTime, DateTime endDateTime)
     {
-
-        int daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
+        int daysBetween = 0;
+        
+        if (startDateTime != null && endDateTime != null)
+        {
+        daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
+        }
         return daysBetween;
 
     }

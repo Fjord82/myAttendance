@@ -1,5 +1,6 @@
 package myattendance.GUI.Model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -36,16 +37,13 @@ public class StudentViewModel
         int daysUptoTodayInt = daysUpToToday.size();
         int presentDaysInt = daysUptoTodayInt - absentDaysInt;
 
-        System.out.println(absentDaysInt + "+" + presentDaysInt + "=" + daysUptoTodayInt);
-
         double percentageAbsence = (double) absentDaysInt / daysUptoTodayInt * 100;
         double percentagePresence = 100 - percentageAbsence;
 
-        System.out.println(percentageAbsence);
-        System.out.println(percentagePresence);
+        DecimalFormat df = new DecimalFormat("##");
 
-        pieChartData.add(new PieChart.Data("Presence: " + percentagePresence + "%", presentDaysInt));
-        pieChartData.add(new PieChart.Data("Absence: " + percentageAbsence + "%", absentDaysInt));
+        pieChartData.add(new PieChart.Data("Presence: " + df.format(percentagePresence) + "%", presentDaysInt));
+        pieChartData.add(new PieChart.Data("Absence: " + df.format(percentageAbsence) + "%", absentDaysInt));
 
         return pieChartData;
     }
