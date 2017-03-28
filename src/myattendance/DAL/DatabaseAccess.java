@@ -34,9 +34,11 @@ public class DatabaseAccess
         ds.setPortNumber(1433);
         ds.setServerName("10.176.111.31");
     }
-    
-    public boolean establishServerConnection(){
-        try(Connection con = ds.getConnection()){
+
+    public boolean establishServerConnection()
+    {
+        try (Connection con = ds.getConnection())
+        {
             return true;
         } catch (SQLException ex)
         {
@@ -368,20 +370,16 @@ public class DatabaseAccess
         }
     }
 
-    public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
+    public void writeAbsencesIntoDB(User user, Day day)
     {
-        ArrayList<Day> datesAbsent = new ArrayList(getDaysBetweenDates(startDate, endDate));
 
         try (Connection con = ds.getConnection())
         {
-            for (int i = 0; i < datesAbsent.size() - 1; i++)
-            {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Absence (PID, dateID) VALUES (?, ?)");
-                ps.setInt(1, user.getId());
-                ps.setInt(2, datesAbsent.get(i).getDateID());
-                ps.execute();
 
-            }
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Absence (PID, dateID) VALUES (?, ?)");
+            ps.setInt(1, user.getId());
+            ps.setInt(2, day.getDateID());
+            ps.execute();
 
         } catch (SQLException ex)
         {
