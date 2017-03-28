@@ -56,11 +56,6 @@ public class BLLFacade
         return dalFacade.fillUsersInCourse(course);
     }
     
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
-    {
-        return dateManager.daysBetweenSpecificDateAndToday(specificDate);
-    }
-    
     public DateTime getStartDate()
     {
         return dalFacade.getStartDate();
