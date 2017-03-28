@@ -40,11 +40,6 @@ public class DateParser
         return bllFacade.getStartDate();
     }
 
-    public boolean isAbsent(User user, Day day)
-    {
-        return bllFacade.isAbsent(user, day);
-    }
-
     public Day getDay(DateTime dateTime)
     {
         return bllFacade.getDay(dateTime);

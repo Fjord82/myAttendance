@@ -86,9 +86,9 @@ public class DALFacade
         return databaseAccess.getDaysBetweenDates(startDate, endDate);
     }
 
-    public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
+    public void writeAbsencesIntoDB(User user, Day day)
     {
-        databaseAccess.writeAbsencesIntoDB(user, startDate, endDate);
+        databaseAccess.writeAbsencesIntoDB(user, day);
     }
 
     public boolean establishServerConnection()
