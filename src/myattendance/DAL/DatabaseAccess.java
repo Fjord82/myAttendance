@@ -51,7 +51,7 @@ public class DatabaseAccess
         try (Connection con = ds.getConnection())
         {
             PreparedStatement ps = con.prepareStatement(""
-                    + "SELECT People.PID, People.fname, People.mname, People.lname, People.Teacher, Classes.ClassName "
+                    + "SELECT People.PID, People.fname, People.mname, People.lname, People.Teacher, People.LastLogin, Classes.ClassName "
                     + "FROM People, Classes, ClassRelation "
                     + "WHERE People.PID = ClassRelation.PID AND Classes.ClassID = ClassRelation.ClassID AND People.slog=? AND People.spass=?");
             ps.setString(1, login);
@@ -69,8 +69,9 @@ public class DatabaseAccess
             {
 
                 String className = rs.getString("classname");
+                DateTime lastLogin = new DateTime(rs.getDate("LastLogin"));
 
-                user = new User(id, fullName, className, isTeacher);
+                user = new User(id, fullName, className, lastLogin, isTeacher);
                 updateLastLogin(user);
             } else
             {
