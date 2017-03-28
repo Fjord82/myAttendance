@@ -33,21 +33,14 @@ public class User
         this.isTeacher = isTeacher;
     }
 
-    public User(int id, String name, String sClass, boolean isTeacher)
+    public User(int id, String name, String sClass, DateTime lastLogin, boolean isTeacher)
     {
         this.id.set(id);
         this.name.set(name);
         this.sClass.set(sClass);
+        this.lastLogin = lastLogin;
+        
         this.isTeacher = isTeacher;
-    }
-
-    public User(String name, String status, int absentClasses, int presentClasses)
-    {
-        this.name.set(name);
-        this.status.set(status);
-        this.absentClasses = absentClasses;
-        this.presentClasses = presentClasses;
-        this.isTeacher = false;
     }
 
     public int getId()
