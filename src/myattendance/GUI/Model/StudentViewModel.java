@@ -34,7 +34,9 @@ public class StudentViewModel
         List<Day> daysUpToToday = new ArrayList<>(bllFacade.getDaysBetweenDates(bllFacade.getStartDate(), new DateTime()));
 
         int absentDaysInt = absentDays.size();
+        System.out.println(absentDaysInt);
         int daysUptoTodayInt = daysUpToToday.size();
+        System.out.println(daysUptoTodayInt);
         int presentDaysInt = daysUptoTodayInt - absentDaysInt;
 
         double percentageAbsence = (double) absentDaysInt / daysUptoTodayInt * 100;
