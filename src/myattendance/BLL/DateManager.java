@@ -26,29 +26,6 @@ public class DateManager
 
     }
 
-    public DateTime getTodaysDate()
-    {
-        DateTime todaysDateTime = new DateTime();
-        return todaysDateTime;
-    }
-
-    //This method needs tidying up - combine with the one below
-    public int daysBetweenStartAndToday()
-    {
-        DateTime startDate = dalFacade.getStartDate();
-        DateTime startDateTime = new DateTime(startDate);
-        int daysBetweenStartAndToday = daysBetween(startDateTime, getTodaysDate());
-        return daysBetweenStartAndToday;
-    }
-
-    public int daysBetweenSpecificDateAndToday(DateTime lastLogin)
-    {
-
-        DateTime today = new DateTime();
-        int daysBetweenLastLoginAndToday = daysBetween(lastLogin, today);
-        return daysBetweenLastLoginAndToday;
-    }
-
     public boolean isAbsent(User user)
     {
         //Number of days between today and last login

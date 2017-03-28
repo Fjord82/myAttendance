@@ -71,9 +71,6 @@ public class StudentMainOverviewController implements Initializable
 
         dateParser.recordAbsence(user, today);
 
-        //this needs fixing
-        //dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
-
     }
 
     private void updateView()
