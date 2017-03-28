@@ -72,7 +72,7 @@ public class StudentMainOverviewController implements Initializable
         dateParser.recordAbsence(user, today);
 
         //this needs fixing
-        dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
+        //dateParser.daysBetweenSpecificDateAndToday(dateParser.getStartDate());
 
     }
 
@@ -119,8 +119,8 @@ public class StudentMainOverviewController implements Initializable
     public void setUser(User user)
     {
         this.user = user;
-        updateView();
         attendenceChecks();
+        updateView();
     }
 
 }

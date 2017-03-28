@@ -41,7 +41,7 @@ public class Day
         return weekdayName;
     }
 
-    public boolean isIsSchoolDay()
+    public boolean isSchoolDay()
     {
         return isSchoolDay;
     }

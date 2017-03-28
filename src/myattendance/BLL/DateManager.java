@@ -21,6 +21,7 @@ public class DateManager
         {
         daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
         }
+        System.out.println(daysBetween);
         return daysBetween;
 
     }
@@ -53,26 +54,37 @@ public class DateManager
         //Number of days between today and last login
         int lLAndToday = daysBetween(user.getLastLogin(), new DateTime());
 
-        if (lLAndToday == 1)
+        if (lLAndToday <= 1)
         {
+            System.out.println("Is absent = false");
             return false;
         } else
         {
+            System.out.println("Is absent = true");
             return true;
         }
+        
 
     }
 
     public void recordAbsence(User user, Day today)
     {
+        System.out.println("Started record absence");
         if (isAbsent(user))
         {
-            List<Day> absentDays = new ArrayList<>(dalFacade.getDaysBetweenDates(user.getLastLogin(), today.getDateInTime()));
+            System.out.println("Getting list");
+            List<Day> absentDays = new ArrayList(dalFacade.getDaysBetweenDates(user.getLastLogin(), today.getDateInTime()));
+            System.out.println("Got list at size " + absentDays.size());
             
             for (Day day : absentDays)
             {
-                if(day.isIsSchoolDay())
+                System.out.println(day.getWeekdayName());
+                
+                if(day.isSchoolDay())
+                {
                     dalFacade.writeAbsencesIntoDB(user, day);
+                    System.out.println("Recorded absence");
+                }
             }
         }
     }
