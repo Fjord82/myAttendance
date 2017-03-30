@@ -17,6 +17,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
     <children>
+      <Label text="Class:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="27.0" />
       <Label text="Signed in as:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
       <Label fx:id="lblStudentClass" text="Class" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="27.0" />
       <Label fx:id="lblStudentName" text="Student" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
