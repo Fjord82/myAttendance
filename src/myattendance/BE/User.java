@@ -1,5 +1,7 @@
 package myattendance.BE;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,10 +18,10 @@ public class User
 
     private final boolean isTeacher;
 
-    private int absentClasses = 0;
-    private int presentClasses = 0;
     DateTime today = new DateTime();
     DateTime lastLogin;
+    
+    List<Day> absentDays = new ArrayList();
 
     public User()
     {
@@ -46,26 +48,6 @@ public class User
     public int getId()
     {
         return id.get();
-    }
-
-    public int getAbsentDates()
-    {
-        return absentClasses;
-    }
-
-    public void setAbsentClasses(int absentClasses)
-    {
-        this.absentClasses = absentClasses;
-    }
-
-    public int getPresentDates()
-    {
-        return presentClasses;
-    }
-
-    public void setPresentClasses(int presentClasses)
-    {
-        this.presentClasses = presentClasses;
     }
 
     public String getStatus()
@@ -125,5 +107,17 @@ public class User
             setStatus("Offline");
         }
     }
+
+    public List<Day> getAbsentDays()
+    {
+        return absentDays;
+    }
+
+    public void setAbsentDays(List<Day> absentDays)
+    {
+        this.absentDays = absentDays;
+    }
+    
+    
 
 }
