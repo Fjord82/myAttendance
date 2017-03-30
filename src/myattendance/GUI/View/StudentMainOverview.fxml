@@ -17,6 +17,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
     <children>
+      <Label text="Signed in as:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="lblStudentClass" text="Class" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="27.0" />
+      <Label fx:id="lblStudentName" text="Student" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
                 <VBox fx:id="vBoxSelectionContent" prefHeight="306.0" prefWidth="290.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
@@ -24,16 +27,6 @@
                         <Insets />
                     </BorderPane.margin>
                     <children>
-                  <Label fx:id="lblStudentName" text="Student">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="lblStudentClass" text="Class">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
                         <DatePicker fx:id="datePicker" prefWidth="175.0" promptText="mm/dd/yyyy">
                             <VBox.margin>
                                 <Insets top="75.0" />
