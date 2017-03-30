@@ -292,7 +292,6 @@ public class TeacherAttendanceOverviewController implements Initializable
             filter = txtFldSearchStudent.getText();
             updateView();
             updatePresentCounter();
-            automaticUpdate();
         }
     }
 
@@ -303,17 +302,8 @@ public class TeacherAttendanceOverviewController implements Initializable
         {
             public void run()
             {
-
-                try
-                {
-                    updatePresentCounter();
-                    timer.wait();
-                    updateView();
-                } catch (InterruptedException ex)
-                {
-                    Logger.getLogger(TeacherAttendanceOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+                updatePresentCounter();
+                updateView();
             }
         }, 0, 5000);
     }
