@@ -144,7 +144,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml", null);
+        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
