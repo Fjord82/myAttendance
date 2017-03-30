@@ -78,8 +78,8 @@ public class StudentMainOverviewController implements Initializable
         PieChart absenceChart = new PieChart(model.getPieChartData(user));
         absenceChart.setTitle("Absence");
 
-        Label absenceLabel = new Label();
-        absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
+        Label absenceLabel = new Label("Student Attendance: ");
+        //absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
