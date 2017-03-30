@@ -56,19 +56,9 @@ public class BLLFacade
         return dalFacade.fillUsersInCourse(course);
     }
     
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
-    {
-        return dateManager.daysBetweenSpecificDateAndToday(specificDate);
-    }
-    
     public DateTime getStartDate()
     {
         return dalFacade.getStartDate();
-    }
-    
-    public boolean isAbsent(User user, Day day)
-    {
-        return dateManager.isAbsent(user, day);
     }
     
     public Day getDay(DateTime dateTime)
@@ -91,9 +81,9 @@ public class BLLFacade
         return dalFacade.getDaysBetweenDates(startDate, endDate);
     }
     
-    public void writeAbsencesIntoDB(User user, DateTime startDate, DateTime endDate)
+    public void writeAbsencesIntoDB(User user, Day day)
     {
-        dalFacade.writeAbsencesIntoDB(user, startDate, endDate);
+        dalFacade.writeAbsencesIntoDB(user, day);
     }
     
     public void recordAbsence(User user, Day today)

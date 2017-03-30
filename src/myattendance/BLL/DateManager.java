@@ -1,5 +1,7 @@
 package myattendance.BLL;
 
+import java.util.ArrayList;
+import java.util.List;
 import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
@@ -19,55 +21,48 @@ public class DateManager
         {
         daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
         }
+        System.out.println(daysBetween);
         return daysBetween;
 
     }
 
-    public DateTime getTodaysDate()
-    {
-        DateTime todaysDateTime = new DateTime();
-        return todaysDateTime;
-    }
-
-    //This method needs tidying up - combine with the one below
-    public int daysBetweenStartAndToday()
-    {
-        DateTime startDate = dalFacade.getStartDate();
-        DateTime startDateTime = new DateTime(startDate);
-        int daysBetweenStartAndToday = daysBetween(startDateTime, getTodaysDate());
-        return daysBetweenStartAndToday;
-    }
-
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
-    {
-
-        DateTime today = getTodaysDate();
-        int daysBetweenLastLoginAndToday = daysBetween(specificDate, today);
-        return daysBetweenLastLoginAndToday;
-    }
-
-    public boolean isAbsent(User user, Day day)
+    public boolean isAbsent(User user)
     {
         //Number of days between today and last login
-        int lLAndToday = daysBetweenSpecificDateAndToday(dalFacade.getLastLoginDate(user));
+        int lLAndToday = daysBetween(user.getLastLogin(), new DateTime());
 
-        if (lLAndToday == 1)
+        if (lLAndToday <= 1)
         {
+            System.out.println("Is absent = false");
             return false;
         } else
         {
+            System.out.println("Is absent = true");
             return true;
-            //Further checks for weekends and public holidays
         }
+        
 
     }
 
     public void recordAbsence(User user, Day today)
     {
-        if (isAbsent(user, today) == true)
+        System.out.println("Started record absence");
+        if (isAbsent(user))
         {
-            daysBetweenSpecificDateAndToday(user.getLastLogin());
-            dalFacade.writeAbsencesIntoDB(user, user.getLastLogin(), today.getDateInTime());
+            System.out.println("Getting list");
+            List<Day> absentDays = new ArrayList(dalFacade.getDaysBetweenDates(user.getLastLogin(), today.getDateInTime()));
+            System.out.println("Got list at size " + absentDays.size());
+            
+            for (Day day : absentDays)
+            {
+                System.out.println(day.getWeekdayName());
+                
+                if(day.isSchoolDay())
+                {
+                    dalFacade.writeAbsencesIntoDB(user, day);
+                    System.out.println("Recorded absence");
+                }
+            }
         }
     }
 
