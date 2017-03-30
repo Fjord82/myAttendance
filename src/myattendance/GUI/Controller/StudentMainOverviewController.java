@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Day;
 import myattendance.BE.User;
+import myattendance.BLL.BLLFacade;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
 import myattendance.GUI.Model.StudentViewModel;
@@ -41,6 +42,8 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     DateParser dateParser = DateParser.getInstance();
     StudentViewModel model = new StudentViewModel();
+    
+    BLLFacade bllFacade = BLLFacade.getInstance();
 
     User user = new User();
 
@@ -79,7 +82,7 @@ public class StudentMainOverviewController implements Initializable
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label("Student Attendance: ");
-        //absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
+        absenceLabel.setText("Student Attendance: " + user.getAbsentDays().size() + "/" + bllFacade.getDaysUptoToday().size());
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
@@ -119,5 +122,7 @@ public class StudentMainOverviewController implements Initializable
         attendenceChecks();
         updateView();
     }
+    
+    
 
 }

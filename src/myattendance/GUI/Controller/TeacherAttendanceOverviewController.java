@@ -250,6 +250,10 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void chartData()
     {
         pieChartData.clear();
+        pieChartData.setAll(model.getPieChartData(lastSelectedUser));
+        absenceChart.setTitle("Absence");
+        
+        //pieChartData.clear();
 //        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
 //        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
 //        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "

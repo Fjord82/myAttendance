@@ -95,4 +95,14 @@ public class DALFacade
     {
         return databaseAccess.establishServerConnection();
     }
+    
+    public Integer totalSchoolDays()
+    {
+        return databaseAccess.totalSchoolDays();
+    }
+    
+     public List<Day> getDaysUptoToday()
+    {
+        return databaseAccess.getDaysUptoToday();
+    }
 }

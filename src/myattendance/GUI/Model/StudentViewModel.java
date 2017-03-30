@@ -28,24 +28,7 @@ public class StudentViewModel
 
     public ObservableList<PieChart.Data> getPieChartData(User user)
     {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-
-        List<Day> absentDays = new ArrayList<>(user.getAbsentDays());
-        List<Day> daysUpToToday = new ArrayList<>(bllFacade.getDaysBetweenDates(bllFacade.getStartDate(), new DateTime()));
-
-        int absentDaysInt = absentDays.size();
-        int daysUptoTodayInt = daysUpToToday.size();
-        int presentDaysInt = daysUptoTodayInt - absentDaysInt;
-
-        double percentageAbsence = (double) absentDaysInt / daysUptoTodayInt * 100;
-        double percentagePresence = 100 - percentageAbsence;
-
-        DecimalFormat df = new DecimalFormat("##");
-
-        pieChartData.add(new PieChart.Data("Presence: " + df.format(percentagePresence) + "%", presentDaysInt));
-        pieChartData.add(new PieChart.Data("Absence: " + df.format(percentageAbsence) + "%", absentDaysInt));
-
-        return pieChartData;
+        return bllFacade.getPieChartData(user);
     }
 
 }
