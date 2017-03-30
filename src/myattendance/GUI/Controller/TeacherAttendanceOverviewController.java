@@ -210,7 +210,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
-
+        
     }
 
     @FXML
@@ -261,7 +261,6 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     private void updateView()
     {
-        model.updateList(filter, lastSelectedCourse);
         tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
         updatePresentCounter();
 
@@ -302,7 +301,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         {
             public void run()
             {
-                updatePresentCounter();
                 updateView();
             }
         }, 0, 5000);
