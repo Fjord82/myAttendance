@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="myattendance.GUI.View.AdminViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.View.AdminViewController">
    <children>
       <TextField layoutX="40.0" layoutY="104.0" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" promptText="First Name" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="105.0" />
       <TextField layoutX="40.0" layoutY="146.0" promptText="Middle Name" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="40.0" />
