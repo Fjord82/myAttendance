@@ -1,4 +1,3 @@
-
 package myattendance.BE;
 
 import javafx.beans.property.IntegerProperty;
@@ -14,19 +13,19 @@ public class User
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
-    
+
     private final boolean isTeacher;
-    
+
     private int absentClasses = 0;
     private int presentClasses = 0;
-    DateTime date = new DateTime();
+    DateTime today = new DateTime();
     DateTime lastLogin;
-    
+
     public User()
     {
         isTeacher = false;
     }
-    
+
     public User(int id, String name, boolean isTeacher)
     {
         this.id.set(id);
@@ -34,21 +33,20 @@ public class User
         this.isTeacher = isTeacher;
     }
 
-    public User(int id, String name, String sClass, boolean isTeacher, DateTime lastLogin)
+    public User(int id, String name, String sClass, DateTime lastLogin, boolean isTeacher)
     {
         this.id.set(id);
         this.name.set(name);
         this.sClass.set(sClass);
+        this.lastLogin = lastLogin;
+        
         this.isTeacher = isTeacher;
-        this.lastLogin=lastLogin;
     }
-    
 
     public int getId()
     {
         return id.get();
     }
-        
 
     public int getAbsentDates()
     {
@@ -108,7 +106,7 @@ public class User
     public boolean IsTeacher()
     {
         return isTeacher;
-    }  
+    }
 
     public DateTime getLastLogin()
     {
@@ -118,12 +116,14 @@ public class User
     public void setLastLogin(DateTime lastLogin)
     {
         this.lastLogin = lastLogin;
-        if (lastLogin.dayOfYear().equals(date.dayOfYear()))
+        if (lastLogin.dayOfYear().equals(today.dayOfYear()))
         {
             setStatus("Online");
-        }
-        else
+            
+        } else
+        {
             setStatus("Offline");
+        }
     }
-    
+
 }

@@ -1,15 +1,13 @@
 package myattendance.BLL;
 
+import java.util.ArrayList;
+import java.util.List;
 import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.DAL.DALFacade;
 import org.joda.time.Days;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author meng
- */
 public class DateManager
 {
 
@@ -17,74 +15,55 @@ public class DateManager
 
     public int daysBetween(DateTime startDateTime, DateTime endDateTime)
     {
-
-        int daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
+        int daysBetween = 0;
+        
+        if (startDateTime != null && endDateTime != null)
+        {
+        daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
+        }
+        System.out.println(daysBetween);
         return daysBetween;
 
     }
 
-    public DateTime getTodaysDate()
-    {
-        DateTime todaysDateTime = new DateTime();
-        return todaysDateTime;
-    }
-
-    //This method needs tidying up - combine with the one below
-    public int daysBetweenStartAndToday()
-    {
-        DateTime startDate = dalFacade.getStartDate();
-        DateTime startDateTime = new DateTime(startDate);
-        int daysBetweenStartAndToday = daysBetween(startDateTime, getTodaysDate());
-        return daysBetweenStartAndToday;
-    }
-
-    public int daysBetweenSpecificDateAndToday(DateTime specificDate)
-    {
-
-        DateTime today = getTodaysDate();
-        int daysBetweenLastLoginAndToday = daysBetween(specificDate, today);
-        return daysBetweenLastLoginAndToday;
-    }
-
-    public boolean isAbsent(User user, Day day)
+    public boolean isAbsent(User user)
     {
         //Number of days between today and last login
-        int lLAndToday = daysBetweenSpecificDateAndToday(user.getLastLogin());
+        int lLAndToday = daysBetween(user.getLastLogin(), new DateTime());
 
-        //Checks if today is a school day and whether it is a Monday
-        if (day.isIsSchoolDay() == true && day.getWeekdayNumber() != 2)
+        if (lLAndToday <= 1)
         {
-            //Does not make the student if the difference between last login and today is 1
-            if (lLAndToday == 1)
-            {
-                return false;
-            } else
-            {
-                return true;
-            }
-        } else if (day.isIsSchoolDay() == true && day.getWeekdayNumber() == 2)
-        {
-            if (lLAndToday <= 3)
-            {
-                return false;
-            } else
-            {
-                return true;
-            }
-
+            System.out.println("Is absent = false");
+            return false;
         } else
         {
-            return false;
+            System.out.println("Is absent = true");
+            return true;
         }
+        
+
     }
 
     public void recordAbsence(User user, Day today)
     {
-        if (isAbsent(user, today) == true)
+        System.out.println("Started record absence");
+        if (isAbsent(user))
         {
-            daysBetweenSpecificDateAndToday(user.getLastLogin());
-            dalFacade.writeAbsencesIntoDB(user.getId(), user.getLastLogin(), today.getDateInTime());
-        } 
+            System.out.println("Getting list");
+            List<Day> absentDays = new ArrayList(dalFacade.getDaysBetweenDates(user.getLastLogin(), today.getDateInTime()));
+            System.out.println("Got list at size " + absentDays.size());
+            
+            for (Day day : absentDays)
+            {
+                System.out.println(day.getWeekdayName());
+                
+                if(day.isSchoolDay())
+                {
+                    dalFacade.writeAbsencesIntoDB(user, day);
+                    System.out.println("Recorded absence");
+                }
+            }
+        }
     }
 
 }

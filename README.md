@@ -17,10 +17,7 @@ Group members:
 Meng Dunmow, Jeppe Ehmsen, Rasmus Fjord,  Kristoffer Christensen & Jonas Husted Andersen.
 
 Login Details:
-Student:
-Username: student
-Password: pass
 
-Teacher:
-Username: teacher
-Password: pass
+Usernames and passwords are set to be the same. 
+Student login details start with an S, followed by an integer ranging from 1 - 54 (except 18) [e.g. S1].
+Teacher login deatils start with a T, followed by an integer ranging from 1 - 2 [e.g. T1].
