@@ -9,9 +9,13 @@ import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,13 +30,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Course;
@@ -97,9 +100,14 @@ public class TeacherAttendanceOverviewController implements Initializable
     private Pagination paginationBtn;
     @FXML
     private Label lblName;
+    @FXML
+    private MenuBar hiddenMenu;
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -154,7 +162,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         //Install JFxtra from the internet!!!
         DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-        
+
         Node popupContent = datePickerSkin.getPopupContent();
 
         vBoxSelectionContent.setPadding(new Insets(10));
@@ -203,13 +211,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
 
-    }
-
-    @FXML
-    private void keyReleaseSearchField(KeyEvent event)
-    {
-        filter = txtFldSearchStudent.getText();
-        updateView();
     }
 
     @FXML
@@ -272,4 +273,48 @@ public class TeacherAttendanceOverviewController implements Initializable
         model.getClassList();
     }
 
+    @FXML
+    private void searchFunction(ActionEvent event)
+    {
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+        }
+
+    }
+
+    @FXML
+    private void handleRefreshStudents(MouseEvent event)
+    {
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+            updatePresentCounter();
+            automaticUpdate();
+        }
+    }
+
+    public void automaticUpdate()
+    {
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            public void run()
+            {
+
+                try
+                {
+                    updatePresentCounter();
+                    timer.wait();
+                    updateView();
+                } catch (InterruptedException ex)
+                {
+                    Logger.getLogger(TeacherAttendanceOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }, 0, 5000);
+    }
 }
