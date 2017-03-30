@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
@@ -10,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,18 +16,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
-import myattendance.GUI.Model.StudentParser;
+import myattendance.GUI.Model.DateParser;
+import myattendance.GUI.Model.StudentViewModel;
+import org.joda.time.DateTime;
 
-/**
- * FXML Controller class
- *
- * @author Fjord82
- */
 public class StudentMainOverviewController implements Initializable
 {
 
@@ -49,9 +39,13 @@ public class StudentMainOverviewController implements Initializable
     private VBox vBoxMiddle;
 
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
-    StudentParser studentParser = StudentParser.getInstance();
+    DateParser dateParser = DateParser.getInstance();
+    StudentViewModel model = new StudentViewModel();
 
     User user = new User();
+
+    Day today;
+
     @FXML
     private Label lblStudentName;
     @FXML
@@ -66,25 +60,27 @@ public class StudentMainOverviewController implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {
-        // TODO
-        showConstantCalender();
 
-        
+    {
+        showConstantCalender();
     }
-    
+
+    public void attendenceChecks()
+    {
+        today = dateParser.getDay(new DateTime());
+
+        dateParser.recordAbsence(user, today);
+
+    }
+
     private void updateView()
     {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        pieChartData.add(new PieChart.Data("Absence", user.getAbsentDates()));
-        pieChartData.add(new PieChart.Data("Presence", user.getPresentDates()));
-
-        PieChart absenceChart = new PieChart(pieChartData);
+        PieChart absenceChart = new PieChart(model.getPieChartData(user));
         absenceChart.setTitle("Absence");
 
         Label absenceLabel = new Label();
         absenceLabel.setText("Student Attendance: " + user.getPresentDates() + "/" + Math.addExact(user.getAbsentDates(), user.getPresentDates()));
-        
+
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
@@ -116,10 +112,11 @@ public class StudentMainOverviewController implements Initializable
         vBoxSelectionContent.getChildren().add(popupContent);
 
     }
-    
+
     public void setUser(User user)
     {
         this.user = user;
+        attendenceChecks();
         updateView();
     }
 

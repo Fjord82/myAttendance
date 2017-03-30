@@ -9,19 +9,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="anchorpanelogin" prefHeight="272.0" prefWidth="324.0" stylesheets="@styleSheetLogin.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.LoginViewController">
+<AnchorPane id="anchorpanelogin" prefHeight="272.0" prefWidth="324.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.LoginViewController">
     <children>
-        <TextField fx:id="usernameField" layoutX="79.0" layoutY="106.0" promptText="Username" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
-        <PasswordField fx:id="passwordField" layoutX="79.0" layoutY="142.0" promptText="Password" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
-        <Button id="LoginButton" fx:id="loginButton" defaultButton="true" layoutX="90.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-        <CheckBox id="checkboxlogin" fx:id="rememberMeCheckBox" layoutX="144.0" layoutY="176.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Remember me" />
+        <TextField id="logintextfield" fx:id="usernameField" layoutX="79.0" layoutY="106.0" promptText="Username" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
+        <PasswordField id="logintextfield" fx:id="passwordField" layoutX="79.0" layoutY="142.0" promptText="Password" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
+        <Button id="LoginButton" fx:id="loginButton" defaultButton="true" layoutX="79.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
+        <CheckBox id="checkboxlogin" fx:id="rememberMeCheckBox" layoutX="133.0" layoutY="175.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Remember me" />
         <Label id="labellogin" layoutX="83.0" layoutY="74.0" prefHeight="32.0" prefWidth="162.0" text="Sign in:" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" />
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <image>
             <Image url="@Resource/logo.png" />
          </image>
         </ImageView>
-      <Label id="wrongLoginLabel" fx:id="wrongLoginLabel" alignment="CENTER" disable="true" layoutX="39.0" layoutY="210.0" prefWidth="247.0" text="Wrong username or password" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+      <Label id="wrongLoginLabel" fx:id="wrongLoginLabel" alignment="CENTER" disable="true" layoutX="30.0" layoutY="220.0" prefWidth="247.0" text="Wrong username or password" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
       <Label fx:id="LabelConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="235.0" prefHeight="25.0" prefWidth="252.0" />
     </children>
 </AnchorPane>

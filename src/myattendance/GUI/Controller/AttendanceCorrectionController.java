@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance.GUI.Controller;
 
 import java.io.IOException;
@@ -15,11 +10,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import myattendance.GUI.Model.AttendanceParser;
 
-/**
- * FXML Controller class
- *
- * @author Kristoffers
- */
 public class AttendanceCorrectionController implements Initializable
 {
 
