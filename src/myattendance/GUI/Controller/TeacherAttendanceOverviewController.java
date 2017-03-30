@@ -10,9 +10,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -273,8 +276,12 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void searchFunction(ActionEvent event)
     {
-        filter = txtFldSearchStudent.getText();
-        updateView();
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+        }
+
     }
 
     @FXML
@@ -284,6 +291,30 @@ public class TeacherAttendanceOverviewController implements Initializable
         {
             filter = txtFldSearchStudent.getText();
             updateView();
+            updatePresentCounter();
+            automaticUpdate();
         }
+    }
+
+    public void automaticUpdate()
+    {
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            public void run()
+            {
+
+                try
+                {
+                    updatePresentCounter();
+                    timer.wait();
+                    updateView();
+                } catch (InterruptedException ex)
+                {
+                    Logger.getLogger(TeacherAttendanceOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }, 0, 5000);
     }
 }
