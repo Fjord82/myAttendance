@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import myattendance.GUI.Model.AttendanceParser;
 
@@ -18,8 +19,11 @@ public class AttendanceCorrectionController implements Initializable
      */
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
 
-    @FXML
     private Button overviewButton;
+    @FXML
+    private Label nameLbl;
+    @FXML
+    private Button btnBackToMain;
 
     /**
      * Initializes the controller class.
@@ -36,8 +40,9 @@ public class AttendanceCorrectionController implements Initializable
         attendanceParser.changeView("Homepage", "GUI/View/TeacherAttendanceOverview.fxml", null);
 
         // Closes the primary stage
-        Stage stage = (Stage) overviewButton.getScene().getWindow();
+        Stage stage = (Stage) btnBackToMain.getScene().getWindow();
         stage.close();
     }
+
 
 }
