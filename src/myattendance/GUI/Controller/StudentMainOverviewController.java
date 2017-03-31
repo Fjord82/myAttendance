@@ -11,11 +11,17 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Day;
@@ -42,8 +48,6 @@ public class StudentMainOverviewController implements Initializable
     AttendanceParser attendanceParser = AttendanceParser.getInstance();
     DateParser dateParser = DateParser.getInstance();
     StudentViewModel model = new StudentViewModel();
-    
-    BLLFacade bllFacade = BLLFacade.getInstance();
 
     User user = new User();
 
@@ -57,6 +61,12 @@ public class StudentMainOverviewController implements Initializable
     public boolean present = false;
     @FXML
     private Pagination paginationBtn;
+
+    private PieChart absenceChart = new PieChart();
+
+    private CategoryAxis xAxis = new CategoryAxis();
+    private NumberAxis yAxis = new NumberAxis();
+    private StackedBarChart<String, Number> stackedChart = new StackedBarChart<>(xAxis, yAxis);
 
     /**
      * Initializes the controller class.
@@ -78,18 +88,39 @@ public class StudentMainOverviewController implements Initializable
 
     private void updateView()
     {
-        PieChart absenceChart = new PieChart(model.getPieChartData(user));
-        absenceChart.setTitle("Absence");
-
-        Label absenceLabel = new Label("Student Attendance: ");
-        absenceLabel.setText("Student Attendance: " + user.getAbsentDays().size() + "/" + bllFacade.getDaysUptoToday().size());
-
-        vBoxMiddle.getChildren().add(absenceChart);
-        vBoxMiddle.getChildren().add(absenceLabel);
-        vBoxMiddle.setAlignment(Pos.CENTER);
-
         lblStudentName.setText(user.getName());
         lblStudentClass.setText(user.getsClass());
+
+        Label absenceLabel = new Label("Student Attendance: ");
+        absenceLabel.setText("Student Absence: " + user.getAbsentDays().size() + "/" + model.getDaysUptoToday().size());
+        vBoxMiddle.getChildren().add(absenceLabel);
+        vBoxMiddle.setAlignment(Pos.CENTER);
+    }
+
+    public void updateStatistics()
+    {
+        vBoxMiddle.getChildren().remove(stackedChart);
+        vBoxMiddle.getChildren().remove(absenceChart);
+        if (paginationBtn.getCurrentPageIndex() == 0)
+        {
+            absenceChart.getData().clear();
+            
+            absenceChart.setData(model.getPieChartData(user));
+            absenceChart.setTitle("Absence");
+
+            vBoxMiddle.getChildren().add(absenceChart);
+
+        } else if (paginationBtn.getCurrentPageIndex() == 1)
+        {
+            stackedChart.getData().clear();
+            
+            vBoxMiddle.getChildren().add(stackedChart);
+            stackedChart.getData().add(model.getBarChartData(user));
+            xAxis.setLabel("Day");
+            yAxis.setLabel("Recorded Absences");
+            stackedChart.setTitle("Absence per day");
+
+        }
     }
 
     @FXML
@@ -100,6 +131,12 @@ public class StudentMainOverviewController implements Initializable
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void handlePaginationClick(MouseEvent event)
+    {
+        updateStatistics();
     }
 
     private void showConstantCalender()
@@ -120,9 +157,9 @@ public class StudentMainOverviewController implements Initializable
     {
         this.user = user;
         attendenceChecks();
+        user.setAbsentDays(model.getAbsentDays(user));
         updateView();
+        updateStatistics();
     }
-    
-    
 
 }

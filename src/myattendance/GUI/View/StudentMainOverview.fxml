@@ -82,7 +82,10 @@
                               <Insets />
                            </VBox.margin>
                            <children>
-                              <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
+                              <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" onMouseReleased="#handlePaginationClick" pageCount="3" prefHeight="65.0" prefWidth="200.0">
+                                 <HBox.margin>
+                                    <Insets top="1.0" />
+                                 </HBox.margin></Pagination>
                            </children>
                         </HBox>
                      </children></VBox>

@@ -3,6 +3,7 @@ package myattendance.BLL;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -102,6 +103,11 @@ public class BLLFacade
     public ObservableList<PieChart.Data> getPieChartData(User user)
     {
         return statistics.getPieChartData(user);
+    }
+    
+     public XYChart.Series<String, Number> getBarChartData(User user)
+    {
+        return statistics.getBarChartData(user);
     }
 
     public Integer totalSchoolDays()

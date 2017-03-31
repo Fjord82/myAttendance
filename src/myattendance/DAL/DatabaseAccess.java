@@ -75,7 +75,6 @@ public class DatabaseAccess
 
                 user = new User(id, fullName, className, lastLogin, isTeacher);
                 updateLastLogin(user);
-                user.setAbsentDays(getAbsentDays(user));
             } else
             {
 
