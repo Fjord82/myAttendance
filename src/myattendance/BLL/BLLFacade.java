@@ -104,8 +104,8 @@ public class BLLFacade
     {
         return statistics.getPieChartData(user);
     }
-    
-     public XYChart.Series<String, Number> getBarChartData(User user)
+
+    public XYChart.Series<String, Number> getBarChartData(User user)
     {
         return statistics.getBarChartData(user);
     }
@@ -120,4 +120,9 @@ public class BLLFacade
         return dalFacade.getDaysUptoToday();
     }
 
+    public void changeToNonSchoolDay(Day d, int c)
+    {
+
+        dalFacade.changeToNonSchoolDay(d, c);
+    }
 }
