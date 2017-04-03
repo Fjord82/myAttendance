@@ -128,6 +128,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        
 
     }
 
@@ -176,7 +177,10 @@ public class TeacherAttendanceOverviewController implements Initializable
 
 
         vBoxSelectionContent.setPadding(new Insets(10));
+        vBoxSelectionContent.setSpacing(100);
         vBoxSelectionContent.getChildren().add(pop);
+        
+        
 
     }
 
