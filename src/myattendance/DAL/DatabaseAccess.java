@@ -247,31 +247,31 @@ public class DatabaseAccess
         }
     }
 
-    public boolean isSchoolDay(Day day)
-    {
-
-        try (Connection con = ds.getConnection())
-        {
-
-            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
-            ps.setInt(1, day.getDateID());
-
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            if (rs.getBoolean("isSchoolDay"))
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
-
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
+//    public boolean isSchoolDay(Day day)
+//    {
+//
+//        try (Connection con = ds.getConnection())
+//        {
+//
+//            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
+//            ps.setInt(1, day.getDateID());
+//
+//            ResultSet rs = ps.executeQuery();
+//            rs.next();
+//            if (rs.getBoolean("isSchoolDay"))
+//            {
+//                return true;
+//            } else
+//            {
+//                return false;
+//            }
+//
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
+//    }
 
     public Day getDay(DateTime dateTime)
     {
@@ -383,6 +383,22 @@ public class DatabaseAccess
             ps.setInt(2, day.getDateID());
             ps.execute();
 
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void changeToNonSchoolDay(Day d, int c){
+        
+        try(Connection con = ds.getConnection()){
+            
+            PreparedStatement ps = con.prepareStatement("UPDATE Calendar SET isSchoolDay = ? WHERE dateID =?");
+            ps.setInt(1, c);
+            ps.setInt(2, d.getDateID());
+            ps.execute();
+            
+            
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);

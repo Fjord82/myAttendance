@@ -44,4 +44,9 @@ public class DateParser
     {
         bllFacade.recordAbsence(user, today);
     }
+
+    public void changeSchoolDay(Day d, int c)
+    {
+        bllFacade.changeToNonSchoolDay(d, c);
+    }
 }
