@@ -235,6 +235,7 @@ public class DatabaseAccess
 
                 User user = new User(id, name, isTeacher);
                 user.setLastLogin(new DateTime(rs.getDate("lastlogin")));
+                user.setAbsentDays(getAbsentDays(user));
 
                 course.addToUserList(user);
 
