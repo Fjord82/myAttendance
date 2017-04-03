@@ -20,6 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,11 +38,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import myattendance.BE.Course;
 import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.TeacherViewModel;
+import myattendance.MyAttendance;
 
 /**
  * FXML Controller class
@@ -123,7 +127,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
     }
-
+    
     public void setUser(User user)
     {
         this.user = user;
@@ -134,7 +138,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null);
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null, false);
 
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();
@@ -144,13 +148,29 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", null);
 
-        // Closes the primary stage
-        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
-        stage.close();
+        if(tblStatusView.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setContentText("Please select a student inside the studentlist");
+
+            alert.showAndWait();
+        }
+        else 
+        {
+        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
+        }
+        
+//        
+//        Closes the primary stage
+//        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
+//        stage.initModality(Modality.WINDOW_MODAL);
+//        stage.initOwner(primaryStage);
+//        //Scene scene = new Scene
+          //stage.show();
     }
-
+    
     private void fillComboBox()
     {
 
