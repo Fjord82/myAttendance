@@ -75,7 +75,6 @@ public class DatabaseAccess
 
                 user = new User(id, fullName, className, lastLogin, isTeacher);
                 updateLastLogin(user);
-                user.setAbsentDays(getAbsentDays(user));
             } else
             {
 
@@ -338,7 +337,7 @@ public class DatabaseAccess
 
     public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
     {
-        List<Day> datesAbsent = new ArrayList();
+        List<Day> dayList = new ArrayList();
         java.sql.Date sDate = new java.sql.Date(startDate.getMillis());
         java.sql.Date eDate = new java.sql.Date(endDate.getMillis());
 
@@ -362,14 +361,14 @@ public class DatabaseAccess
                 boolean isSchoolDay = rs.getBoolean("isSchoolDay");
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
                 if (day.isSchoolDay())
-                    datesAbsent.add(day);
+                    dayList.add(day);
             }
 
-            return datesAbsent;
+            return dayList;
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-            return datesAbsent;
+            return dayList;
         }
     }
 
@@ -390,6 +389,11 @@ public class DatabaseAccess
         }
     }
     
+    public List<Day> getDaysUptoToday()
+    {
+        return getDaysBetweenDates(getStartDate(), new DateTime());
+    }
+
     public void changeToNonSchoolDay(Day d, int c){
         
         try(Connection con = ds.getConnection()){
