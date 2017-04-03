@@ -148,7 +148,7 @@ public class StudentMainOverviewController implements Initializable
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null);
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null, false);
 
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();

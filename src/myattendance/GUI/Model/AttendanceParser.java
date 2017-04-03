@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
+import myattendance.GUI.Controller.AttendanceCorrectionController;
 import myattendance.GUI.Controller.StudentMainOverviewController;
 import myattendance.GUI.Controller.TeacherAttendanceOverviewController;
 import myattendance.MyAttendance;
@@ -46,7 +47,7 @@ public class AttendanceParser
      * @param path
      * @throws IOException
      */
-    public void changeView(String title, String path, User user) throws IOException
+    public void changeView(String title, String path, User user, boolean modifyAttendance) throws IOException
     {
 
         FXMLLoader loader = new FXMLLoader();
@@ -57,15 +58,25 @@ public class AttendanceParser
         {
             if (!user.IsTeacher())
             {
+                if(modifyAttendance)
+                {
+                AttendanceCorrectionController controller = loader.<AttendanceCorrectionController>getController();
+                controller.setUser(user);
+                }
+                else
+                {
                 StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
                 controller.setUser(user);
+                }
 
             } else
             {
                 TeacherAttendanceOverviewController controller = loader.<TeacherAttendanceOverviewController>getController();
                 controller.setUser(user);
+                
             }
         }
+        
 
         Stage dialogStage = new Stage();
         dialogStage.initOwner(stage);
@@ -76,7 +87,12 @@ public class AttendanceParser
         dialogStage.setScene(scene);
         dialogStage.setTitle(title);
 
+        if(modifyAttendance)
+        {
+            dialogStage.showAndWait();
+        }else
         dialogStage.show();
+       
     }
 
     public void tryLogin(String login, String pass, Stage stage)
@@ -89,10 +105,10 @@ public class AttendanceParser
             {
                 if (!user.IsTeacher())
                 {
-                    changeView("Homepage", "GUI/View/StudentMainOverview.fxml", user);
+                    changeView("Homepage", "GUI/View/StudentMainOverview.fxml", user, false);
                 } else
                 {
-                    changeView("Homepage", "GUI/View/TeacherAttendanceOverview.fxml", user);
+                    changeView("Homepage", "GUI/View/TeacherAttendanceOverview.fxml", user, false);
                 }
                 stage.close();
             } catch (IOException ex)
