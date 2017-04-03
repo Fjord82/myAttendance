@@ -19,8 +19,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<<<<<<< HEAD
 <AnchorPane id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#AnchorPaneActionEvent" prefHeight="600.0" prefWidth="1000.0" stylesheets="@ThemeSheetEasv.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.TeacherAttendanceOverviewController">
+=======
+<AnchorPane id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#AnchorPaneActionEvent" prefHeight="600.0" prefWidth="1000.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.TeacherAttendanceOverviewController">
+>>>>>>> development
     <children>
+      <Label text="Signed in as:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="lblName" text="Jonas Husted Andersen" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
                 <VBox fx:id="vBoxSelectionContent" prefHeight="306.0" prefWidth="290.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
@@ -28,16 +34,24 @@
                         <Insets />
                     </BorderPane.margin>
                     <children>
-                  <Label id="classlistlabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="290.0">
+                  <Label id="classlistlabel" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="182.0">
                      <graphic>
                               <ComboBox id="comboclasslist" fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="175.0" promptText="Select Class" />
                      </graphic>
                   </Label>
+<<<<<<< HEAD
                   <Label fx:id="lblName">
                      <VBox.margin>
                         <Insets left="5.0" top="10.0" />
                      </VBox.margin>
                   </Label>
+=======
+                        <DatePicker fx:id="datePicker" prefWidth="175.0" promptText="mm/dd/yyyy">
+                            <VBox.margin>
+                                <Insets top="75.0" />
+                            </VBox.margin>
+                        </DatePicker>
+>>>>>>> development
                     </children>
                 </VBox>
             </left>
@@ -94,14 +108,14 @@
                 </HBox>
             </top>
             <right>
-                <VBox fx:id="vBoxStatus" prefHeight="419.0" prefWidth="275.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
+                <VBox fx:id="vBoxStatus" prefHeight="497.0" prefWidth="316.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
                     <children>
                   <VBox id="vboxstatus" prefHeight="63.0" prefWidth="275.0">
                      <children>
                         <Label id="statuslabel" prefHeight="40.0" prefWidth="275.0" text="Todays students attendance" />
                         <HBox prefHeight="32.0" prefWidth="275.0">
                            <children>
-                                        <TextField id="searchfield" fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#keyReleaseSearchField" prefHeight="18.0" prefWidth="194.0" promptText="Search student">
+                                        <TextField id="searchfield" fx:id="txtFldSearchStudent" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchFunction" prefHeight="20.0" prefWidth="229.0" promptText="Search student">
                                             <opaqueInsets>
                                                 <Insets />
                                             </opaqueInsets>
@@ -109,28 +123,27 @@
                                     <Insets left="10.0" />
                                  </HBox.margin>
                                         </TextField>
-                              <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="22.0" fitWidth="49.0" onMouseClicked="#handleRefreshStudents" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="file:/Users/Fjord82/Downloads/search-logo-md.png" />
+                                    <Image url="file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/src/myattendance/GUI/View/Resource/refresh-button-icon-63755.png" />
+
                                  </image>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
                               </ImageView>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                        <TableView fx:id="tblStatusView" onMouseReleased="#clickTableStudents" prefHeight="356.0" prefWidth="250.0">
+                        <TableView fx:id="tblStatusView" onMouseReleased="#clickTableStudents" prefHeight="356.0" prefWidth="309.0">
                             <placeholder>
                                 <Label text="Please select a class list" />
                             </placeholder>
                             <columns>
-                                <TableColumn fx:id="tblViewName" prefWidth="161.0" resizable="false" text="Name" />
-                                <TableColumn fx:id="tblViewStatus" prefWidth="67.0" resizable="false" text="Status" />
+                                <TableColumn fx:id="tblViewName" prefWidth="165.0" resizable="false" text="Name" />
+                                <TableColumn fx:id="tblViewStatus" minWidth="0.0" prefWidth="69.0" resizable="false" text="Status" />
+                        <TableColumn prefWidth="51.0" text="\%" />
                             </columns>
                         </TableView>
-                        <Label id="counterlabel" fx:id="labelPresentCounter" contentDisplay="CENTER" prefHeight="40.0" prefWidth="275.0" text="Present: 0/0">
+                        <Label id="counterlabel" fx:id="labelPresentCounter" contentDisplay="CENTER" prefHeight="40.0" prefWidth="329.0" text="Present: 0/0">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>

@@ -3,13 +3,13 @@ package myattendance.GUI.Controller;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,13 +26,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Course;
@@ -106,9 +107,14 @@ public class TeacherAttendanceOverviewController implements Initializable
     private Pagination paginationBtn;
     @FXML
     private Label lblName;
+    @FXML
+    private MenuBar hiddenMenu;
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -145,7 +151,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Absence Overview", "GUI/View/StatisticAttendanceOverview.fxml", null);
+        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", null);
 
         // Closes the primary stage
         Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
@@ -162,10 +168,12 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
 
         //Install JFxtra from the internet!!!
+
         calendar = new DatePicker(LocalDate.now());
 
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
+
 
         vBoxSelectionContent.setPadding(new Insets(10));
         vBoxSelectionContent.getChildren().add(pop);
@@ -269,14 +277,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
-
-    }
-
-    @FXML
-    private void keyReleaseSearchField(KeyEvent event)
-    {
-        filter = txtFldSearchStudent.getText();
-        updateView();
+        
     }
 
     @FXML
@@ -317,17 +318,16 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void chartData()
     {
         pieChartData.clear();
-        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
-        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
-        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
-                + lastSelectedUser.getPresentDates()
-                + "/"
-                + Math.addExact(lastSelectedUser.getAbsentDates(), lastSelectedUser.getPresentDates()));
+//        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
+//        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
+//        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
+//                + lastSelectedUser.getPresentDates()
+//                + "/"
+//                + Math.addExact(lastSelectedUser.getAbsentDates(), lastSelectedUser.getPresentDates()));
     }
 
     private void updateView()
     {
-        model.updateList(filter, lastSelectedCourse);
         tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
         updatePresentCounter();
 
@@ -339,4 +339,37 @@ public class TeacherAttendanceOverviewController implements Initializable
         model.getClassList();
     }
 
+    @FXML
+    private void searchFunction(ActionEvent event)
+    {
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+        }
+
+    }
+
+    @FXML
+    private void handleRefreshStudents(MouseEvent event)
+    {
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+            updatePresentCounter();
+        }
+    }
+
+    public void automaticUpdate()
+    {
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            public void run()
+            {
+                updateView();
+            }
+        }, 0, 5000);
+    }
 }

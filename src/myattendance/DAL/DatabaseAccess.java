@@ -75,6 +75,7 @@ public class DatabaseAccess
 
                 user = new User(id, fullName, className, lastLogin, isTeacher);
                 updateLastLogin(user);
+                user.setAbsentDays(getAbsentDays(user));
             } else
             {
 
@@ -336,7 +337,6 @@ public class DatabaseAccess
 
     public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
     {
-        System.out.println("Get days between dates.");
         List<Day> datesAbsent = new ArrayList();
         java.sql.Date sDate = new java.sql.Date(startDate.getMillis());
         java.sql.Date eDate = new java.sql.Date(endDate.getMillis());
@@ -360,8 +360,8 @@ public class DatabaseAccess
                 String weekdayName = rs.getString("weekdayName");
                 boolean isSchoolDay = rs.getBoolean("isSchoolDay");
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
-                datesAbsent.add(day);
-                System.out.println("Add day " + day.getWeekdayName());
+                if (day.isSchoolDay())
+                    datesAbsent.add(day);
             }
 
             return datesAbsent;
@@ -382,7 +382,6 @@ public class DatabaseAccess
             ps.setInt(1, user.getId());
             ps.setInt(2, day.getDateID());
             ps.execute();
-            //System.out.println("Registered attendance for " + user.getName() + " on " + day.getDateInTime());
 
         } catch (SQLException ex)
         {
