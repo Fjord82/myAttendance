@@ -68,6 +68,10 @@ public class StudentMainOverviewController implements Initializable
     private NumberAxis yAxis = new NumberAxis();
     private StackedBarChart<String, Number> stackedChart = new StackedBarChart<>(xAxis, yAxis);
 
+    boolean pie = false;
+    boolean stacked = false;
+    boolean bar = false;
+
     /**
      * Initializes the controller class.
      */
@@ -99,27 +103,45 @@ public class StudentMainOverviewController implements Initializable
 
     public void updateStatistics()
     {
+
         vBoxMiddle.getChildren().remove(stackedChart);
         vBoxMiddle.getChildren().remove(absenceChart);
-        if (paginationBtn.getCurrentPageIndex() == 0)
+        if (paginationBtn.getCurrentPageIndex() == 0 && pie == false)
         {
+            pie = true;
+            stacked = false;
+            bar = false;
             absenceChart.getData().clear();
-            
+
             absenceChart.setData(model.getPieChartData(user));
             absenceChart.setTitle("Absence");
 
             vBoxMiddle.getChildren().add(absenceChart);
 
-        } else if (paginationBtn.getCurrentPageIndex() == 1)
+        } else if (paginationBtn.getCurrentPageIndex() == 1 && stacked == false)
         {
+            bar = false;
+            stacked = true;
+            bar = false;
+
             stackedChart.getData().clear();
-            
+
             vBoxMiddle.getChildren().add(stackedChart);
             stackedChart.getData().add(model.getBarChartData(user));
             xAxis.setLabel("Day");
+            xAxis.setTickMarkVisible(false);
             yAxis.setLabel("Recorded Absences");
+            yAxis.setTickUnit(1);
+            yAxis.setTickMarkVisible(false);
             stackedChart.setTitle("Absence per day");
 
+        } else if (paginationBtn.getCurrentPageIndex() == 2 && bar == false)
+        {
+            bar = false;
+            stacked = false;
+            bar = true;
+
+            System.out.println("Pagination 3");
         }
     }
 
