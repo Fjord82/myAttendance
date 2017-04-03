@@ -1,5 +1,6 @@
 package myattendance.BE;
 
+import java.text.SimpleDateFormat;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -65,7 +66,9 @@ public class Day
     {
         StringProperty returnString = new SimpleStringProperty();
         
-        returnString.set(this.getWeekdayName() + " " + (this.getDateInTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
+        
+        returnString.set(this.getWeekdayName() + " " + (this.getDateInTime().toLocalDate()));
         
         return returnString;
     }
