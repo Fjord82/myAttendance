@@ -1,6 +1,9 @@
 package myattendance.BLL;
 
 import java.util.List;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -16,8 +19,8 @@ public class BLLFacade
     /**
      * Publicly accessible method for acquiring the singleton instance of the
      * class. Returns the instance of the class, and creates one if there
-     * currently isn't one. Either case, returns a the singleton instance of
-     * this class.
+     * currently isn't one. Either case, returns the singleton instance of this
+     * class.
      *
      * @return BLLFacade
      */
@@ -40,6 +43,7 @@ public class BLLFacade
 
     DALFacade dalFacade = DALFacade.getInstance();
     DateManager dateManager = new DateManager();
+    Statistics statistics = new Statistics();
 
     public User getUser(String login, String pass)
     {
@@ -94,6 +98,26 @@ public class BLLFacade
     public boolean establishServerConnection()
     {
         return dalFacade.establishServerConnection();
+    }
+
+    public ObservableList<PieChart.Data> getPieChartData(User user)
+    {
+        return statistics.getPieChartData(user);
+    }
+
+    public XYChart.Series<String, Number> getBarChartData(User user)
+    {
+        return statistics.getBarChartData(user);
+    }
+
+    public Integer totalSchoolDays()
+    {
+        return dalFacade.totalSchoolDays();
+    }
+
+    public List<Day> getDaysUptoToday()
+    {
+        return dalFacade.getDaysUptoToday();
     }
 
     public void changeToNonSchoolDay(Day d, int c)
