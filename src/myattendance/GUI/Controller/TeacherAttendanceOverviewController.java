@@ -3,6 +3,7 @@ package myattendance.GUI.Controller;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -15,7 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,13 +38,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-<<<<<<< HEAD
+
 import javafx.util.Callback;
-=======
-import javafx.stage.Window;
->>>>>>> Development
+
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -215,9 +212,11 @@ public class TeacherAttendanceOverviewController implements Initializable
                 @Override
                 public void updateItem(LocalDate item, boolean empty)
                 {
+                    //Must call super
                     super.updateItem(item, empty);
-
-                    Instant instant = Instant.from(item.atStartOfDay());
+                    
+                    
+                    Instant instant = Instant.from(item);
 
                     Date date = Date.from(instant);
 
@@ -234,6 +233,10 @@ public class TeacherAttendanceOverviewController implements Initializable
                         setTooltip(new Tooltip("Not a school day"));
                         setStyle("-fx-background-color: ##8eff44;");
                     }
+                    
+                    
+                    
+
                 }
             };
         }
