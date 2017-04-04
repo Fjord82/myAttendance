@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,6 +46,8 @@ public class AttendanceCorrectionController implements Initializable
     private TableColumn<Day, String> columnAbsenceDays;
     
     private User user = new User();
+    @FXML
+    private DatePicker dpCalender;
 
     /**
      * Initializes the controller class.
@@ -52,13 +55,14 @@ public class AttendanceCorrectionController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+       
         columnAbsenceDays.setCellValueFactory(cellData -> cellData.getValue().toStringProperty());
+        
     }
     
     public void setUser(User user)
     {
         this.user = user;
-        
         nameLbl.setText(user.getName());
         populateList();
         
@@ -69,6 +73,7 @@ public class AttendanceCorrectionController implements Initializable
         //ObservableList<Day> absenceList = FXCollections.observableArrayList(user.getAbsentDays());
         
         tblAbsenceOverview.setItems(FXCollections.observableArrayList(user.getAbsentDays()));
+        
     }
     
     
@@ -86,17 +91,25 @@ public class AttendanceCorrectionController implements Initializable
     @FXML
     private void handleRemoveContent(ActionEvent event)
     {
-        if(tblAbsenceOverview.getSelectionModel().getSelectedItem() == null)
+        Day selectedDay = tblAbsenceOverview.getSelectionModel().getSelectedItem();
+        
+        
+        if(selectedDay == null)
         {
             confirmLbl.setText("Select a day from above list to remove!");
         }
         else 
-        {
-            Button yesBtn = new Button("Yes");
-            Button noBtn = new Button("No");
-            confirmLbl.setText("Are you sure you want to remove selected from list? ");
+        { 
             
+            attendanceParser.deleteAbsenceFromDB(user, selectedDay);
+            user.getAbsentDays().remove(selectedDay);
+            populateList();
+              
+//            Button yesBtn = new Button("Yes");
+//            Button noBtn = new Button("No");
+//            confirmLbl.setText("Are you sure you want to remove selected from list? ");  
         }
+        
             
     }
 

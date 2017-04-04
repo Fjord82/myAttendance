@@ -389,6 +389,23 @@ public class DatabaseAccess
         }
     }
     
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        try(Connection con = ds.getConnection())
+        {
+           PreparedStatement ps = con.prepareStatement("DELETE from Absence Where PID=? and dateID=?");
+           ps.setInt(1, user.getId());
+           ps.setInt(2, day.getDateID());
+           
+           ps.execute();
+           
+           
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public List<Day> getDaysUptoToday()
     {
         return getDaysBetweenDates(getStartDate(), new DateTime());

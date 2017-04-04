@@ -110,4 +110,9 @@ public class DALFacade
 
         databaseAccess.changeToNonSchoolDay(d, c);
     }
+    
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        databaseAccess.deleteAbsenceFromDB(user, day);
+    }
 }
