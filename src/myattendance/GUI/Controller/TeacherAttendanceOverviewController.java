@@ -1,6 +1,7 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -11,6 +12,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import static javafx.application.Platform.runLater;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -132,7 +137,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-
     }
 
     public void setUser(User user)
@@ -372,49 +376,45 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleRefreshStudents(MouseEvent event)
     {
+        automaticUpdate();
         if (!cBoxClassSelection.getSelectionModel().isEmpty())
         {
             filter = txtFldSearchStudent.getText();
             updateView();
             updatePresentCounter();
-            test();
         }
     }
 
-    public void automaticUpdate() throws InterruptedException
+    /**
+     * Automatically updates the list of students and their status
+     */
+    @FXML
+    private void automaticUpdate()
     {
-//        java.util.Timer timer = new java.util.Timer();
-//        timer.scheduleAtFixedRate(new TimerTask()
+        // The time between every update in milliseconds
+        int delay = 15000;
 
-        long t = System.currentTimeMillis();
-        long end = t + 5000;
-
-        while (System.currentTimeMillis() < end)
-        {
-
-            updateView();
-            System.out.println("HEHE");
-
-            // pause to avoid churning
-            Thread.sleep(end);
-
-            automaticUpdate();
-        }
-    }
-
-    private void test()
-    {
+        // Creates a new timer
         Timer timer = new Timer();
+
+        // Creates a new timer schedule
         timer.schedule(new TimerTask()
         {
+
             @Override
             public void run()
             {
-                System.out.println("1");
-                updateView();
-                run();
+                // Creates a new thread
+                Thread t = new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        updateView();
+                    }
+                };
+                Platform.runLater(t);
             }
-        }, 0, 5000);
+        }, 0, delay);
     }
-
 }
