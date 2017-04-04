@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.TimerTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -137,6 +138,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewName.setCellFactory(getCustomCellFactory());
         tblViewStatus.setCellFactory(getCustomCellFactory());
 
+
     }
 
     public void setUser(User user)
@@ -189,17 +191,14 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     private void showConstantCalender()
     {
-
-        //Install JFxtra from the internet!!!
         calendar = new DatePicker(LocalDate.now());
 
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
 
-        vBoxSelectionContent.setPadding(new Insets(10));
-        vBoxSelectionContent.setSpacing(100);
+        vBoxSelectionContent.setPadding(new Insets(5));
+        vBoxSelectionContent.setSpacing(200);
         vBoxSelectionContent.getChildren().add(pop);
-
     }
 
     private void setClickCal()
@@ -382,17 +381,42 @@ public class TeacherAttendanceOverviewController implements Initializable
             filter = txtFldSearchStudent.getText();
             updateView();
             updatePresentCounter();
+            test();
         }
     }
 
-    public void automaticUpdate()
+    public void automaticUpdate() throws InterruptedException
     {
-        java.util.Timer timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
+//        java.util.Timer timer = new java.util.Timer();
+//        timer.scheduleAtFixedRate(new TimerTask()
+
+        long t = System.currentTimeMillis();
+        long end = t + 5000;
+
+        while (System.currentTimeMillis() < end)
         {
+
+            updateView();
+            System.out.println("HEHE");
+
+            // pause to avoid churning
+            Thread.sleep(end);
+
+            automaticUpdate();
+        }
+    }
+
+    private void test()
+    {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask()
+        {
+            @Override
             public void run()
             {
+                System.out.println("1");
                 updateView();
+                run();
             }
         }, 0, 5000);
     }
