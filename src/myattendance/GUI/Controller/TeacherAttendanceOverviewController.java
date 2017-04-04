@@ -24,6 +24,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -31,11 +32,13 @@ import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -128,7 +131,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        
 
     }
 
@@ -169,20 +171,51 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
 
         //Install JFxtra from the internet!!!
-
         calendar = new DatePicker(LocalDate.now());
 
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
 
+        calendar.setDayCellFactory(dayCellFactory);
 
         vBoxSelectionContent.setPadding(new Insets(10));
         vBoxSelectionContent.setSpacing(100);
         vBoxSelectionContent.getChildren().add(pop);
-        
-        
 
     }
+
+    final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
+    {
+        public DateCell call(final DatePicker datePicker)
+        {
+            return new DateCell()
+            {
+                @Override
+                public void updateItem(LocalDate item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+
+                    Instant instant = Instant.from(item.atStartOfDay());
+
+                    Date date = Date.from(instant);
+
+                    Day d = dateParser.getDay(new DateTime(date));
+
+                    if (d.isSchoolDay() == false)
+
+                    {
+                        setTooltip(new Tooltip("Not a school day"));
+                        setStyle("-fx-background-color: #ff4444;");
+                    }
+                    if (d.isSchoolDay() == true)
+                    {
+                        setTooltip(new Tooltip("Not a school day"));
+                        setStyle("-fx-background-color: ##8eff44;");
+                    }
+                }
+            };
+        }
+    };
 
     private void setClickCal()
     {
@@ -216,7 +249,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
             DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
             String strDate = dtf.print(clickedDay.getDateInTime());
-            
+
             //Bit reference - set to 0 if day is meant to be a non-school day, or 1 if it is a school day
             int c;
 
@@ -228,9 +261,9 @@ public class TeacherAttendanceOverviewController implements Initializable
             } else
             {
                 alert.setContentText("Are you sure you want to change " + strDate + " to a school day?");
-                c=1;
+                c = 1;
             }
-            
+
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == ButtonType.OK)
@@ -238,7 +271,7 @@ public class TeacherAttendanceOverviewController implements Initializable
                 dateParser.changeSchoolDay(clickedDay, c);
             }
 
-        } 
+        }
 
     }
 
@@ -281,7 +314,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
-        
+
     }
 
     @FXML
