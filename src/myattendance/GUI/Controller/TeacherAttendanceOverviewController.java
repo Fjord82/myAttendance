@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.TimerTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -131,10 +132,9 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        
 
     }
-    
+
     public void setUser(User user)
     {
         this.user = user;
@@ -156,28 +156,27 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
 
-        if(tblStatusView.getSelectionModel().getSelectedItem() == null)
+        if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setContentText("Please select a student inside the studentlist");
 
             alert.showAndWait();
-        }
-        else 
+        } else
         {
-        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
+            attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
         }
-        
+
 //        
 //        Closes the primary stage
 //        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
 //        stage.initModality(Modality.WINDOW_MODAL);
 //        stage.initOwner(primaryStage);
 //        //Scene scene = new Scene
-          //stage.show();
+        //stage.show();
     }
-    
+
     private void fillComboBox()
     {
 
@@ -186,21 +185,14 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     private void showConstantCalender()
     {
-
-        //Install JFxtra from the internet!!!
-
         calendar = new DatePicker(LocalDate.now());
 
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
 
-
-        vBoxSelectionContent.setPadding(new Insets(10));
-        vBoxSelectionContent.setSpacing(100);
+        vBoxSelectionContent.setPadding(new Insets(5));
+        vBoxSelectionContent.setSpacing(200);
         vBoxSelectionContent.getChildren().add(pop);
-        
-        
-
     }
 
     private void setClickCal()
@@ -235,7 +227,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
             DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
             String strDate = dtf.print(clickedDay.getDateInTime());
-            
+
             //Bit reference - set to 0 if day is meant to be a non-school day, or 1 if it is a school day
             int c;
 
@@ -247,9 +239,9 @@ public class TeacherAttendanceOverviewController implements Initializable
             } else
             {
                 alert.setContentText("Are you sure you want to change " + strDate + " to a school day?");
-                c=1;
+                c = 1;
             }
-            
+
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == ButtonType.OK)
@@ -257,7 +249,7 @@ public class TeacherAttendanceOverviewController implements Initializable
                 dateParser.changeSchoolDay(clickedDay, c);
             }
 
-        } 
+        }
 
     }
 
@@ -300,7 +292,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
-        
+
     }
 
     @FXML
@@ -343,7 +335,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         pieChartData.clear();
         pieChartData.setAll(model.getPieChartData(lastSelectedUser));
         absenceChart.setTitle("Absence");
-        
+
         //pieChartData.clear();
 //        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
 //        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
@@ -385,18 +377,44 @@ public class TeacherAttendanceOverviewController implements Initializable
             filter = txtFldSearchStudent.getText();
             updateView();
             updatePresentCounter();
+            test();
         }
     }
 
-    public void automaticUpdate()
+    public void automaticUpdate() throws InterruptedException
     {
-        java.util.Timer timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
+//        java.util.Timer timer = new java.util.Timer();
+//        timer.scheduleAtFixedRate(new TimerTask()
+
+        long t = System.currentTimeMillis();
+        long end = t + 5000;
+
+        while (System.currentTimeMillis() < end)
         {
+
+            updateView();
+            System.out.println("HEHE");
+
+            // pause to avoid churning
+            Thread.sleep(end);
+
+            automaticUpdate();
+        }
+    }
+
+    private void test()
+    {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask()
+        {
+            @Override
             public void run()
             {
+                System.out.println("1");
                 updateView();
+                run();
             }
         }, 0, 5000);
     }
+
 }

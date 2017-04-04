@@ -169,7 +169,7 @@ public class StudentMainOverviewController implements Initializable
 
         Node popupContent = datePickerSkin.getPopupContent();
 
-        vBoxSelectionContent.setPadding(new Insets(10));
+        vBoxSelectionContent.setPadding(new Insets(5));
 
         vBoxSelectionContent.getChildren().add(popupContent);
 
