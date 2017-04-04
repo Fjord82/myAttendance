@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#AnchorPaneActionEvent" prefHeight="600.0" prefWidth="1000.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.TeacherAttendanceOverviewController">
+<AnchorPane id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#AnchorPaneActionEvent" prefHeight="600.0" prefWidth="1000.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.TeacherAttendanceOverviewController">
     <children>
         <Label text="Signed in as:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
         <Label fx:id="lblName" text="Jonas Husted Andersen" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
@@ -29,13 +29,9 @@
                     <BorderPane.margin>
                         <Insets />
                     </BorderPane.margin>
-                    <children>
-                        <Label id="classlistlabel" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="290.0">
-                            <graphic>
-                                <ComboBox id="comboclasslist" fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="26.0" prefWidth="295.0" promptText="Select Class" />
-                            </graphic>
-                        </Label>
-                    </children>
+               <children>
+                  <Label />
+               </children>
                 </VBox>
             </left>
             <top>
@@ -51,12 +47,12 @@
                                         <Insets bottom="5.0" left="10.0" top="10.0" />
                                     </VBox.margin>
                                 </ImageView>
-                                <MenuBar fx:id="hiddenMenu" maxHeight="42.0" minWidth="275.0" prefHeight="42.0" prefWidth="275.0" />
+                                <ComboBox id="comboclasslist" fx:id="cBoxClassSelection" onAction="#clickCBox" prefHeight="59.0" prefWidth="273.0" promptText="Select Class" />
                             </children>
                         </VBox>
                         <ButtonBar buttonMinWidth="80.0" maxHeight="42.0" minWidth="450.0" prefHeight="42.0" prefWidth="450.0">
                             <buttons>
-                                <Button fx:id="btnAbsenceOverview" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="35.0" prefWidth="239.0" text="Attendance List" />
+                                <Button fx:id="btnAbsenceOverview" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="35.0" prefWidth="239.0" text="Attendance Correction" />
                                 <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="35.0" prefWidth="252.0" text="Statistics" />
                             </buttons>
                             <HBox.margin>
