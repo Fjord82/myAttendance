@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
@@ -89,8 +91,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private ComboBox<Course> cBoxClassSelection;
     @FXML
-    private Button btnLogOut;
-    @FXML
     private VBox vBoxSelectionContent;
 
     @FXML
@@ -115,6 +115,8 @@ public class TeacherAttendanceOverviewController implements Initializable
     private Label lblName;
     @FXML
     private MenuBar hiddenMenu;
+    @FXML
+    private TableColumn<User, Number> tblViewPercentage;
 
     /**
      * Initializes the controller class.
@@ -134,10 +136,11 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
         tblViewName.setCellFactory(getCustomCellFactory());
         tblViewStatus.setCellFactory(getCustomCellFactory());
-
+        tblViewPercentage.setCellFactory(getCustomCellFactory());
 
     }
 
@@ -341,13 +344,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         pieChartData.clear();
         pieChartData.setAll(model.getPieChartData(lastSelectedUser));
         absenceChart.setTitle("Absence");
-        //pieChartData.clear();
-//        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
-//        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
-//        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
-//                + lastSelectedUser.getPresentDates()
-//                + "/"
-//                + Math.addExact(lastSelectedUser.getAbsentDates(), lastSelectedUser.getPresentDates()));
     }
 
     private void updateView()
@@ -365,24 +361,14 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void searchFunction(ActionEvent event)
     {
-        if (!cBoxClassSelection.getSelectionModel().isEmpty())
-        {
-            filter = txtFldSearchStudent.getText();
-            updateView();
-        }
+        refreshStudents();
 
     }
 
     @FXML
     private void handleRefreshStudents(MouseEvent event)
     {
-        if (!cBoxClassSelection.getSelectionModel().isEmpty())
-        {
-            filter = txtFldSearchStudent.getText();
-            updateView();
-            updatePresentCounter();
-            test();
-        }
+        refreshStudents();
     }
 
     public void automaticUpdate() throws InterruptedException
@@ -419,6 +405,25 @@ public class TeacherAttendanceOverviewController implements Initializable
                 run();
             }
         }, 0, 5000);
+    }
+    
+    public void refreshStudents()
+    {
+                if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+            updatePresentCounter();
+        }
+    }
+
+    @FXML
+    private void searchFieldTyped(KeyEvent event)
+    {
+        filter = txtFldSearchStudent.getText();
+        
+        if (filter != null)
+        tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
     }
 
     private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()

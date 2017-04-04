@@ -2,7 +2,9 @@ package myattendance.BE;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -15,6 +17,8 @@ public class User
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
+    
+    private DoubleProperty absencePercentage = new SimpleDoubleProperty();
 
     private final boolean isTeacher;
 
@@ -117,6 +121,22 @@ public class User
     {
         this.absentDays = absentDays;
     }
+
+    public double getAbsencePercentage()
+    {
+        return absencePercentage.get();
+    }
+
+    public void setAbsencePercentage(double absencePercentage)
+    {
+        this.absencePercentage.set(absencePercentage);
+    }
+    
+    public DoubleProperty getAbsencePercentageProperty()
+    {
+        return absencePercentage;
+    }
+    
     
     public String getCSSClass()
         {
