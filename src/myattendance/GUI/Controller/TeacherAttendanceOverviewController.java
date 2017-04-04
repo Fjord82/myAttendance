@@ -70,7 +70,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     TeacherViewModel model = new TeacherViewModel();
     DateParser dateParser = DateParser.getInstance();
 
-    User user;
+    User teacher;
     User lastSelectedUser;
     Day clickedDay;
 
@@ -140,13 +140,12 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         tblViewName.setCellFactory(getCustomCellFactory());
         tblViewStatus.setCellFactory(getCustomCellFactory());
-        tblViewPercentage.setCellFactory(getCustomCellFactory());
 
     }
 
     public void setUser(User user)
     {
-        this.user = user;
+        this.teacher = user;
         lblName.setText(user.getName());
         fillComboBox();
     }
@@ -189,7 +188,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void fillComboBox()
     {
 
-        cBoxClassSelection.setItems(model.comboBoxContentGet(user.getId()));
+        cBoxClassSelection.setItems(model.comboBoxContentGet(teacher));
     }
 
     private void showConstantCalender()
@@ -211,7 +210,7 @@ public class TeacherAttendanceOverviewController implements Initializable
             @Override
             public void handle(ActionEvent event)
             {
-                //Selects the date the user has clicked on from the calendar
+                //Selects the date the teacher has clicked on from the calendar
                 LocalDate localDate = calendar.getValue();
                 //Converts local date to absolute time (uses default time zone of the computer)
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
