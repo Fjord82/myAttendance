@@ -66,8 +66,6 @@ public class Day
     {
         StringProperty returnString = new SimpleStringProperty();
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
-        
         returnString.set(this.getWeekdayName() + " " + (this.getDateInTime().toLocalDate()));
         
         return returnString;

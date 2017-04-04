@@ -12,10 +12,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
-import static javafx.application.Platform.runLater;
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,9 +32,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
@@ -45,6 +44,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -71,7 +71,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     TeacherViewModel model = new TeacherViewModel();
     DateParser dateParser = DateParser.getInstance();
 
-    User user;
+    User teacher;
     User lastSelectedUser;
     Day clickedDay;
 
@@ -91,8 +91,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     private TextField txtFldSearchStudent;
     @FXML
     private ComboBox<Course> cBoxClassSelection;
-    @FXML
-    private Button btnLogOut;
     @FXML
     private VBox vBoxSelectionContent;
 
@@ -118,6 +116,8 @@ public class TeacherAttendanceOverviewController implements Initializable
     private Label lblName;
     @FXML
     private MenuBar hiddenMenu;
+    @FXML
+    private TableColumn<User, Number> tblViewPercentage;
 
     /**
      * Initializes the controller class.
@@ -137,11 +137,15 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
+
+        tblViewName.setCellFactory(getCustomCellFactory());
+        tblViewStatus.setCellFactory(getCustomCellFactory());
     }
 
     public void setUser(User user)
     {
-        this.user = user;
+        this.teacher = user;
         lblName.setText(user.getName());
         fillComboBox();
     }
@@ -184,7 +188,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void fillComboBox()
     {
 
-        cBoxClassSelection.setItems(model.comboBoxContentGet(user.getId()));
+        cBoxClassSelection.setItems(model.comboBoxContentGet(teacher));
     }
 
     private void showConstantCalender()
@@ -206,7 +210,7 @@ public class TeacherAttendanceOverviewController implements Initializable
             @Override
             public void handle(ActionEvent event)
             {
-                //Selects the date the user has clicked on from the calendar
+                //Selects the date the teacher has clicked on from the calendar
                 LocalDate localDate = calendar.getValue();
                 //Converts local date to absolute time (uses default time zone of the computer)
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
@@ -339,21 +343,12 @@ public class TeacherAttendanceOverviewController implements Initializable
         pieChartData.clear();
         pieChartData.setAll(model.getPieChartData(lastSelectedUser));
         absenceChart.setTitle("Absence");
-
-        //pieChartData.clear();
-//        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
-//        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
-//        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
-//                + lastSelectedUser.getPresentDates()
-//                + "/"
-//                + Math.addExact(lastSelectedUser.getAbsentDates(), lastSelectedUser.getPresentDates()));
     }
 
     private void updateView()
     {
         tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
         updatePresentCounter();
-
     }
 
     @FXML
@@ -365,24 +360,14 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void searchFunction(ActionEvent event)
     {
-        if (!cBoxClassSelection.getSelectionModel().isEmpty())
-        {
-            filter = txtFldSearchStudent.getText();
-            updateView();
-        }
+        refreshStudents();
 
     }
 
     @FXML
     private void handleRefreshStudents(MouseEvent event)
     {
-        automaticUpdate();
-        if (!cBoxClassSelection.getSelectionModel().isEmpty())
-        {
-            filter = txtFldSearchStudent.getText();
-            updateView();
-            updatePresentCounter();
-        }
+        refreshStudents();
     }
 
     /**
@@ -416,5 +401,47 @@ public class TeacherAttendanceOverviewController implements Initializable
                 Platform.runLater(t);
             }
         }, 0, delay);
+    }
+    
+    public void refreshStudents()
+    {
+                if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        {
+            filter = txtFldSearchStudent.getText();
+            updateView();
+            updatePresentCounter();
+        }
+    }
+
+    @FXML
+    private void searchFieldTyped(KeyEvent event)
+    {
+        filter = txtFldSearchStudent.getText();
+        
+        if (filter != null)
+        tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+    }
+
+    private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()
+    {
+        return (TableColumn<User, String> param)
+                -> 
+                {
+                    return new TableCell<User, String>()
+                    {
+                        @Override
+                        public void updateItem(final String item, boolean empty)
+                        {
+                            
+                            if (item != null)
+                            {
+                                User user = getTableView().getItems().get(getIndex());
+                                setText(item);
+                                String warningClass = user.getCSSClass();
+                                getStyleClass().add(warningClass);
+                            }
+                        }
+                    };
+        };
     }
 }
