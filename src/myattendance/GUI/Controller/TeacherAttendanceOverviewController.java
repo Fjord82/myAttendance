@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -139,8 +140,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
-        tblViewName.setCellFactory(getCustomCellFactory());
-        tblViewStatus.setCellFactory(getCustomCellFactory());
+
     }
 
     public void setUser(User user)
