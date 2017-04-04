@@ -24,9 +24,9 @@ public class TeacherViewModel
 
     ObservableList<Course> comboItems;
 
-    public ObservableList<Course> comboBoxContentGet(int PID)
+    public ObservableList<Course> comboBoxContentGet(User teacher)
     {
-        courseList = bllFacade.getCourses(PID);
+        courseList = bllFacade.getCourses(teacher);
         getClassList();
 
         comboItems = FXCollections.observableArrayList(courseList);
