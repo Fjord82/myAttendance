@@ -30,6 +30,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -40,6 +41,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -132,6 +134,10 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+
+        tblViewName.setCellFactory(getCustomCellFactory());
+        tblViewStatus.setCellFactory(getCustomCellFactory());
+
 
     }
 
@@ -335,7 +341,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         pieChartData.clear();
         pieChartData.setAll(model.getPieChartData(lastSelectedUser));
         absenceChart.setTitle("Absence");
-
         //pieChartData.clear();
 //        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
 //        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
@@ -349,7 +354,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
         updatePresentCounter();
-
     }
 
     @FXML
@@ -417,4 +421,26 @@ public class TeacherAttendanceOverviewController implements Initializable
         }, 0, 5000);
     }
 
+    private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()
+    {
+        return (TableColumn<User, String> param)
+                -> 
+                {
+                    return new TableCell<User, String>()
+                    {
+                        @Override
+                        public void updateItem(final String item, boolean empty)
+                        {
+                            
+                            if (item != null)
+                            {
+                                User user = getTableView().getItems().get(getIndex());
+                                setText(item);
+                                String warningClass = user.getCSSClass();
+                                getStyleClass().add(warningClass);
+                            }
+                        }
+                    };
+        };
+    }
 }
