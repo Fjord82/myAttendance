@@ -1,6 +1,7 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -140,7 +141,6 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         tblViewName.setCellFactory(getCustomCellFactory());
         tblViewStatus.setCellFactory(getCustomCellFactory());
-
     }
 
     public void setUser(User user)
@@ -370,40 +370,37 @@ public class TeacherAttendanceOverviewController implements Initializable
         refreshStudents();
     }
 
-    public void automaticUpdate() throws InterruptedException
+    /**
+     * Automatically updates the list of students and their status
+     */
+    @FXML
+    private void automaticUpdate()
     {
-//        java.util.Timer timer = new java.util.Timer();
-//        timer.scheduleAtFixedRate(new TimerTask()
+        // The time between every update in milliseconds
+        int delay = 15000;
 
-        long t = System.currentTimeMillis();
-        long end = t + 5000;
-
-        while (System.currentTimeMillis() < end)
-        {
-
-            updateView();
-            System.out.println("HEHE");
-
-            // pause to avoid churning
-            Thread.sleep(end);
-
-            automaticUpdate();
-        }
-    }
-
-    private void test()
-    {
+        // Creates a new timer
         Timer timer = new Timer();
+
+        // Creates a new timer schedule
         timer.schedule(new TimerTask()
         {
+
             @Override
             public void run()
             {
-                System.out.println("1");
-                updateView();
-                run();
+                // Creates a new thread
+                Thread t = new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        updateView();
+                    }
+                };
+                Platform.runLater(t);
             }
-        }, 0, 5000);
+        }, 0, delay);
     }
     
     public void refreshStudents()
