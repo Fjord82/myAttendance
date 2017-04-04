@@ -136,7 +136,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
     }
-    
+
     public void setUser(User user)
     {
         this.user = user;
@@ -158,28 +158,27 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
 
-        if(tblStatusView.getSelectionModel().getSelectedItem() == null)
+        if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setContentText("Please select a student inside the studentlist");
 
             alert.showAndWait();
-        }
-        else 
+        } else
         {
-        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
+            attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
         }
-        
+
 //        
 //        Closes the primary stage
 //        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
 //        stage.initModality(Modality.WINDOW_MODAL);
 //        stage.initOwner(primaryStage);
 //        //Scene scene = new Scene
-          //stage.show();
+        //stage.show();
     }
-    
+
     private void fillComboBox()
     {
 
@@ -195,6 +194,8 @@ public class TeacherAttendanceOverviewController implements Initializable
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
 
+        // Factory to create Cell of DatePicker
+        Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory();
         calendar.setDayCellFactory(dayCellFactory);
 
         vBoxSelectionContent.setPadding(new Insets(10));
@@ -202,45 +203,81 @@ public class TeacherAttendanceOverviewController implements Initializable
         vBoxSelectionContent.getChildren().add(pop);
 
     }
+    // Factory to create Cell of DatePicker
 
-    final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
+    private Callback<DatePicker, DateCell> getDayCellFactory()
     {
-        public DateCell call(final DatePicker datePicker)
+
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
         {
-            return new DateCell()
+
+            @Override
+            public DateCell call(final DatePicker datePicker)
             {
-                @Override
-                public void updateItem(LocalDate item, boolean empty)
+                return new DateCell()
                 {
-                    //Must call super
-                    super.updateItem(item, empty);
-                    
-                    
-                    Instant instant = Instant.from(item);
-
-                    Date date = Date.from(instant);
-
-                    Day d = dateParser.getDay(new DateTime(date));
-
-                    if (d.isSchoolDay() == false)
-
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty)
                     {
-                        setTooltip(new Tooltip("Not a school day"));
-                        setStyle("-fx-background-color: #ff4444;");
-                    }
-                    if (d.isSchoolDay() == true)
-                    {
-                        setTooltip(new Tooltip("Not a school day"));
-                        setStyle("-fx-background-color: ##8eff44;");
-                    }
-                    
-                    
-                    
+                        super.updateItem(item, empty);
 
-                }
-            };
-        }
-    };
+                        // Disable Monday, Tueday, Wednesday.
+                        if (item.getDayOfWeek() == DayOfWeek.MONDAY //
+                                || item.getDayOfWeek() == DayOfWeek.TUESDAY //
+                                || item.getDayOfWeek() == DayOfWeek.WEDNESDAY)
+                        {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;");
+                        }
+                    }
+                };
+            }
+        };
+        return dayCellFactory;
+    }
+//    final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
+//    {
+//        public DateCell call(final DatePicker datePicker)
+//        {
+//            return new DateCell()
+//            {
+//                @Override
+//                public void updateItem(LocalDate item, boolean empty)
+//                {
+//                    //Must call super
+//                    super.updateItem(item, empty);
+//                    
+//                    
+////                    Instant instant = Instant.from(item);
+////
+////                    Date date = Date.from(instant);
+////
+////                    Day d = dateParser.getDay(new DateTime(date));
+////
+////                    if (d.isSchoolDay() == false)
+////
+////                    {
+////                        setTooltip(new Tooltip("Not a school day"));
+////                        setStyle("-fx-background-color: #ff4444;");
+////                    }
+////                    if (d.isSchoolDay() == true)
+////                    {
+////                        setTooltip(new Tooltip("Not a school day"));
+////                        setStyle("-fx-background-color: ##8eff44;");
+////                    }
+//                    
+//                    //Show weekends in grey
+//                    DayOfWeek day = DayOfWeek.from(item);
+//                    if(day==DayOfWeek.SATURDAY||day==DayOfWeek.SUNDAY){
+//                        setStyle("-fx-background-color: #ff4444;");
+//                    }
+//                    
+//                    
+//
+//                }
+//            };
+//        }
+//    };
 
     private void setClickCal()
     {
@@ -382,7 +419,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         pieChartData.clear();
         pieChartData.setAll(model.getPieChartData(lastSelectedUser));
         absenceChart.setTitle("Absence");
-        
+
         //pieChartData.clear();
 //        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
 //        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
