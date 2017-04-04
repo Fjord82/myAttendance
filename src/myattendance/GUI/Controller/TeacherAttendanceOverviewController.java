@@ -191,16 +191,19 @@ public class TeacherAttendanceOverviewController implements Initializable
         //Install JFxtra from the internet!!!
         calendar = new DatePicker(LocalDate.now());
 
-        DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
-        Region pop = (Region) datePickerSkin.getPopupContent();
+        
+        
 
         // Factory to create Cell of DatePicker
         Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory();
-        calendar.setDayCellFactory(dayCellFactory);
-
+        
+        calendar.setDayCellFactory(getDayCellFactory());
+DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
+        Region pop = (Region) datePickerSkin.getPopupContent();
         vBoxSelectionContent.setPadding(new Insets(10));
         vBoxSelectionContent.setSpacing(100);
         vBoxSelectionContent.getChildren().add(pop);
+//        vBoxSelectionContent.getChildren().add(calendar);
 
     }
     // Factory to create Cell of DatePicker
@@ -222,10 +225,11 @@ public class TeacherAttendanceOverviewController implements Initializable
                         super.updateItem(item, empty);
 
                         // Disable Monday, Tueday, Wednesday.
-                        if (item.getDayOfWeek() == DayOfWeek.MONDAY //
-                                || item.getDayOfWeek() == DayOfWeek.TUESDAY //
+                        if (item.getDayOfWeek() == DayOfWeek.MONDAY 
+                                || item.getDayOfWeek() == DayOfWeek.TUESDAY 
                                 || item.getDayOfWeek() == DayOfWeek.WEDNESDAY)
                         {
+//                            setText("MumboJumbo");
                             setDisable(true);
                             setStyle("-fx-background-color: #ffc0cb;");
                         }
