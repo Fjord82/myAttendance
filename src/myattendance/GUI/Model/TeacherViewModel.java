@@ -6,8 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -35,7 +37,6 @@ public class TeacherViewModel
     public void getClassList()
     {
 
-        
         for (Course course : courseList)
         {
             course.clearUserList();
@@ -47,6 +48,24 @@ public class TeacherViewModel
 
     }
 
+    public ObservableList<User> filterList(String filter, Course course)
+    {
+        List<User> unfilteredList = new ArrayList<>(course.getUserList());
+        List<User> filteredList = new ArrayList<>();
+        ObservableList<User> returnList = FXCollections.observableArrayList();
+
+        for (User u : unfilteredList)
+        {
+            if (u.getName().toLowerCase().contains(filter.toLowerCase()))
+            {
+                filteredList.add(u);
+            }
+        }
+        returnList.addAll(filteredList);
+
+        return returnList;
+    }
+
     public ObservableList<User> updateList(String filter, Course course)
     {
         getClassList();
@@ -55,27 +74,42 @@ public class TeacherViewModel
         List<User> filteredList = new ArrayList<>();
         ObservableList<User> returnList = FXCollections.observableArrayList();
 
-        if (filter == "")
-        {
-            returnList.addAll(unfilteredList);
-
-        } else
+//        if (filter == "")
+//        {
+//            returnList.addAll(unfilteredList);
+//
+//        } else
         {
             for (User u : unfilteredList)
             {
                 if (u.getName().toLowerCase().contains(filter.toLowerCase()))
                 {
                     filteredList.add(u);
+                    u.setAbsencePercentage(calculateAbsencePercentage(u));
                 }
             }
             returnList.addAll(filteredList);
         }
         return returnList;
     }
-    
-        public ObservableList<PieChart.Data> getPieChartData(User user)
+
+    public ObservableList<PieChart.Data> getPieChartData(User user)
     {
         return bllFacade.getPieChartData(user);
+    }
+
+    public double calculateAbsencePercentage(User user)
+    {
+        List<Day> absentDays = new ArrayList<>(user.getAbsentDays());
+        List<Day> daysUpToToday = new ArrayList<>(bllFacade.getDaysBetweenDates(bllFacade.getStartDate(), new DateTime()));
+
+        int absentDaysInt = absentDays.size();
+        int daysUptoTodayInt = daysUpToToday.size();
+        int presentDaysInt = daysUptoTodayInt - absentDaysInt;
+
+        double percentageAbsence = (double) absentDaysInt / daysUptoTodayInt * 100;
+
+        return percentageAbsence;
     }
 
 }
