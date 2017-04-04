@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import myattendance.BE.Course;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
@@ -70,6 +71,11 @@ public class TeacherViewModel
             returnList.addAll(filteredList);
         }
         return returnList;
+    }
+    
+        public ObservableList<PieChart.Data> getPieChartData(User user)
+    {
+        return bllFacade.getPieChartData(user);
     }
 
 }

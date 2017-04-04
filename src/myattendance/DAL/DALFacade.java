@@ -94,9 +94,20 @@ public class DALFacade
     {
         return databaseAccess.establishServerConnection();
     }
-    
-    public void changeToNonSchoolDay(Day d, int c){
-        
+
+    public Integer totalSchoolDays()
+    {
+        return databaseAccess.totalSchoolDays();
+    }
+
+    public List<Day> getDaysUptoToday()
+    {
+        return databaseAccess.getDaysUptoToday();
+    }
+
+    public void changeToNonSchoolDay(Day d, int c)
+    {
+
         databaseAccess.changeToNonSchoolDay(d, c);
     }
 }

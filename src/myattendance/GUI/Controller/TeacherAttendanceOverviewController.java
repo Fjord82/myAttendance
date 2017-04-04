@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,8 +38,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+<<<<<<< HEAD
 import javafx.util.Callback;
+=======
+import javafx.stage.Window;
+>>>>>>> Development
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -133,7 +139,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
     }
-
+    
     public void setUser(User user)
     {
         this.user = user;
@@ -144,7 +150,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleLogout(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null);
+        attendanceParser.changeView("Login", "GUI/View/LoginView.fxml", null, false);
 
         // Closes the primary stage
         Stage stage = (Stage) btnLogout.getScene().getWindow();
@@ -154,13 +160,29 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", null);
 
-        // Closes the primary stage
-        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
-        stage.close();
+        if(tblStatusView.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setContentText("Please select a student inside the studentlist");
+
+            alert.showAndWait();
+        }
+        else 
+        {
+        attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
+        }
+        
+//        
+//        Closes the primary stage
+//        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
+//        stage.initModality(Modality.WINDOW_MODAL);
+//        stage.initOwner(primaryStage);
+//        //Scene scene = new Scene
+          //stage.show();
     }
-
+    
     private void fillComboBox()
     {
 
@@ -355,6 +377,10 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void chartData()
     {
         pieChartData.clear();
+        pieChartData.setAll(model.getPieChartData(lastSelectedUser));
+        absenceChart.setTitle("Absence");
+        
+        //pieChartData.clear();
 //        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
 //        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
 //        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
