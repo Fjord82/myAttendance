@@ -180,7 +180,7 @@ public class DatabaseAccess
         return null;
     }
 
-    public List<Course> getCourses(int PID)
+    public List<Course> getCourses(User teacher)
     {
         List<Course> courseList = new ArrayList<>();
 
@@ -191,7 +191,7 @@ public class DatabaseAccess
                     + "FROM People p, Classes c, ClassRelation cr "
                     + "WHERE p.PID = cr.PID AND cr.ClassID = c.ClassID AND p.PID =?");
 
-            ps.setInt(1, PID);
+            ps.setInt(1, teacher.getId());
 
             ResultSet rs = ps.executeQuery();
 

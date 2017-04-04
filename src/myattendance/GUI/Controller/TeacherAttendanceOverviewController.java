@@ -1,6 +1,7 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,7 +72,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     TeacherViewModel model = new TeacherViewModel();
     DateParser dateParser = DateParser.getInstance();
 
-    User user;
+    User teacher;
     User lastSelectedUser;
     Day clickedDay;
 
@@ -138,13 +140,12 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
-        
 
     }
 
     public void setUser(User user)
     {
-        this.user = user;
+        this.teacher = user;
         lblName.setText(user.getName());
         fillComboBox();
     }
@@ -187,7 +188,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void fillComboBox()
     {
 
-        cBoxClassSelection.setItems(model.comboBoxContentGet(user.getId()));
+        cBoxClassSelection.setItems(model.comboBoxContentGet(teacher));
     }
 
     private void showConstantCalender()
@@ -209,7 +210,7 @@ public class TeacherAttendanceOverviewController implements Initializable
             @Override
             public void handle(ActionEvent event)
             {
-                //Selects the date the user has clicked on from the calendar
+                //Selects the date the teacher has clicked on from the calendar
                 LocalDate localDate = calendar.getValue();
                 //Converts local date to absolute time (uses default time zone of the computer)
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
@@ -369,40 +370,37 @@ public class TeacherAttendanceOverviewController implements Initializable
         refreshStudents();
     }
 
-    public void automaticUpdate() throws InterruptedException
+    /**
+     * Automatically updates the list of students and their status
+     */
+    @FXML
+    private void automaticUpdate()
     {
-//        java.util.Timer timer = new java.util.Timer();
-//        timer.scheduleAtFixedRate(new TimerTask()
+        // The time between every update in milliseconds
+        int delay = 15000;
 
-        long t = System.currentTimeMillis();
-        long end = t + 5000;
-
-        while (System.currentTimeMillis() < end)
-        {
-
-            updateView();
-            System.out.println("HEHE");
-
-            // pause to avoid churning
-            Thread.sleep(end);
-
-            automaticUpdate();
-        }
-    }
-
-    private void test()
-    {
+        // Creates a new timer
         Timer timer = new Timer();
+
+        // Creates a new timer schedule
         timer.schedule(new TimerTask()
         {
+
             @Override
             public void run()
             {
-                System.out.println("1");
-                updateView();
-                run();
+                // Creates a new thread
+                Thread t = new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        updateView();
+                    }
+                };
+                Platform.runLater(t);
             }
-        }, 0, 5000);
+        }, 0, delay);
     }
     
     public void refreshStudents()
