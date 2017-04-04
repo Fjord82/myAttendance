@@ -20,7 +20,7 @@ public class User
 
     DateTime today = new DateTime();
     DateTime lastLogin;
-    
+
     List<Day> absentDays = new ArrayList();
 
     public User()
@@ -41,7 +41,7 @@ public class User
         this.name.set(name);
         this.sClass.set(sClass);
         this.lastLogin = lastLogin;
-        
+
         this.isTeacher = isTeacher;
     }
 
@@ -118,6 +118,17 @@ public class User
         this.absentDays = absentDays;
     }
     
-    
+    public String getCSSClass()
+        {
+            String cssClass = "";
+            if (this.getStatus().equalsIgnoreCase("offline"))
+            {
+                cssClass = "absent";
+                
+            } else if (this.getStatus().equalsIgnoreCase("online")) {
+                cssClass = "present";
+            }
+            return cssClass;
+        }
 
 }
