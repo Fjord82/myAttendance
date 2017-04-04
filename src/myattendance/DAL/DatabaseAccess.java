@@ -75,7 +75,6 @@ public class DatabaseAccess
 
                 user = new User(id, fullName, className, lastLogin, isTeacher);
                 updateLastLogin(user);
-                user.setAbsentDays(getAbsentDays(user));
             } else
             {
 
@@ -235,6 +234,7 @@ public class DatabaseAccess
 
                 User user = new User(id, name, isTeacher);
                 user.setLastLogin(new DateTime(rs.getDate("lastlogin")));
+                user.setAbsentDays(getAbsentDays(user));
 
                 course.addToUserList(user);
 
@@ -247,31 +247,31 @@ public class DatabaseAccess
         }
     }
 
-    public boolean isSchoolDay(Day day)
-    {
-
-        try (Connection con = ds.getConnection())
-        {
-
-            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
-            ps.setInt(1, day.getDateID());
-
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            if (rs.getBoolean("isSchoolDay"))
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
-
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
+//    public boolean isSchoolDay(Day day)
+//    {
+//
+//        try (Connection con = ds.getConnection())
+//        {
+//
+//            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
+//            ps.setInt(1, day.getDateID());
+//
+//            ResultSet rs = ps.executeQuery();
+//            rs.next();
+//            if (rs.getBoolean("isSchoolDay"))
+//            {
+//                return true;
+//            } else
+//            {
+//                return false;
+//            }
+//
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
+//    }
 
     public Day getDay(DateTime dateTime)
     {
@@ -337,7 +337,7 @@ public class DatabaseAccess
 
     public List<Day> getDaysBetweenDates(DateTime startDate, DateTime endDate)
     {
-        List<Day> datesAbsent = new ArrayList();
+        List<Day> dayList = new ArrayList();
         java.sql.Date sDate = new java.sql.Date(startDate.getMillis());
         java.sql.Date eDate = new java.sql.Date(endDate.getMillis());
 
@@ -361,14 +361,14 @@ public class DatabaseAccess
                 boolean isSchoolDay = rs.getBoolean("isSchoolDay");
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
                 if (day.isSchoolDay())
-                    datesAbsent.add(day);
+                    dayList.add(day);
             }
 
-            return datesAbsent;
+            return dayList;
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-            return datesAbsent;
+            return dayList;
         }
     }
 
@@ -383,6 +383,27 @@ public class DatabaseAccess
             ps.setInt(2, day.getDateID());
             ps.execute();
 
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public List<Day> getDaysUptoToday()
+    {
+        return getDaysBetweenDates(getStartDate(), new DateTime());
+    }
+
+    public void changeToNonSchoolDay(Day d, int c){
+        
+        try(Connection con = ds.getConnection()){
+            
+            PreparedStatement ps = con.prepareStatement("UPDATE Calendar SET isSchoolDay = ? WHERE dateID =?");
+            ps.setInt(1, c);
+            ps.setInt(2, d.getDateID());
+            ps.execute();
+            
+            
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,6 +1,5 @@
 package myattendance.DAL;
 
-import java.sql.Date;
 import java.util.List;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
@@ -94,5 +93,21 @@ public class DALFacade
     public boolean establishServerConnection()
     {
         return databaseAccess.establishServerConnection();
+    }
+
+    public Integer totalSchoolDays()
+    {
+        return databaseAccess.totalSchoolDays();
+    }
+
+    public List<Day> getDaysUptoToday()
+    {
+        return databaseAccess.getDaysUptoToday();
+    }
+
+    public void changeToNonSchoolDay(Day d, int c)
+    {
+
+        databaseAccess.changeToNonSchoolDay(d, c);
     }
 }
