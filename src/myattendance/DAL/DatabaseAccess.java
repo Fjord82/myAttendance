@@ -208,7 +208,7 @@ public class DatabaseAccess
         return listNonSchoolDays;
     }
 
-    public List<Course> getCourses(int PID)
+    public List<Course> getCourses(User teacher)
     {
         List<Course> courseList = new ArrayList<>();
 
@@ -219,7 +219,7 @@ public class DatabaseAccess
                     + "FROM People p, Classes c, ClassRelation cr "
                     + "WHERE p.PID = cr.PID AND cr.ClassID = c.ClassID AND p.PID =?");
 
-            ps.setInt(1, PID);
+            ps.setInt(1, teacher.getId());
 
             ResultSet rs = ps.executeQuery();
 
@@ -417,7 +417,24 @@ public class DatabaseAccess
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        try(Connection con = ds.getConnection())
+        {
+           PreparedStatement ps = con.prepareStatement("DELETE from Absence Where PID=? and dateID=?");
+           ps.setInt(1, user.getId());
+           ps.setInt(2, day.getDateID());
+           
+           ps.execute();
+           
+           
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public List<Day> getDaysUptoToday()
     {
         return getDaysBetweenDates(getStartDate(), new DateTime());

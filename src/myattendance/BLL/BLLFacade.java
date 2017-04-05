@@ -50,9 +50,9 @@ public class BLLFacade
         return dalFacade.loginQuery(login, pass);
     }
 
-    public List<Course> getCourses(int PID)
+    public List<Course> getCourses(User teacher)
     {
-        return dalFacade.getCourses(PID);
+        return dalFacade.getCourses(teacher);
     }
 
     public Course fillUsersInCourse(Course course)
@@ -129,5 +129,11 @@ public class BLLFacade
       public List<Day> listNonSchoolDays()
     {
         return dalFacade.listNonSchoolDays();
+    }
+      
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        dalFacade.deleteAbsenceFromDB(user, day);
+
     }
 }

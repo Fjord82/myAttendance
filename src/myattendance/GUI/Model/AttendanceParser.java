@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
 import myattendance.GUI.Controller.AttendanceCorrectionController;
@@ -129,6 +130,16 @@ public class AttendanceParser
     public boolean establishServerConnection()
     {
         return bllFacade.establishServerConnection();
+    }
+    
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        bllFacade.deleteAbsenceFromDB(user, day);
+    }
+    
+    public void writeAbsencesIntoDB(User user, Day day)
+    {
+        bllFacade.writeAbsencesIntoDB(user, day);
     }
 
 }

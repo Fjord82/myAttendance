@@ -50,9 +50,9 @@ public class DALFacade
         return databaseAccess.getStartDate();
     }
 
-    public List<Course> getCourses(int PID)
+    public List<Course> getCourses(User teacher)
     {
-        return databaseAccess.getCourses(PID);
+        return databaseAccess.getCourses(teacher);
     }
 
     public Course fillUsersInCourse(Course course)
@@ -114,5 +114,10 @@ public class DALFacade
     public List<Day> listNonSchoolDays()
     {
         return databaseAccess.listNonSchoolDays();
+    }
+    
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        databaseAccess.deleteAbsenceFromDB(user, day);
     }
 }
