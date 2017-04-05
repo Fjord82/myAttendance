@@ -125,4 +125,9 @@ public class BLLFacade
 
         dalFacade.changeToNonSchoolDay(d, c);
     }
+    
+    public void deleteAbsenceFromDB(User user, Day day)
+    {
+        dalFacade.deleteAbsenceFromDB(user, day);
+    }
 }
