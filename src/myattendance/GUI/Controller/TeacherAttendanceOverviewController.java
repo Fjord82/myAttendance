@@ -426,7 +426,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void automaticUpdate()
     {
         // The time between every update in milliseconds
-        int delay = 15000;
+        int delay = 150000;
 
         // Creates a new timer
         Timer timer = new Timer();
