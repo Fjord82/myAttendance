@@ -1,6 +1,7 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -11,6 +12,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +37,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
@@ -68,7 +72,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     TeacherViewModel model = new TeacherViewModel();
     DateParser dateParser = DateParser.getInstance();
 
-    User user;
+    User teacher;
     User lastSelectedUser;
     Day clickedDay;
 
@@ -88,8 +92,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     private TextField txtFldSearchStudent;
     @FXML
     private ComboBox<Course> cBoxClassSelection;
-    @FXML
-    private Button btnLogOut;
     @FXML
     private VBox vBoxSelectionContent;
 
@@ -115,6 +117,8 @@ public class TeacherAttendanceOverviewController implements Initializable
     private Label lblName;
     @FXML
     private MenuBar hiddenMenu;
+    @FXML
+    private TableColumn<User, Number> tblViewPercentage;
 
     /**
      * Initializes the controller class.
@@ -134,16 +138,14 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-
-        tblViewName.setCellFactory(getCustomCellFactory());
-        tblViewStatus.setCellFactory(getCustomCellFactory());
+        tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
 
     }
 
     public void setUser(User user)
     {
-        this.user = user;
+        this.teacher = user;
         lblName.setText(user.getName());
         fillComboBox();
     }
@@ -186,7 +188,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void fillComboBox()
     {
 
-        cBoxClassSelection.setItems(model.comboBoxContentGet(user.getId()));
+        cBoxClassSelection.setItems(model.comboBoxContentGet(teacher));
     }
 
     private void showConstantCalender()
@@ -208,7 +210,7 @@ public class TeacherAttendanceOverviewController implements Initializable
             @Override
             public void handle(ActionEvent event)
             {
-                //Selects the date the user has clicked on from the calendar
+                //Selects the date the teacher has clicked on from the calendar
                 LocalDate localDate = calendar.getValue();
                 //Converts local date to absolute time (uses default time zone of the computer)
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
@@ -298,6 +300,8 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
+        
+        automaticUpdate();
 
     }
 
@@ -341,13 +345,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         pieChartData.clear();
         pieChartData.setAll(model.getPieChartData(lastSelectedUser));
         absenceChart.setTitle("Absence");
-        //pieChartData.clear();
-//        pieChartData.add(new PieChart.Data("Absence", lastSelectedUser.getAbsentDates()));
-//        pieChartData.add(new PieChart.Data("Presence", lastSelectedUser.getPresentDates()));
-//        absenceLabel.setText(lastSelectedUser.getName() + " Attendance: "
-//                + lastSelectedUser.getPresentDates()
-//                + "/"
-//                + Math.addExact(lastSelectedUser.getAbsentDates(), lastSelectedUser.getPresentDates()));
     }
 
     private void updateView()
@@ -365,60 +362,66 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void searchFunction(ActionEvent event)
     {
-        if (!cBoxClassSelection.getSelectionModel().isEmpty())
-        {
-            filter = txtFldSearchStudent.getText();
-            updateView();
-        }
+        refreshStudents();
 
     }
 
     @FXML
     private void handleRefreshStudents(MouseEvent event)
     {
-        if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        refreshStudents();
+    }
+
+    /**
+     * Automatically updates the list of students and their status
+     */
+    @FXML
+    private void automaticUpdate()
+    {
+        // The time between every update in milliseconds
+        int delay = 15000;
+
+        // Creates a new timer
+        Timer timer = new Timer();
+
+        // Creates a new timer schedule
+        timer.schedule(new TimerTask()
+        {
+
+            @Override
+            public void run()
+            {
+                // Creates a new thread
+                Thread t = new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        updateView();
+                    }
+                };
+                Platform.runLater(t);
+            }
+        }, 0, delay);
+    }
+    
+    public void refreshStudents()
+    {
+                if (!cBoxClassSelection.getSelectionModel().isEmpty())
         {
             filter = txtFldSearchStudent.getText();
             updateView();
             updatePresentCounter();
-            test();
         }
     }
 
-    public void automaticUpdate() throws InterruptedException
+    @FXML
+    private void searchFieldTyped(KeyEvent event)
     {
-//        java.util.Timer timer = new java.util.Timer();
-//        timer.scheduleAtFixedRate(new TimerTask()
-
-        long t = System.currentTimeMillis();
-        long end = t + 5000;
-
-        while (System.currentTimeMillis() < end)
-        {
-
-            updateView();
-            System.out.println("HEHE");
-
-            // pause to avoid churning
-            Thread.sleep(end);
-
-            automaticUpdate();
-        }
-    }
-
-    private void test()
-    {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                System.out.println("1");
-                updateView();
-                run();
-            }
-        }, 0, 5000);
+        filter = txtFldSearchStudent.getText();
+        
+        if (filter != null)
+        tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
     }
 
     private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()
