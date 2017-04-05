@@ -300,6 +300,8 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
+        
+        automaticUpdate();
 
     }
 
