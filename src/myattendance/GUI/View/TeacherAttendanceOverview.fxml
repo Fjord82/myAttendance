@@ -141,7 +141,7 @@
                                 <Insets bottom="435.0" />
                             </StackPane.margin>
                             <children>
-                                <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
+                                <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" onMouseEntered="#onPaginationClicked" onMouseExited="#onPaginationClicked" onMouseMoved="#onPaginationClicked" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
                             </children>
                         </HBox>
                         <VBox fx:id="vBoxMiddle" maxHeight="499.0" prefHeight="499.0" prefWidth="433.0" style="-fx-border-width: 1;">

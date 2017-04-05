@@ -132,7 +132,8 @@ public class StudentMainOverviewController implements Initializable
             stackedChart.getData().clear();
 
             vBoxMiddle.getChildren().add(stackedChart);
-            stackedChart.getData().add(model.getBarChartData(user));
+            stackedChart.getData().add(model.getStackedChartData(user));
+            
             xAxisStacked.setLabel("Day");
             xAxisStacked.setTickMarkVisible(false);
             yAxisStacked.setLabel("Recorded Absences");
@@ -150,6 +151,8 @@ public class StudentMainOverviewController implements Initializable
             lineChart.getData().clear();
 
             vBoxMiddle.getChildren().add(lineChart);
+            lineChart.getData().add(model.getLineChartData(user));
+            
             xAxisLine.setLabel("Month");
             xAxisLine.setTickMarkVisible(false);
             yAxisLine.setLabel("Absent Days");

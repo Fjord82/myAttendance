@@ -137,18 +137,5 @@ public class User
         return absencePercentage;
     }
     
-    
-    public String getCSSClass()
-        {
-            String cssClass = "";
-            if (this.getStatus().equalsIgnoreCase("offline"))
-            {
-                cssClass = "absent";
-                
-            } else if (this.getStatus().equalsIgnoreCase("online")) {
-                cssClass = "present";
-            }
-            return cssClass;
-        }
 
 }
