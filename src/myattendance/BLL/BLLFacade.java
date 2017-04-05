@@ -107,7 +107,7 @@ public class BLLFacade
 
     public XYChart.Series<String, Number> getBarChartData(User user)
     {
-        return statistics.getBarChartData(user);
+        return statistics.getStackedChartData(user);
     }
 
     public Integer totalSchoolDays()

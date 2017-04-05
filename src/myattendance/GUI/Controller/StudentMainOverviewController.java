@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
@@ -64,13 +65,17 @@ public class StudentMainOverviewController implements Initializable
 
     private PieChart absenceChart = new PieChart();
 
-    private CategoryAxis xAxis = new CategoryAxis();
-    private NumberAxis yAxis = new NumberAxis();
-    private StackedBarChart<String, Number> stackedChart = new StackedBarChart<>(xAxis, yAxis);
+    private CategoryAxis xAxisStacked = new CategoryAxis();
+    private NumberAxis yAxisStacked = new NumberAxis();
+    private StackedBarChart<String, Number> stackedChart = new StackedBarChart<>(xAxisStacked, yAxisStacked);
+
+    private CategoryAxis xAxisLine = new CategoryAxis();
+    private NumberAxis yAxisLine = new NumberAxis();
+    private LineChart<String, Number> lineChart = new LineChart<>(xAxisLine, yAxisLine);
 
     boolean pie = false;
     boolean stacked = false;
-    boolean bar = false;
+    boolean line = false;
 
     /**
      * Initializes the controller class.
@@ -104,13 +109,12 @@ public class StudentMainOverviewController implements Initializable
     public void updateStatistics()
     {
 
-        vBoxMiddle.getChildren().remove(stackedChart);
-        vBoxMiddle.getChildren().remove(absenceChart);
         if (paginationBtn.getCurrentPageIndex() == 0 && pie == false)
         {
+            clearStatistics();
             pie = true;
             stacked = false;
-            bar = false;
+            line = false;
             absenceChart.getData().clear();
 
             absenceChart.setData(model.getPieChartData(user));
@@ -120,29 +124,45 @@ public class StudentMainOverviewController implements Initializable
 
         } else if (paginationBtn.getCurrentPageIndex() == 1 && stacked == false)
         {
-            bar = false;
+            clearStatistics();
+            pie = false;
             stacked = true;
-            bar = false;
+            line = false;
 
             stackedChart.getData().clear();
 
             vBoxMiddle.getChildren().add(stackedChart);
             stackedChart.getData().add(model.getBarChartData(user));
-            xAxis.setLabel("Day");
-            xAxis.setTickMarkVisible(false);
-            yAxis.setLabel("Recorded Absences");
-            yAxis.setTickUnit(1);
-            yAxis.setTickMarkVisible(false);
+            xAxisStacked.setLabel("Day");
+            xAxisStacked.setTickMarkVisible(false);
+            yAxisStacked.setLabel("Recorded Absences");
+            yAxisStacked.setTickUnit(1);
+            yAxisStacked.setTickMarkVisible(false);
             stackedChart.setTitle("Absence per day");
 
-        } else if (paginationBtn.getCurrentPageIndex() == 2 && bar == false)
+        } else if (paginationBtn.getCurrentPageIndex() == 2 && line == false)
         {
-            bar = false;
+            clearStatistics();
+            pie = false;
             stacked = false;
-            bar = true;
+            line = true;
 
-            System.out.println("Pagination 3");
+            lineChart.getData().clear();
+
+            vBoxMiddle.getChildren().add(lineChart);
+            xAxisLine.setLabel("Month");
+            xAxisLine.setTickMarkVisible(false);
+            yAxisLine.setLabel("Absent Days");
+            yAxisLine.setTickUnit(1);
+            yAxisLine.setTickMarkVisible(false);
         }
+    }
+
+    public void clearStatistics()
+    {
+        vBoxMiddle.getChildren().remove(stackedChart);
+        vBoxMiddle.getChildren().remove(absenceChart);
+        vBoxMiddle.getChildren().remove(lineChart);
     }
 
     @FXML

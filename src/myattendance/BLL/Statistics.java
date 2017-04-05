@@ -43,14 +43,56 @@ public class Statistics
         return pieChartData;
     }
 
-    public XYChart.Series<String, Number> getBarChartData(User user)
+    public XYChart.Series<String, Number> getStackedChartData(User user)
     {
         XYChart.Series<String, Number> absenceSeries = new XYChart.Series<>();
+        
+        int mondays = 0;
+        int tuesdays = 0;
+        int wednesdays = 0;
+        int thursdays = 0;
+        int fridays = 0;
+        
+        List<String> dayStrings = new ArrayList<>();
         for (Day day : user.getAbsentDays())
         {
-            absenceSeries.getData().add(new XYChart.Data(day.getWeekdayName(), 1));
+            if (day.getWeekdayName().equalsIgnoreCase("monday"))
+            {
+                mondays++;
+            }
+            if (day.getWeekdayName().equalsIgnoreCase("tuesday"))
+            {
+                tuesdays++;
+            }
+            if (day.getWeekdayName().equalsIgnoreCase("wednesday"))
+            {
+                wednesdays++;
+            }
+            if (day.getWeekdayName().equalsIgnoreCase("thursday"))
+            {
+                thursdays++;
+            }
+            if (day.getWeekdayName().equalsIgnoreCase("friday"))
+            {
+                fridays++;
+            }
+            
         }
+        absenceSeries.getData().add(new XYChart.Data("Monday", mondays));
+        absenceSeries.getData().add(new XYChart.Data("Tuesday", tuesdays));
+        absenceSeries.getData().add(new XYChart.Data("Wednesday", wednesdays));
+        absenceSeries.getData().add(new XYChart.Data("Thursday", thursdays));
+        absenceSeries.getData().add(new XYChart.Data("Friday", fridays));
 
+        return absenceSeries;
+    }
+    
+    public XYChart.Series<String, Number> getLineChartData(User user)
+    {
+        XYChart.Series<String, Number> absenceSeries = new XYChart.Series<>();
+        
+        
+        
         return absenceSeries;
     }
 }

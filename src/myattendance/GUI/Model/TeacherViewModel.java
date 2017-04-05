@@ -1,5 +1,6 @@
 package myattendance.GUI.Model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -98,7 +99,7 @@ public class TeacherViewModel
         return bllFacade.getPieChartData(user);
     }
 
-    public double calculateAbsencePercentage(User user)
+    public String calculateAbsencePercentage(User user)
     {
         List<Day> absentDays = new ArrayList<>(user.getAbsentDays());
         List<Day> daysUpToToday = new ArrayList<>(bllFacade.getDaysBetweenDates(bllFacade.getStartDate(), new DateTime()));
@@ -108,8 +109,10 @@ public class TeacherViewModel
         int presentDaysInt = daysUptoTodayInt - absentDaysInt;
 
         double percentageAbsence = (double) absentDaysInt / daysUptoTodayInt * 100;
-
-        return percentageAbsence;
+        
+        DecimalFormat df = new DecimalFormat("#.00");
+        
+        return df.format(percentageAbsence);
     }
 
 }

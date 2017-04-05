@@ -18,7 +18,7 @@ public class User
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
     
-    private DoubleProperty absencePercentage = new SimpleDoubleProperty();
+    private StringProperty absencePercentage = new SimpleStringProperty();
 
     private final boolean isTeacher;
 
@@ -122,17 +122,17 @@ public class User
         this.absentDays = absentDays;
     }
 
-    public double getAbsencePercentage()
+    public String getAbsencePercentage()
     {
         return absencePercentage.get();
     }
 
-    public void setAbsencePercentage(double absencePercentage)
+    public void setAbsencePercentage(String absencePercentage)
     {
         this.absencePercentage.set(absencePercentage);
     }
     
-    public DoubleProperty getAbsencePercentageProperty()
+    public StringProperty getAbsencePercentageProperty()
     {
         return absencePercentage;
     }

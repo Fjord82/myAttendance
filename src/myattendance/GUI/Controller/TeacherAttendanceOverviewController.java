@@ -118,7 +118,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private MenuBar hiddenMenu;
     @FXML
-    private TableColumn<User, Number> tblViewPercentage;
+    private TableColumn<User, String> tblViewPercentage;
 
     /**
      * Initializes the controller class.
@@ -135,12 +135,10 @@ public class TeacherAttendanceOverviewController implements Initializable
         updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
-        paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
-        tblViewName.setCellFactory(getCustomCellFactory());
         tblViewStatus.setCellFactory(getCustomCellFactory());
     }
 
@@ -312,19 +310,18 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
+
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setContentText("Please select a class and then point on a student inside the studentlist");
 
             alert.showAndWait();
 
-            paginationBtn.setVisible(false);
         }
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
-        paginationBtn.setVisible(true);
 
     }
 
@@ -403,10 +400,10 @@ public class TeacherAttendanceOverviewController implements Initializable
             }
         }, 0, delay);
     }
-    
+
     public void refreshStudents()
     {
-                if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
         {
             filter = txtFldSearchStudent.getText();
             updateView();
@@ -418,9 +415,11 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void searchFieldTyped(KeyEvent event)
     {
         filter = txtFldSearchStudent.getText();
-        
+
         if (filter != null)
-        tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+        {
+            tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+        }
     }
 
     private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()
@@ -433,7 +432,7 @@ public class TeacherAttendanceOverviewController implements Initializable
                         @Override
                         public void updateItem(final String item, boolean empty)
                         {
-                            
+
                             if (item != null)
                             {
                                 User user = getTableView().getItems().get(getIndex());
