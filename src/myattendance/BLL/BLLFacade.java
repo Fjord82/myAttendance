@@ -125,4 +125,9 @@ public class BLLFacade
 
         dalFacade.changeToNonSchoolDay(d, c);
     }
+    
+      public List<Day> listNonSchoolDays()
+    {
+        return dalFacade.listNonSchoolDays();
+    }
 }

@@ -1,6 +1,7 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import com.sun.prism.paint.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -36,12 +37,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-
 import javafx.scene.layout.VBox;
+import static javafx.scene.paint.Color.GREEN;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
 import javafx.util.Callback;
-
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -52,11 +52,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-/**
- * FXML Controller class
- *
- * @author Kristoffers
- */
 public class TeacherAttendanceOverviewController implements Initializable
 
 {
@@ -125,7 +120,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-
         showConstantCalender();
         setClickCal();
         updatePresentCounter();
@@ -134,7 +128,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-
     }
 
     public void setUser(User user)
@@ -170,13 +163,12 @@ public class TeacherAttendanceOverviewController implements Initializable
             attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
         }
 
-//        
 //        Closes the primary stage
 //        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
 //        stage.initModality(Modality.WINDOW_MODAL);
 //        stage.initOwner(primaryStage);
-//        //Scene scene = new Scene
-        //stage.show();
+//        Scene scene = new Scene
+//        stage.show();
     }
 
     private void fillComboBox()
@@ -191,47 +183,78 @@ public class TeacherAttendanceOverviewController implements Initializable
         //Install JFxtra from the internet!!!
         calendar = new DatePicker(LocalDate.now());
 
-        
-        
-
         // Factory to create Cell of DatePicker
         Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory();
-        
+
         calendar.setDayCellFactory(getDayCellFactory());
-DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
+        DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
-        vBoxSelectionContent.setPadding(new Insets(10));
+
+        vBoxSelectionContent.setPadding(new Insets(5));
         vBoxSelectionContent.setSpacing(100);
         vBoxSelectionContent.getChildren().add(pop);
-//        vBoxSelectionContent.getChildren().add(calendar);
 
     }
-    // Factory to create Cell of DatePicker
 
-    private Callback<DatePicker, DateCell> getDayCellFactory()
+//    // Factory to create Cell of DatePicker
+//    private Callback<DatePicker, DateCell> getDayCellFactory()
+//    {
+//
+//        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
+//        {
+//
+//            @Override
+//            public DateCell call(final DatePicker datePicker)
+//            {
+//                return new DateCell()
+//                {
+//                    @Override
+//                    public void updateItem(LocalDate item, boolean empty)
+//                    {
+//                        super.updateItem(item, empty);
+//
+//                        if (item.getDayOfWeek() == DayOfWeek.SATURDAY|| item.getDayOfWeek() == DayOfWeek.SUNDAY)
+//                        {
+//                            setDisable(true);
+//                            setStyle("-fx-background-color: #C0C0C0;");
+//                        }
+//                    }
+//                };
+//            }
+//        };
+//        return dayCellFactory;
+//    }
+    
+    final Callback<DatePicker, DateCell> getDayCellFactory()
     {
-
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
         {
-
             @Override
             public DateCell call(final DatePicker datePicker)
             {
                 return new DateCell()
                 {
+
                     @Override
                     public void updateItem(LocalDate item, boolean empty)
                     {
+                        //Must call super
                         super.updateItem(item, empty);
 
-                        // Disable Monday, Tueday, Wednesday.
-                        if (item.getDayOfWeek() == DayOfWeek.MONDAY 
-                                || item.getDayOfWeek() == DayOfWeek.TUESDAY 
-                                || item.getDayOfWeek() == DayOfWeek.WEDNESDAY)
+                        Instant instant = Instant.from(item);
+                        
+                        boolean isNonSchoolDay = dateParser.checkNonSchoolDay(instant);
+
+                        if (isNonSchoolDay == false)
+
                         {
-//                            setText("MumboJumbo");
-                            setDisable(true);
-                            setStyle("-fx-background-color: #ffc0cb;");
+                            setTooltip(new Tooltip("School day"));
+                            this.setTextFill(Paint.valueOf("GREEN"));
+                        }
+                        if (isNonSchoolDay == true)
+                        {
+                            setTooltip(new Tooltip("Not a school day"));
+                            setStyle("-fx-background-color: #838383;");
                         }
                     }
                 };
@@ -239,49 +262,7 @@ DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         };
         return dayCellFactory;
     }
-//    final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
-//    {
-//        public DateCell call(final DatePicker datePicker)
-//        {
-//            return new DateCell()
-//            {
-//                @Override
-//                public void updateItem(LocalDate item, boolean empty)
-//                {
-//                    //Must call super
-//                    super.updateItem(item, empty);
-//                    
-//                    
-////                    Instant instant = Instant.from(item);
-////
-////                    Date date = Date.from(instant);
-////
-////                    Day d = dateParser.getDay(new DateTime(date));
-////
-////                    if (d.isSchoolDay() == false)
-////
-////                    {
-////                        setTooltip(new Tooltip("Not a school day"));
-////                        setStyle("-fx-background-color: #ff4444;");
-////                    }
-////                    if (d.isSchoolDay() == true)
-////                    {
-////                        setTooltip(new Tooltip("Not a school day"));
-////                        setStyle("-fx-background-color: ##8eff44;");
-////                    }
-//                    
-//                    //Show weekends in grey
-//                    DayOfWeek day = DayOfWeek.from(item);
-//                    if(day==DayOfWeek.SATURDAY||day==DayOfWeek.SUNDAY){
-//                        setStyle("-fx-background-color: #ff4444;");
-//                    }
-//                    
-//                    
-//
-//                }
-//            };
-//        }
-//    };
+
 
     private void setClickCal()
     {
