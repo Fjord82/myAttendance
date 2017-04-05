@@ -197,7 +197,6 @@ public class DatabaseAccess
                 DateTime dateTime = (new DateTime(rs.getDate("dateInTime"))); 
                 int weekdayNumber = rs.getInt("weekdayNumber");
                 String weekdayName = rs.getString("weekdayName");
-
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, false);
                 listNonSchoolDays.add(day);
             }

@@ -110,4 +110,9 @@ public class DALFacade
 
         databaseAccess.changeToNonSchoolDay(d, c);
     }
+
+    public List<Day> listNonSchoolDays()
+    {
+        return databaseAccess.listNonSchoolDays();
+    }
 }

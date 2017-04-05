@@ -245,16 +245,16 @@ public class TeacherAttendanceOverviewController implements Initializable
                         
                         boolean isNonSchoolDay = dateParser.checkNonSchoolDay(instant);
 
-                        if (isNonSchoolDay == false)
-
-                        {
-                            setTooltip(new Tooltip("School day"));
-                            this.setTextFill(Paint.valueOf("GREEN"));
-                        }
+//                        if (isNonSchoolDay == false)
+//
+//                        {
+//                            setTooltip(new Tooltip("School day"));
+//                            this.setTextFill(Paint.valueOf("GREEN"));
+//                        }
                         if (isNonSchoolDay == true)
                         {
                             setTooltip(new Tooltip("Not a school day"));
-                            setStyle("-fx-background-color: #838383;");
+                            setStyle("-fx-background-color: #C0C0C0;");
                         }
                     }
                 };
