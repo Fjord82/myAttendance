@@ -1,11 +1,13 @@
 package myattendance.GUI.Model;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import myattendance.BE.Course;
+import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
 
