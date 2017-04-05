@@ -58,20 +58,4 @@ public class DateParser
         return bllFacade.listNonSchoolDays();
     }
 
-    public boolean checkNonSchoolDay(Instant day)
-    {
-        Date date = Date.from(day);
-
-        Day d = getDay(new DateTime(date));
-
-        for (Day nonSchoolDay : listNonSchoolDays())
-        {
-            if (d == nonSchoolDay)
-            {
-                return true;
-            }
-
-        }
-        return false;
-    }
 }

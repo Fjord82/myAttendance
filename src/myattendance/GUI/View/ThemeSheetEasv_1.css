@@ -332,6 +332,14 @@ and open the template in the editor.
 .scroll-bar .increment-button {
     -fx-background-color: null;
 }
+.absent
+{
+    -fx-background-color: lightcoral;
+}
+.present
+{
+    -fx-background-color: greenyellow;
+}
 
 
 
