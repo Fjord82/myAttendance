@@ -143,6 +143,10 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     }
 
+    /**
+     *
+     * @param user
+     */
     public void setUser(User user)
     {
         this.teacher = user;
@@ -405,6 +409,9 @@ public class TeacherAttendanceOverviewController implements Initializable
         }, 0, delay);
     }
     
+    /**
+     *
+     */
     public void refreshStudents()
     {
                 if (!cBoxClassSelection.getSelectionModel().isEmpty())

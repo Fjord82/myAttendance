@@ -25,6 +25,10 @@ import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 import org.joda.time.DateTime;
 
+/**
+ *
+ * @author Kristoffers
+ */
 public class AttendanceCorrectionController implements Initializable
 {
 
@@ -55,6 +59,9 @@ public class AttendanceCorrectionController implements Initializable
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -64,6 +71,10 @@ public class AttendanceCorrectionController implements Initializable
 
     }
 
+    /**
+     *
+     * @param user
+     */
     public void setUser(User user)
     {
         this.user = user;
@@ -72,6 +83,9 @@ public class AttendanceCorrectionController implements Initializable
 
     }
 
+    /**
+     *
+     */
     public void populateList()
     {
         //ObservableList<Day> absenceList = FXCollections.observableArrayList(user.getAbsentDays());
@@ -112,19 +126,10 @@ public class AttendanceCorrectionController implements Initializable
 
     }
 
-//    @FXML
-//    private void handleAddAbsence(ActionEvent event)
-//    {
-//        dpCalendar.setOnAction(new EventHandler()
-//        {
-//            public void handle(Event t)
-//            {
-//                LocalDate lDate = dpCalendar.getValue();
-//                lDate.f
-//                system.out.println("Selected date: " + lDate);
-//                attendanceParser.writeAbsencesIntoDB(user, lDate);
-//            }
-//        });
-//    }
-
+    @FXML
+    private void handleAddContent(ActionEvent event)
+    {
+//        LocalDate lDate = dpCalendar.getValue();
+//        attendanceParser.writeAbsencesIntoDB(user, lDate);
+    }
 }
