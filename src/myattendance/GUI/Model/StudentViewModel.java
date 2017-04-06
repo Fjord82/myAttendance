@@ -37,10 +37,7 @@ public class StudentViewModel
         return bllFacade.getBarChartData(user);
     }
 
-    public List<Day> getAbsentDays(User user)
-    {
-        return bllFacade.getAbsentDays(user);
-    }
+
 
     public List<Day> getDaysUptoToday()
     {

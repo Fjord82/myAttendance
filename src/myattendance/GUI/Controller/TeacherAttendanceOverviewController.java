@@ -140,7 +140,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
-
     }
 
     /**
@@ -167,7 +166,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-
         if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -228,7 +226,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     }
 
-    private void handleDateSelection()
+    public void handleDateSelection()
     {
 
         if (clickedDay != null)
@@ -304,7 +302,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
-        
+
         automaticUpdate();
 
     }
@@ -383,7 +381,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void automaticUpdate()
     {
         // The time between every update in milliseconds
-        int delay = 15000;
+        int delay = 150000; // REMEMBER TO REMOVE A 0 SO IT'S 15000
 
         // Creates a new timer
         Timer timer = new Timer();
@@ -408,13 +406,13 @@ public class TeacherAttendanceOverviewController implements Initializable
             }
         }, 0, delay);
     }
-    
+
     /**
      *
      */
     public void refreshStudents()
     {
-                if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
         {
             filter = txtFldSearchStudent.getText();
             updateView();
@@ -426,9 +424,11 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void searchFieldTyped(KeyEvent event)
     {
         filter = txtFldSearchStudent.getText();
-        
+
         if (filter != null)
-        tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+        {
+            tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+        }
     }
 
     private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()
@@ -441,7 +441,7 @@ public class TeacherAttendanceOverviewController implements Initializable
                         @Override
                         public void updateItem(final String item, boolean empty)
                         {
-                            
+
                             if (item != null)
                             {
                                 User user = getTableView().getItems().get(getIndex());

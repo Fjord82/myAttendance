@@ -179,7 +179,7 @@ public class StudentMainOverviewController implements Initializable
     {
         this.user = user;
         attendenceChecks();
-        user.setAbsentDays(model.getAbsentDays(user));
+        user.setAbsentDays(attendanceParser.getAbsentDays(user));
         updateView();
         updateStatistics();
     }
