@@ -1,10 +1,13 @@
 package myattendance.GUI.Model;
 
+import java.text.DecimalFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -42,6 +45,13 @@ public class TeacherViewModel
             course.clearUserList();
             int index = courseList.indexOf(course);
             Course filledCourse = bllFacade.fillUsersInCourse(course);
+            for (Course c : courseList)
+            {
+                for (User u : c.getUserList())
+                {
+                    u.setAbsencePercentage(calculateAbsencePercentage(u));
+                }
+            }
             courseList.set(index, filledCourse);
 
         }
@@ -69,26 +79,14 @@ public class TeacherViewModel
     public ObservableList<User> updateList(String filter, Course course)
     {
         getClassList();
-
-        List<User> unfilteredList = new ArrayList<>(course.getUserList());
-        List<User> filteredList = new ArrayList<>();
         ObservableList<User> returnList = FXCollections.observableArrayList();
-
-//        if (filter == "")
-//        {
-//            returnList.addAll(unfilteredList);
-//
-//        } else
         {
-            for (User u : unfilteredList)
+            for (User u : course.getUserList())
             {
-                if (u.getName().toLowerCase().contains(filter.toLowerCase()))
-                {
-                    filteredList.add(u);
-                    u.setAbsencePercentage(calculateAbsencePercentage(u));
-                }
+                //u.setAbsencePercentage(calculateAbsencePercentage(u));
+                returnList.add(u);
+
             }
-            returnList.addAll(filteredList);
         }
         return returnList;
     }
@@ -98,7 +96,17 @@ public class TeacherViewModel
         return bllFacade.getPieChartData(user);
     }
 
-    public double calculateAbsencePercentage(User user)
+    public XYChart.Series<String, Number> getStackedChartData(User user)
+    {
+        return bllFacade.getStackedChartData(user);
+    }
+
+    public XYChart.Series<String, Number> getLineChartData(User user)
+    {
+        return bllFacade.getLineChartData(user);
+    }
+
+    public String calculateAbsencePercentage(User user)
     {
         List<Day> absentDays = new ArrayList<>(user.getAbsentDays());
         List<Day> daysUpToToday = new ArrayList<>(bllFacade.getDaysBetweenDates(bllFacade.getStartDate(), new DateTime()));
@@ -109,7 +117,9 @@ public class TeacherViewModel
 
         double percentageAbsence = (double) absentDaysInt / daysUptoTodayInt * 100;
 
-        return percentageAbsence;
+        DecimalFormat df = new DecimalFormat("0.0");
+
+        return df.format(percentageAbsence);
     }
 
 }

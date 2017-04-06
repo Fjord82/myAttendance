@@ -31,16 +31,18 @@ public class StudentViewModel
     {
         return bllFacade.getPieChartData(user);
     }
-    
-     public XYChart.Series<String, Number> getBarChartData(User user)
+
+    public XYChart.Series<String, Number> getStackedChartData(User user)
     {
-        return bllFacade.getBarChartData(user);
+        return bllFacade.getStackedChartData(user);
     }
 
-    public List<Day> getAbsentDays(User user)
+    public XYChart.Series<String, Number> getLineChartData(User user)
     {
-        return bllFacade.getAbsentDays(user);
+        return bllFacade.getLineChartData(user);
     }
+
+
 
     public List<Day> getDaysUptoToday()
     {
