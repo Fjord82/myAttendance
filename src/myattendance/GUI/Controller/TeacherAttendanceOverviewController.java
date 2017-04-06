@@ -116,8 +116,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private Label lblName;
     @FXML
-    private MenuBar hiddenMenu;
-    @FXML
     private TableColumn<User, Number> tblViewPercentage;
 
     /**
@@ -149,7 +147,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     public void setUser(User user)
     {
         this.teacher = user;
-        lblName.setText(user.getName());
+        lblName.setText("Logged in as: " + user.getName());
         fillComboBox();
     }
 
@@ -377,7 +375,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     /**
      * Automatically updates the list of students and their status
      */
-    @FXML
     private void automaticUpdate()
     {
         // The time between every update in milliseconds

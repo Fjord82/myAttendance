@@ -131,18 +131,33 @@ public class AttendanceCorrectionController implements Initializable
     @FXML
     private void handleAddAbsence(ActionEvent event)
     {
-        if (clickedDay != null)
+        boolean canAddAbsence = attendanceParser.canAddAbsence(user, clickedDay);
+        System.out.println(canAddAbsence);
+        if (canAddAbsence == true)
         {
-            attendanceParser.writeAbsencesIntoDB(user, clickedDay);
+            if (clickedDay != null)
+            {
+                attendanceParser.writeAbsencesIntoDB(user, clickedDay);
 
-            user.getAbsentDays().add(clickedDay);
-            populateList();
-        } else
+                user.getAbsentDays().add(clickedDay);
+                populateList();
+            } else
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setContentText("No date selected");
+                alert.setHeaderText(null);
+                alert.showAndWait();
+
+            }
+        } else if (canAddAbsence == false)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
-            alert.setContentText("No date selected");
+            alert.setContentText("Absence already recorded");
             alert.setHeaderText(null);
+            alert.showAndWait();
+
         }
     }
 
@@ -159,7 +174,6 @@ public class AttendanceCorrectionController implements Initializable
 
             clickedDay = dateParser.getDay(new DateTime(date));
 
-            System.out.println(localDate);
         }
 
     }

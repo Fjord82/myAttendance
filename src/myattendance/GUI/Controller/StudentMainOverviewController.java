@@ -92,8 +92,9 @@ public class StudentMainOverviewController implements Initializable
 
     private void updateView()
     {
-        lblStudentName.setText(user.getName());
-        lblStudentClass.setText(user.getsClass());
+        lblStudentName.setText("Logged in as: " + user.getName());
+        lblStudentClass.setText("Class: " + user.getsClass());
+        
 
         Label absenceLabel = new Label("Student Attendance: ");
         absenceLabel.setText("Student Absence: " + user.getAbsentDays().size() + "/" + model.getDaysUptoToday().size());

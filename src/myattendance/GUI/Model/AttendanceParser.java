@@ -147,13 +147,16 @@ public class AttendanceParser
         return bllFacade.getAbsentDays(user);
     }
 
-    public boolean checkDuplicateDate(User user)
+    public boolean canAddAbsence(User user, Day clickedDay)
     {
-        for (Day day : getAbsentDays(user))
+        for (Day individualDay : getAbsentDays(user))
         {
-            
+            if (clickedDay.getDateInTime().equals(individualDay.getDateInTime()))
+            {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
 }
