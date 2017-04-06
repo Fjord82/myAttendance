@@ -134,6 +134,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private Label lblName;
     @FXML
+
     private TableColumn<User, String> tblViewPercentage;
 
     /**
@@ -155,6 +156,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
+
         tblViewStatus.setCellFactory(getCustomCellFactory());
 
     }
@@ -166,7 +168,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     public void setUser(User user)
     {
         this.teacher = user;
-        lblName.setText(user.getName());
+        lblName.setText("Logged in as: " + user.getName());
         fillComboBox();
     }
 
@@ -183,7 +185,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-
         if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -277,7 +278,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     }
 
-    private void handleDateSelection()
+    public void handleDateSelection()
     {
 
         if (clickedDay != null)
@@ -426,7 +427,8 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void automaticUpdate()
     {
         // The time between every update in milliseconds
-        int delay = 150000;
+        int delay = 150000; // REMEMBER TO REMOVE A 0 SO IT'S 15000
+
 
         // Creates a new timer
         Timer timer = new Timer();
@@ -451,8 +453,7 @@ public class TeacherAttendanceOverviewController implements Initializable
             }
         }, 0, delay);
     }
-
-
+    
     public void refreshStudents()
     {
         if (!cBoxClassSelection.getSelectionModel().isEmpty())
@@ -534,6 +535,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         {
             tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
         }
+
     }
 
     public String getCSSClass(String string)

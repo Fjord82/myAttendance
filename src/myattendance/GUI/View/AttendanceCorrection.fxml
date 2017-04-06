@@ -24,8 +24,8 @@
         </columns>
       </TableView>
       <Button fx:id="removeBtn" layoutX="29.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleRemoveContent" prefHeight="26.0" prefWidth="190.0" text="Remove absence day" />
-      <DatePicker fx:id="dpCalender" layoutX="29.0" layoutY="405.0" />
-      <Button fx:id="addBtn" layoutX="29.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleAddContent" prefHeight="26.0" prefWidth="190.0" text="Add absence day" />
+      <DatePicker fx:id="dpCalendar" layoutX="29.0" layoutY="405.0" onAction="#selectDate" />
+      <Button fx:id="addBtn" layoutX="29.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleAddAbsence" prefHeight="26.0" prefWidth="190.0" text="Add absence day" />
       <Label fx:id="confirmLbl" layoutX="29.0" layoutY="376.0" prefHeight="25.0" prefWidth="240.0" />
       <Button fx:id="btnBackToMain" layoutX="232.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleHomepage" text="Back" />
    </children>

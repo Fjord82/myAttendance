@@ -1,6 +1,7 @@
 package myattendance.GUI.Model;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -60,40 +61,39 @@ public class AttendanceParser
         {
             if (!user.IsTeacher())
             {
-                if(modifyAttendance)
+                if (modifyAttendance)
                 {
-                AttendanceCorrectionController controller = loader.<AttendanceCorrectionController>getController();
-                controller.setUser(user);
-                }
-                else
+                    AttendanceCorrectionController controller = loader.<AttendanceCorrectionController>getController();
+                    controller.setUser(user);
+                } else
                 {
-                StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
-                controller.setUser(user);
+                    StudentMainOverviewController controller = loader.<StudentMainOverviewController>getController();
+                    controller.setUser(user);
                 }
 
             } else
             {
                 TeacherAttendanceOverviewController controller = loader.<TeacherAttendanceOverviewController>getController();
-                controller.setUser(user); 
+                controller.setUser(user);
             }
         }
-        
 
         Stage dialogStage = new Stage();
         dialogStage.initOwner(stage);
         dialogStage.initModality(Modality.WINDOW_MODAL);
-        
 
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
         dialogStage.setTitle(title);
 
-        if(modifyAttendance)
+        if (modifyAttendance)
         {
             dialogStage.showAndWait();
-        }else
-        dialogStage.show();
-       
+        } else
+        {
+            dialogStage.show();
+        }
+
     }
     
     public void changeToAbsenceOverview(String title, String path, User user)
@@ -153,20 +153,37 @@ public class AttendanceParser
         }
 
     }
-    
+
     public boolean establishServerConnection()
     {
         return bllFacade.establishServerConnection();
     }
-    
+
     public void deleteAbsenceFromDB(User user, Day day)
     {
         bllFacade.deleteAbsenceFromDB(user, day);
     }
-    
+
     public void writeAbsencesIntoDB(User user, Day day)
     {
         bllFacade.writeAbsencesIntoDB(user, day);
+    }
+
+    public List<Day> getAbsentDays(User user)
+    {
+        return bllFacade.getAbsentDays(user);
+    }
+
+    public boolean canAddAbsence(User user, Day clickedDay)
+    {
+        for (Day individualDay : getAbsentDays(user))
+        {
+            if (clickedDay.getDateInTime().equals(individualDay.getDateInTime()))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
