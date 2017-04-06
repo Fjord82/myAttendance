@@ -15,6 +15,7 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
 
+
 public class DatabaseAccess
 {
 
@@ -159,7 +160,7 @@ public class DatabaseAccess
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isschoolday=1");
+            PreparedStatement ps = con.prepareStatement("SELECT dateInTime FROM Calendar WHERE isSchoolDay=1");
             ResultSet rs = ps.executeQuery();
             rs.next();
 
@@ -178,6 +179,33 @@ public class DatabaseAccess
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public List<Day> listNonSchoolDays()
+    {
+        List<Day> listNonSchoolDays = new ArrayList<>();
+
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Calendar WHERE isSchoolDay=0");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            while (rs.next())
+            {
+                int dateID = rs.getInt("dateID");
+                DateTime dateTime = (new DateTime(rs.getDate("dateInTime"))); 
+                int weekdayNumber = rs.getInt("weekdayNumber");
+                String weekdayName = rs.getString("weekdayName");
+                Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, false);
+                listNonSchoolDays.add(day);
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listNonSchoolDays;
     }
 
     public List<Course> getCourses(User teacher)
@@ -272,7 +300,6 @@ public class DatabaseAccess
 //        }
 //        return false;
 //    }
-
     public Day getDay(DateTime dateTime)
     {
 
@@ -361,7 +388,9 @@ public class DatabaseAccess
                 boolean isSchoolDay = rs.getBoolean("isSchoolDay");
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, isSchoolDay);
                 if (day.isSchoolDay())
+                {
                     dayList.add(day);
+                }
             }
 
             return dayList;
@@ -411,16 +440,17 @@ public class DatabaseAccess
         return getDaysBetweenDates(getStartDate(), new DateTime());
     }
 
-    public void changeToNonSchoolDay(Day d, int c){
-        
-        try(Connection con = ds.getConnection()){
-            
+    public void changeToNonSchoolDay(Day d, int c)
+    {
+
+        try (Connection con = ds.getConnection())
+        {
+
             PreparedStatement ps = con.prepareStatement("UPDATE Calendar SET isSchoolDay = ? WHERE dateID =?");
             ps.setInt(1, c);
             ps.setInt(2, d.getDateID());
             ps.execute();
-            
-            
+
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);

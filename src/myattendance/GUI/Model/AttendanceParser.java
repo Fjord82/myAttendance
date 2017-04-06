@@ -136,5 +136,10 @@ public class AttendanceParser
     {
         bllFacade.deleteAbsenceFromDB(user, day);
     }
+    
+    public void writeAbsencesIntoDB(User user, Day day)
+    {
+        bllFacade.writeAbsencesIntoDB(user, day);
+    }
 
 }

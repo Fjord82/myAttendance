@@ -1,13 +1,18 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import com.sun.prism.paint.Color;
 import java.awt.event.ActionListener;
+
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -19,16 +24,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -37,12 +46,13 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
+import static javafx.scene.paint.Color.GREEN;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
@@ -56,11 +66,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-/**
- * FXML Controller class
- *
- * @author Kristoffers
- */
 public class TeacherAttendanceOverviewController implements Initializable
 
 {
@@ -73,15 +78,28 @@ public class TeacherAttendanceOverviewController implements Initializable
     DateParser dateParser = DateParser.getInstance();
 
     User teacher;
-    User lastSelectedUser;
+    User lastSelectedStudent;
     Day clickedDay;
+
+    List<Day> nonSchoolDays = new ArrayList<>();
 
     Course lastSelectedCourse;
 
     String filter = "";
 
-    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-    PieChart absenceChart = new PieChart(pieChartData);
+    private PieChart absenceChart = new PieChart();
+
+    private CategoryAxis xAxisStacked = new CategoryAxis();
+    private NumberAxis yAxisStacked = new NumberAxis();
+    private StackedBarChart<String, Number> stackedChart = new StackedBarChart<>(xAxisStacked, yAxisStacked);
+
+    private CategoryAxis xAxisLine = new CategoryAxis();
+    private NumberAxis yAxisLine = new NumberAxis();
+    private LineChart<String, Number> lineChart = new LineChart<>(xAxisLine, yAxisLine);
+
+    boolean pie = false;
+    boolean stacked = false;
+    boolean line = false;
 
     Label absenceLabel = new Label();
 
@@ -116,9 +134,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private Label lblName;
     @FXML
-    private MenuBar hiddenMenu;
-    @FXML
-    private TableColumn<User, Number> tblViewPercentage;
+    private TableColumn<User, String> tblViewPercentage;
 
     /**
      * Initializes the controller class.
@@ -129,20 +145,24 @@ public class TeacherAttendanceOverviewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-
+        nonSchoolDays = dateParser.listNonSchoolDays();
         showConstantCalender();
         setClickCal();
         updatePresentCounter();
 
         absenceChart.setTitle("Student Absence");
-        paginationBtn.setVisible(false);
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
 
+        tblViewStatus.setCellFactory(getCustomCellFactory());
 
     }
 
+    /**
+     *
+     * @param user
+     */
     public void setUser(User user)
     {
         this.teacher = user;
@@ -173,16 +193,8 @@ public class TeacherAttendanceOverviewController implements Initializable
             alert.showAndWait();
         } else
         {
-            attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedUser, true);
+            attendanceParser.changeView("Absence Overview", "GUI/View/AttendanceCorrection.fxml", lastSelectedStudent, true);
         }
-
-//        
-//        Closes the primary stage
-//        Stage stage = (Stage) btnAbsenceOverview.getScene().getWindow();
-//        stage.initModality(Modality.WINDOW_MODAL);
-//        stage.initOwner(primaryStage);
-//        //Scene scene = new Scene
-        //stage.show();
     }
 
     private void fillComboBox()
@@ -195,12 +207,53 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         calendar = new DatePicker(LocalDate.now());
 
+        // Factory to create Cell of DatePicker
+        Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory();
+
+        calendar.setDayCellFactory(getDayCellFactory());
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
 
         vBoxSelectionContent.setPadding(new Insets(5));
+
         vBoxSelectionContent.setSpacing(200);
         vBoxSelectionContent.getChildren().add(pop);
+    }
+
+    // Factory to create Cell of DatePicker
+    private Callback<DatePicker, DateCell> getDayCellFactory()
+    {
+
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
+        {
+
+            @Override
+            public DateCell call(final DatePicker datePicker)
+            {
+                return new DateCell()
+                {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty)
+                    {
+
+                        super.updateItem(item, empty);
+
+                        //dateParser.checkNonSchoolDay(item);
+                        //Instant instant = Instant.from(item);
+                        //DateTime date = new DateTime(item.atStartOfDay());
+                        for (Day day : nonSchoolDays)
+                        {
+                            if (day.getDateInTime().toLocalDate().toString().equals(item.toString()))
+                            {
+                                setTooltip(new Tooltip("Not school day"));
+                                setStyle("-fx-background-color: #C0C0C0;");
+                            }
+                        }
+                    }
+                };
+            }
+        };
+        return dayCellFactory;
     }
 
     private void setClickCal()
@@ -301,9 +354,10 @@ public class TeacherAttendanceOverviewController implements Initializable
         txtFldSearchStudent.clear();
         txtFldSearchStudent.requestFocus();
 
+        automaticUpdate();
+
     }
 
-    @FXML
     private void clickStatistics(ActionEvent event)
     {
 
@@ -311,19 +365,18 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
+
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setContentText("Please select a class and then point on a student inside the studentlist");
 
             alert.showAndWait();
 
-            paginationBtn.setVisible(false);
         }
 
         vBoxMiddle.getChildren().add(absenceChart);
         vBoxMiddle.getChildren().add(absenceLabel);
         vBoxMiddle.setAlignment(Pos.CENTER);
-        paginationBtn.setVisible(true);
 
     }
 
@@ -332,17 +385,14 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         if (!tblStatusView.getItems().isEmpty())
         {
-            lastSelectedUser = tblStatusView.getSelectionModel().getSelectedItem();
-            chartData();
+            lastSelectedStudent = tblStatusView.getSelectionModel().getSelectedItem();
+            clearStatistics();
+            pie = false;
+            stacked = false;
+            line = false;
+            updateStatistics();
 
         }
-    }
-
-    private void chartData()
-    {
-        pieChartData.clear();
-        pieChartData.setAll(model.getPieChartData(lastSelectedUser));
-        absenceChart.setTitle("Absence");
     }
 
     private void updateView()
@@ -373,11 +423,10 @@ public class TeacherAttendanceOverviewController implements Initializable
     /**
      * Automatically updates the list of students and their status
      */
-    @FXML
     private void automaticUpdate()
     {
         // The time between every update in milliseconds
-        int delay = 15000;
+        int delay = 150000;
 
         // Creates a new timer
         Timer timer = new Timer();
@@ -402,10 +451,11 @@ public class TeacherAttendanceOverviewController implements Initializable
             }
         }, 0, delay);
     }
-    
+
+
     public void refreshStudents()
     {
-                if (!cBoxClassSelection.getSelectionModel().isEmpty())
+        if (!cBoxClassSelection.getSelectionModel().isEmpty())
         {
             filter = txtFldSearchStudent.getText();
             updateView();
@@ -413,13 +463,92 @@ public class TeacherAttendanceOverviewController implements Initializable
         }
     }
 
+    public void updateStatistics()
+    {
+
+        if (paginationBtn.getCurrentPageIndex() == 0 && pie == false)
+        {
+            clearStatistics();
+            pie = true;
+            stacked = false;
+            line = false;
+            absenceChart.getData().clear();
+
+            absenceChart.setData(model.getPieChartData(lastSelectedStudent));
+            absenceChart.setTitle("Absence");
+
+            vBoxMiddle.getChildren().add(absenceChart);
+
+        } else if (paginationBtn.getCurrentPageIndex() == 1 && stacked == false)
+        {
+            clearStatistics();
+            pie = false;
+            stacked = true;
+            line = false;
+
+            stackedChart.getData().clear();
+
+            vBoxMiddle.getChildren().add(stackedChart);
+            stackedChart.getData().add(model.getStackedChartData(lastSelectedStudent));
+
+            xAxisStacked.setLabel("Day");
+            xAxisStacked.setTickMarkVisible(false);
+            yAxisStacked.setLabel("Recorded Absences");
+            yAxisStacked.setTickUnit(1);
+            yAxisStacked.setTickMarkVisible(false);
+            stackedChart.setTitle("Absence per day");
+
+        } else if (paginationBtn.getCurrentPageIndex() == 2 && line == false)
+        {
+            clearStatistics();
+            pie = false;
+            stacked = false;
+            line = true;
+
+            lineChart.getData().clear();
+
+            vBoxMiddle.getChildren().add(lineChart);
+            lineChart.getData().add(model.getLineChartData(lastSelectedStudent));
+
+            xAxisLine.setLabel("Month");
+            xAxisLine.setTickMarkVisible(false);
+            yAxisLine.setLabel("Absent Days");
+            yAxisLine.setTickUnit(1);
+            yAxisLine.setTickMarkVisible(false);
+        }
+    }
+
+    public void clearStatistics()
+    {
+        vBoxMiddle.getChildren().remove(stackedChart);
+        vBoxMiddle.getChildren().remove(absenceChart);
+        vBoxMiddle.getChildren().remove(lineChart);
+    }
+
     @FXML
     private void searchFieldTyped(KeyEvent event)
     {
         filter = txtFldSearchStudent.getText();
-        
+
         if (filter != null)
-        tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+        {
+            tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
+        }
+    }
+
+    public String getCSSClass(String string)
+    {
+        String cssClass = "";
+        if (string.equalsIgnoreCase("offline"))
+        {
+            cssClass = "absent";
+
+        } else if (string.equalsIgnoreCase("online"))
+        {
+            cssClass = "present";
+        }
+        return cssClass;
+
     }
 
     private Callback<TableColumn<User, String>, TableCell<User, String>> getCustomCellFactory()
@@ -432,16 +561,24 @@ public class TeacherAttendanceOverviewController implements Initializable
                         @Override
                         public void updateItem(final String item, boolean empty)
                         {
-                            
+
                             if (item != null)
-                            {
-                                User user = getTableView().getItems().get(getIndex());
+                            {;
                                 setText(item);
-                                String warningClass = user.getCSSClass();
+                                String warningClass = getCSSClass(item);
                                 getStyleClass().add(warningClass);
                             }
                         }
                     };
         };
+    }
+
+    @FXML
+    private void onPaginationClicked(MouseEvent event)
+    {
+        if (lastSelectedStudent != null)
+        {
+            updateStatistics();
+        }
     }
 }
