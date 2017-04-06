@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="310.0" stylesheets="@ThemeSheetEasv_1.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="myattendance.GUI.Controller.StudentAbsenceOverviewController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Resource/logo.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="nameLbl" layoutX="21.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
+      <Label layoutX="21.0" layoutY="86.0" prefHeight="25.0" prefWidth="240.0" text="Absence overview day(s) for" />
+      <TableView fx:id="tblAbsenceOverview" layoutX="21.0" layoutY="134.0" prefHeight="200.0" prefWidth="240.0">
+         <columns>
+            <TableColumn fx:id="columnAbsenceDays" prefWidth="238.0" text="Absence days" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnBackToMain" layoutX="212.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleHomepage" text="Back" />
+   </children>
+</AnchorPane>

@@ -44,10 +44,15 @@
                         </VBox>
                   <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" prefHeight="37.0" prefWidth="500.0">
                      <buttons>
-                        <Button id="logoutbutton" fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="33.0" prefWidth="89.0" text="Sign out" />
+                        <Button fx:id="btnAbsenceOverview" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="35.0" prefWidth="239.0" text="Absence Overview">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button id="logoutbutton" fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" maxWidth="90.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="33.0" prefWidth="89.0" text="Sign out" />
                      </buttons>
                      <padding>
-                        <Insets right="10.0" />
+                        <Insets right="40.0" />
                      </padding>
                      <HBox.margin>
                         <Insets top="55.0" />
