@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.StudentMainOverviewController">
     <children>
       <Label text="Class:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="27.0" />
       <Label text="Signed in as:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
@@ -54,10 +54,15 @@
                         </VBox>
                   <ButtonBar buttonMinWidth="80.0" maxHeight="37.0" prefHeight="37.0" prefWidth="500.0">
                      <buttons>
-                        <Button id="logoutbutton" fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="33.0" prefWidth="89.0" text="Sign out" />
+                        <Button fx:id="btnAbsenceOverview" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="35.0" prefWidth="239.0" text="Absence Overview">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button id="logoutbutton" fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" maxWidth="90.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="33.0" prefWidth="89.0" text="Sign out" />
                      </buttons>
                      <padding>
-                        <Insets right="10.0" />
+                        <Insets right="40.0" />
                      </padding>
                      <HBox.margin>
                         <Insets top="55.0" />
