@@ -105,9 +105,14 @@ public class BLLFacade
         return statistics.getPieChartData(user);
     }
 
-    public XYChart.Series<String, Number> getBarChartData(User user)
+    public XYChart.Series<String, Number> getStackedChartData(User user)
     {
-        return statistics.getBarChartData(user);
+        return statistics.getStackedChartData(user);
+    }
+    
+     public XYChart.Series<String, Number> getLineChartData(User user)
+    {
+        return statistics.getLineChartData(user);
     }
 
     public Integer totalSchoolDays()
@@ -126,8 +131,14 @@ public class BLLFacade
         dalFacade.changeToNonSchoolDay(d, c);
     }
     
+      public List<Day> listNonSchoolDays()
+    {
+        return dalFacade.listNonSchoolDays();
+    }
+      
     public void deleteAbsenceFromDB(User user, Day day)
     {
         dalFacade.deleteAbsenceFromDB(user, day);
+
     }
 }

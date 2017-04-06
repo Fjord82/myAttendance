@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#AnchorPaneActionEvent" prefHeight="600.0" prefWidth="1000.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.TeacherAttendanceOverviewController">
+<AnchorPane id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#AnchorPaneActionEvent" prefHeight="600.0" prefWidth="1000.0" stylesheets="@ThemeSheetEasv_1.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myattendance.GUI.Controller.TeacherAttendanceOverviewController">
     <children>
         <Label fx:id="lblName" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -52,7 +52,6 @@
                         <ButtonBar buttonMinWidth="80.0" maxHeight="42.0" minWidth="450.0" prefHeight="42.0" prefWidth="450.0">
                             <buttons>
                                 <Button fx:id="btnAbsenceOverview" mnemonicParsing="false" onAction="#handleAbsenceOverview" prefHeight="35.0" prefWidth="239.0" text="Attendance Correction" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clickStatistics" prefHeight="35.0" prefWidth="252.0" text="Statistics" />
                             </buttons>
                             <HBox.margin>
                                 <Insets top="55.0" />
@@ -141,7 +140,7 @@
                                 <Insets bottom="435.0" />
                             </StackPane.margin>
                             <children>
-                                <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
+                                <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" onMouseEntered="#onPaginationClicked" onMouseExited="#onPaginationClicked" onMouseMoved="#onPaginationClicked" pageCount="3" prefHeight="65.0" prefWidth="200.0" />
                             </children>
                         </HBox>
                         <VBox fx:id="vBoxMiddle" maxHeight="499.0" prefHeight="499.0" prefWidth="433.0" style="-fx-border-width: 1;">

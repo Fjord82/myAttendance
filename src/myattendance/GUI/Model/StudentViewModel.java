@@ -31,10 +31,15 @@ public class StudentViewModel
     {
         return bllFacade.getPieChartData(user);
     }
-    
-     public XYChart.Series<String, Number> getBarChartData(User user)
+
+    public XYChart.Series<String, Number> getStackedChartData(User user)
     {
-        return bllFacade.getBarChartData(user);
+        return bllFacade.getStackedChartData(user);
+    }
+
+    public XYChart.Series<String, Number> getLineChartData(User user)
+    {
+        return bllFacade.getLineChartData(user);
     }
 
 
