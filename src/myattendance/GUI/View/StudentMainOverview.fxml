@@ -20,9 +20,9 @@
       <Label fx:id="lblStudentName" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
         <BorderPane layoutX="-1.0" layoutY="-3.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
-                <VBox fx:id="vBoxSelectionContent" prefHeight="306.0" prefWidth="290.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
+                <VBox fx:id="vBoxSelectionContent" prefHeight="319.0" prefWidth="290.0" style="-fx-border-width: 1;" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
-                        <Insets />
+                        <Insets top="150.0" />
                     </BorderPane.margin>
                 </VBox>
             </left>
@@ -66,9 +66,9 @@
                               <Insets />
                            </VBox.margin>
                            <children>
-                              <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" onMouseEntered="#handlePaginationClick" onMouseExited="#handlePaginationClick" onMouseMoved="#handlePaginationClick" pageCount="3" prefHeight="65.0" prefWidth="200.0">
+                              <Pagination fx:id="paginationBtn" maxPageIndicatorCount="3" onMouseEntered="#handlePaginationClick" onMouseExited="#handlePaginationClick" onMouseMoved="#handlePaginationClick" pageCount="3" prefHeight="53.0" prefWidth="200.0">
                                  <HBox.margin>
-                                    <Insets top="1.0" />
+                                    <Insets bottom="10.0" top="1.0" />
                                  </HBox.margin></Pagination>
                            </children>
                         </HBox>
