@@ -15,7 +15,6 @@ import myattendance.BE.Day;
 import myattendance.BE.User;
 import myattendance.BLL.BLLFacade;
 import myattendance.GUI.Controller.AttendanceCorrectionController;
-import myattendance.GUI.Controller.StudentAbsenceOverviewController;
 import myattendance.GUI.Controller.StudentMainOverviewController;
 import myattendance.GUI.Controller.TeacherAttendanceOverviewController;
 import myattendance.MyAttendance;
@@ -75,6 +74,7 @@ public class AttendanceParser
             {
                 TeacherAttendanceOverviewController controller = loader.<TeacherAttendanceOverviewController>getController();
                 controller.setUser(user);
+
             }
         }
 
@@ -94,33 +94,6 @@ public class AttendanceParser
             dialogStage.show();
         }
 
-    }
-    
-    public void changeToAbsenceOverview(String title, String path, User user)
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MyAttendance.class.getResource(path));
-            AnchorPane page = (AnchorPane) loader.load();
-            
-            StudentAbsenceOverviewController controller = loader.<StudentAbsenceOverviewController>getController();
-            controller.setUser(user);
-            
-            Stage dialogStage = new Stage();
-            dialogStage.initOwner(stage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            
-            
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-            dialogStage.setTitle(title);
-            dialogStage.show();
-        } catch (IOException ex)
-        {
-            Logger.getLogger(AttendanceParser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
     }
 
     public void tryLogin(String login, String pass, Stage stage)
