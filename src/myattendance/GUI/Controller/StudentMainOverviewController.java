@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,6 +40,8 @@ public class StudentMainOverviewController implements Initializable
 
     @FXML
     private Button btnLogout;
+    @FXML
+    private Button btnAbsenceOverview;
 
     @FXML
     private VBox vBoxMiddle;
@@ -72,7 +76,7 @@ public class StudentMainOverviewController implements Initializable
     boolean pie = false;
     boolean stacked = false;
     boolean line = false;
-
+ 
     /**
      * Initializes the controller class.
      */
@@ -199,6 +203,12 @@ public class StudentMainOverviewController implements Initializable
         user.setAbsentDays(attendanceParser.getAbsentDays(user));
         updateView();
         updateStatistics();
+    }
+
+    @FXML
+    private void handleAbsenceOverview(ActionEvent event)
+    {
+        attendanceParser.changeToAbsenceOverview("Absence Overview", "GUI/View/StudentAbsenceOverview.fxml", user);
     }
 
 }
