@@ -42,10 +42,7 @@ public class StudentViewModel
         return bllFacade.getLineChartData(user);
     }
 
-    public List<Day> getAbsentDays(User user)
-    {
-        return bllFacade.getAbsentDays(user);
-    }
+
 
     public List<Day> getDaysUptoToday()
     {
