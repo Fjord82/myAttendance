@@ -1,8 +1,5 @@
 /build/
 /dist/
 /nbproject/private/
-/nbproject/jfx-impl_backup.xml
-nbproject/jfx-impl_backup_2.xml
-nbproject/jfx-impl_backup_3.xml
-nbproject/jfx-impl_backup_6.xml
-nbproject/jfx-impl_backup_5.xml
+nbproject/jfx-impl_backup_*.xml
+nbproject/jfx-impl_backup.xml
