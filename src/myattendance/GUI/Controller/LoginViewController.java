@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -70,8 +69,8 @@ public class LoginViewController implements Initializable
     }
 
     private void checkConnection()
-    { 
-        if (attendanceParser.establishServerConnection()==true)
+    {
+        if (attendanceParser.establishServerConnection() == true)
         {
             LabelConnection.setTextFill(Color.GREEN);
             LabelConnection.setText("Connected to school network");

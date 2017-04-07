@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.joda.time.DateTime;
 
-
 public class Day
 {
 
@@ -54,20 +53,19 @@ public class Day
     {
         this.isSchoolDay = isSchoolDay;
     }
-    
+
     public StringProperty WeekdayNameProperty()
     {
         return weekdayName;
     }
-    
+
     public StringProperty toStringProperty()
     {
         StringProperty returnString = new SimpleStringProperty();
 
-        returnString.set(this.getDateInTime().toLocalDate() + "\t" +(this.getWeekdayName()));
-        
+        returnString.set(this.getDateInTime().toLocalDate() + "\t" + (this.getWeekdayName()));
+
         return returnString;
     }
-    
-    
+
 }

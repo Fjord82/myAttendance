@@ -8,7 +8,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -68,7 +67,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     User teacher;
     User lastSelectedStudent;
     Day clickedDay;
-
 
     Course lastSelectedCourse;
 
@@ -141,7 +139,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
-
 
         tblViewStatus.setCellFactory(getCustomCellFactory());
 
@@ -347,13 +344,13 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         updateView(getUsersFromModel());
     }
-    
+
     private void updateView(ObservableList<User> users)
     {
         tblStatusView.setItems(users);
         updatePresentCounter();
     }
-    
+
     private ObservableList<User> getUsersFromModel()
     {
         return model.updateList(filter, lastSelectedCourse);
@@ -386,7 +383,6 @@ public class TeacherAttendanceOverviewController implements Initializable
         // The time between every update in milliseconds
         int delay = 1200000; // 120 seconds
 
-
         // Creates a new timer
         Timer timer = new Timer();
 
@@ -411,7 +407,7 @@ public class TeacherAttendanceOverviewController implements Initializable
             }
         }, 0, delay);
     }
-    
+
     public void refreshStudents()
     {
         if (!cBoxClassSelection.getSelectionModel().isEmpty())

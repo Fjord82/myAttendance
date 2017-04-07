@@ -109,8 +109,8 @@ public class BLLFacade
     {
         return statistics.getStackedChartData(user);
     }
-    
-     public XYChart.Series<String, Number> getLineChartData(User user)
+
+    public XYChart.Series<String, Number> getLineChartData(User user)
     {
         return statistics.getLineChartData(user);
     }
@@ -130,12 +130,12 @@ public class BLLFacade
 
         dalFacade.changeToNonSchoolDay(d, c);
     }
-    
-      public List<Day> listNonSchoolDays()
+
+    public List<Day> listNonSchoolDays()
     {
         return dalFacade.listNonSchoolDays();
     }
-      
+
     public void deleteAbsenceFromDB(User user, Day day)
     {
         dalFacade.deleteAbsenceFromDB(user, day);

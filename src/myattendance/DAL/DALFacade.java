@@ -115,7 +115,7 @@ public class DALFacade
     {
         return databaseAccess.listNonSchoolDays();
     }
-    
+
     public void deleteAbsenceFromDB(User user, Day day)
     {
         databaseAccess.deleteAbsenceFromDB(user, day);

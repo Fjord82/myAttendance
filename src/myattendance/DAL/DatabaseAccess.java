@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.Alert;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
 import org.joda.time.DateTime;
-
 
 public class DatabaseAccess
 {
@@ -192,7 +190,7 @@ public class DatabaseAccess
             while (rs.next())
             {
                 int dateID = rs.getInt("dateID");
-                DateTime dateTime = (new DateTime(rs.getDate("dateInTime"))); 
+                DateTime dateTime = (new DateTime(rs.getDate("dateInTime")));
                 int weekdayNumber = rs.getInt("weekdayNumber");
                 String weekdayName = rs.getString("weekdayName");
                 Day day = new Day(dateID, dateTime, weekdayNumber, weekdayName, false);
@@ -415,24 +413,23 @@ public class DatabaseAccess
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void deleteAbsenceFromDB(User user, Day day)
     {
-        try(Connection con = ds.getConnection())
+        try (Connection con = ds.getConnection())
         {
-           PreparedStatement ps = con.prepareStatement("DELETE from Absence Where PID=? and dateID=?");
-           ps.setInt(1, user.getId());
-           ps.setInt(2, day.getDateID());
-           
-           ps.execute();
-           
-           
+            PreparedStatement ps = con.prepareStatement("DELETE from Absence Where PID=? and dateID=?");
+            ps.setInt(1, user.getId());
+            ps.setInt(2, day.getDateID());
+
+            ps.execute();
+
         } catch (SQLException ex)
         {
             Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public List<Day> getDaysUptoToday()
     {
         return getDaysBetweenDates(getStartDate(), new DateTime());

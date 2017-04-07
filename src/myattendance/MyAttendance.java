@@ -12,7 +12,7 @@ public class MyAttendance extends Application
 {
 
     public Window stage;
-    
+
     @Override
     public void start(Stage primaryStage) throws IOException
     {
@@ -22,7 +22,6 @@ public class MyAttendance extends Application
 
         //scene.getStylesheets().add("myattendance/GUI/View/styleSheetLogin.css");
         //scene.getStylesheets().add("file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/styleSheetLogin.css");
-
         primaryStage.setTitle("Login");
 
         primaryStage.setScene(scene);

@@ -16,10 +16,10 @@ public class DateManager
     public int daysBetween(DateTime startDateTime, DateTime endDateTime)
     {
         int daysBetween = 0;
-        
+
         if (startDateTime != null && endDateTime != null)
         {
-        daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
+            daysBetween = Days.daysBetween(startDateTime, endDateTime).getDays();
         }
         return daysBetween;
 
@@ -37,7 +37,6 @@ public class DateManager
         {
             return true;
         }
-        
 
     }
 
@@ -46,11 +45,11 @@ public class DateManager
         if (isAbsent(user))
         {
             List<Day> absentDays = new ArrayList(dalFacade.getDaysBetweenDates(user.getLastLogin(), today.getDateInTime()));
-            
+
             for (Day day : absentDays)
             {
-                
-                if(day.isSchoolDay())
+
+                if (day.isSchoolDay())
                 {
                     dalFacade.writeAbsencesIntoDB(user, day);
                 }

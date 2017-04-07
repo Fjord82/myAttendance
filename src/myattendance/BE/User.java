@@ -2,9 +2,7 @@ package myattendance.BE;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,7 +15,7 @@ public class User
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty sClass = new SimpleStringProperty();
-    
+
     private StringProperty absencePercentage = new SimpleStringProperty();
 
     private final boolean isTeacher;
@@ -105,7 +103,7 @@ public class User
         if (lastLogin.dayOfYear().equals(today.dayOfYear()))
         {
             setStatus("Online");
-            
+
         } else
         {
             setStatus("Offline");
@@ -131,11 +129,10 @@ public class User
     {
         this.absencePercentage.set(absencePercentage);
     }
-    
+
     public StringProperty getAbsencePercentageProperty()
     {
         return absencePercentage;
     }
-    
 
 }

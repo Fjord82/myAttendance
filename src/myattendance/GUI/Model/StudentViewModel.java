@@ -38,8 +38,6 @@ public class StudentViewModel
         return bllFacade.getLineChartData(user);
     }
 
-
-
     public List<Day> getDaysUptoToday()
     {
         return bllFacade.getDaysUptoToday();

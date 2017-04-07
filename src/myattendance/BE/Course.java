@@ -9,17 +9,18 @@ import javafx.beans.property.StringProperty;
 
 public class Course
 {
+
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
-    
+
     private List<User> userList = new ArrayList<>();
-    
+
     @Override
     public String toString()
     {
         return name.get();
     }
-    
+
     public Course(int id, String name)
     {
         this.id.set(id);
@@ -45,20 +46,15 @@ public class Course
     {
         this.userList = userList;
     }
-    
+
     public void addToUserList(User user)
     {
         this.userList.add(user);
     }
-    
+
     public void clearUserList()
     {
         userList.clear();
     }
-    
-    
-    
-    
-    
 
 }
