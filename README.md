@@ -11,7 +11,7 @@ myAttendance
           /      /`
 
 
-2nd Semester Compulsory Assignment 1
+2nd Semester Compulsory Assignment 2
 
 Group members:
 Meng Dunmow, Jeppe Ehmsen, Rasmus Fjord,  Kristoffer Christensen & Jonas Husted Andersen.

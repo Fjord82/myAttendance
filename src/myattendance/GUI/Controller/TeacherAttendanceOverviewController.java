@@ -8,11 +8,13 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -343,8 +345,18 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     private void updateView()
     {
-        tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
+        updateView(getUsersFromModel());
+    }
+    
+    private void updateView(ObservableList<User> users)
+    {
+        tblStatusView.setItems(users);
         updatePresentCounter();
+    }
+    
+    private ObservableList<User> getUsersFromModel()
+    {
+        return model.updateList(filter, lastSelectedCourse);
     }
 
     @FXML
@@ -385,13 +397,14 @@ public class TeacherAttendanceOverviewController implements Initializable
             @Override
             public void run()
             {
+                ObservableList<User> users = getUsersFromModel();
                 // Creates a new thread
                 Thread t = new Thread()
                 {
                     @Override
                     public void run()
                     {
-                        updateView();
+                        updateView(users);
                     }
                 };
                 Platform.runLater(t);
@@ -510,9 +523,10 @@ public class TeacherAttendanceOverviewController implements Initializable
                         {
 
                             if (item != null)
-                            {;
+                            {
                                 setText(item);
                                 String warningClass = getCSSClass(item);
+                                getStyleClass().clear();
                                 getStyleClass().add(warningClass);
                             }
                         }
