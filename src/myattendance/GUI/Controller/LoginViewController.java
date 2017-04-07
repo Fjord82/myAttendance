@@ -33,8 +33,6 @@ public class LoginViewController implements Initializable
     @FXML
     private PasswordField passwordField;
     @FXML
-    private CheckBox rememberMeCheckBox;
-    @FXML
     private Label wrongLoginLabel;
     @FXML
     private Label LabelConnection;
