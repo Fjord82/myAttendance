@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance.GUI.Controller;
 
 import java.io.IOException;
@@ -13,22 +8,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import myattendance.BE.User;
 import myattendance.GUI.Model.AttendanceParser;
 
-/**
- * FXML Controller class
- *
- * @author Kristoffers
- */
 public class LoginViewController implements Initializable
 {
 
-    private final String studentUsername = "student";
-    private final String teacherUsername = "teacher";
-    private final String password = "pass";
+    User student = new User();
 
     /**
      * Gets the singleton instance of AttendanceParser.java.
@@ -42,7 +33,9 @@ public class LoginViewController implements Initializable
     @FXML
     private PasswordField passwordField;
     @FXML
-    private CheckBox rememberMeCheckBox;
+    private Label wrongLoginLabel;
+    @FXML
+    private Label LabelConnection;
 
     /**
      * Initializes the controller class.
@@ -50,29 +43,47 @@ public class LoginViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        // Hides the "Wrong username or password" label
+        wrongLoginLabel.setVisible(false);
+        checkConnection();
     }
 
-        @FXML
-        private void handleLogin(ActionEvent event) throws IOException
+    @FXML
+    private void handleLogin(ActionEvent event) throws IOException
+    {
+        checkConnection();
+
+        if (!usernameField.getText().isEmpty())
         {
-            if (usernameField.getText().equals(studentUsername) && passwordField.getText().equals(password))
-            {
-                attendanceParser.changeView("Homepage", "GUI/View/StudentMainOverview.fxml");
+            Stage stage = (Stage) loginButton.getScene().getWindow();
 
-                // Closes the primary stage
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.close();
-            }
-            if (usernameField.getText().equals(teacherUsername) && passwordField.getText().equals(password))
-            {
-                attendanceParser.changeView("Homepage", "GUI/View/MainAttendanceOverview.fxml");
+            attendanceParser.tryLogin(usernameField.getText(), passwordField.getText(), stage);
 
-                // Closes the primary stage
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.close();
-            }
+            // Closes the primary stage
+        } else
+        {
+            // Displays the "Wrong username or password" label
+            wrongLoginLabel.setVisible(true);
+            usernameField.requestFocus();
+        }
+
+    }
+
+    private void checkConnection()
+    { 
+        if (attendanceParser.establishServerConnection()==true)
+        {
+            LabelConnection.setTextFill(Color.GREEN);
+            LabelConnection.setText("Connected to school network");
+            loginButton.setDisable(false);
+
+        } else
+        {
+            LabelConnection.setTextFill(Color.RED);
+            LabelConnection.setText("Wrong network connected");
+            loginButton.setDisable(true);
 
         }
+    }
 
 }

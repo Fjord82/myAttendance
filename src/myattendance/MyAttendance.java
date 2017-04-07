@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myattendance;
 
 import java.io.IOException;
@@ -13,21 +8,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-/**
- *
- * @author Fjord82
- */
 public class MyAttendance extends Application
 {
 
     public Window stage;
-
+    
     @Override
     public void start(Stage primaryStage) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("GUI/View/LoginView.fxml"));
 
         Scene scene = new Scene(root);
+
+        //scene.getStylesheets().add("myattendance/GUI/View/styleSheetLogin.css");
         //scene.getStylesheets().add("file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/styleSheetLogin.css");
 
         primaryStage.setTitle("Login");
@@ -43,8 +36,6 @@ public class MyAttendance extends Application
     public static void main(String[] args)
     {
         launch(args);
-        
-        
     }
 
 }
