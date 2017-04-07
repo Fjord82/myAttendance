@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
 import myattendance.BE.User;
@@ -86,8 +87,6 @@ public class DatabaseAccess
 
         } catch (SQLException ex)
         {
-            System.out.println(ex);
-            System.out.println("Connection Error");
             return null;
         }
     }

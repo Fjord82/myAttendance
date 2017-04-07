@@ -75,11 +75,13 @@ public class LoginViewController implements Initializable
         {
             LabelConnection.setTextFill(Color.GREEN);
             LabelConnection.setText("Connected to school network");
+            loginButton.setDisable(false);
 
         } else
         {
             LabelConnection.setTextFill(Color.RED);
             LabelConnection.setText("Wrong network connected");
+            loginButton.setDisable(false);
 
         }
     }
