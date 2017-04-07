@@ -271,31 +271,6 @@ public class DatabaseAccess
         }
     }
 
-//    public boolean isSchoolDay(Day day)
-//    {
-//
-//        try (Connection con = ds.getConnection())
-//        {
-//
-//            PreparedStatement ps = con.prepareStatement("SELECT isSchoolDay From Calender WHERE dateID=?");
-//            ps.setInt(1, day.getDateID());
-//
-//            ResultSet rs = ps.executeQuery();
-//            rs.next();
-//            if (rs.getBoolean("isSchoolDay"))
-//            {
-//                return true;
-//            } else
-//            {
-//                return false;
-//            }
-//
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return false;
-//    }
     public Day getDay(DateTime dateTime)
     {
 

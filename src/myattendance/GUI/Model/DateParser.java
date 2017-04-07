@@ -79,9 +79,6 @@ public class DateParser
 
                         super.updateItem(item, empty);
 
-                        //dateParser.checkNonSchoolDay(item);
-                        //Instant instant = Instant.from(item);
-                        //DateTime date = new DateTime(item.atStartOfDay());
                         for (Day day : listNonSchoolDays())
                         {
                             if (day.getDateInTime().toLocalDate().toString().equals(item.toString()))

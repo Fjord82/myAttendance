@@ -20,10 +20,7 @@ public class MyAttendance extends Application
 
         Scene scene = new Scene(root);
 
-        //scene.getStylesheets().add("myattendance/GUI/View/styleSheetLogin.css");
-        //scene.getStylesheets().add("file:/Users/Kristoffers/Desktop/School/Projects/myAttendance/styleSheetLogin.css");
         primaryStage.setTitle("Login");
-
         primaryStage.setScene(scene);
         primaryStage.show();
 

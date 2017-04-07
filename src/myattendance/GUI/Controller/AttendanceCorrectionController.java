@@ -81,7 +81,6 @@ public class AttendanceCorrectionController implements Initializable
         this.user = user;
         nameLbl.setText(user.getName());
         populateList();
-
     }
 
     /**
@@ -89,10 +88,7 @@ public class AttendanceCorrectionController implements Initializable
      */
     public void populateList()
     {
-        //ObservableList<Day> absenceList = FXCollections.observableArrayList(user.getAbsentDays());
-
         tblAbsenceOverview.setItems(FXCollections.observableArrayList(user.getAbsentDays()));
-
     }
 
     @FXML
@@ -119,10 +115,6 @@ public class AttendanceCorrectionController implements Initializable
             attendanceParser.deleteAbsenceFromDB(user, selectedDay);
             user.getAbsentDays().remove(selectedDay);
             populateList();
-
-//            Button yesBtn = new Button("Yes");
-//            Button noBtn = new Button("No");
-//            confirmLbl.setText("Are you sure you want to remove selected from list? ");  
         }
     }
 
