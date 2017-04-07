@@ -44,9 +44,8 @@ public class DatabaseAccess
             return true;
         } catch (SQLException ex)
         {
-            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        return false;
     }
 
     public User loginQuery(String login, String pass)
