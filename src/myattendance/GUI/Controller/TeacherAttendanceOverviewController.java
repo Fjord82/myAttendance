@@ -1,16 +1,12 @@
 package myattendance.GUI.Controller;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
-import com.sun.prism.paint.Color;
-import java.awt.event.ActionListener;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +14,6 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,24 +31,18 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import static javafx.scene.paint.Color.GREEN;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Callback;
 import myattendance.BE.Course;
 import myattendance.BE.Day;
@@ -81,7 +69,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     User lastSelectedStudent;
     Day clickedDay;
 
-    List<Day> nonSchoolDays = new ArrayList<>();
 
     Course lastSelectedCourse;
 
@@ -134,6 +121,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private Label lblName;
     @FXML
+
     private TableColumn<User, String> tblViewPercentage;
 
     /**
@@ -145,7 +133,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        nonSchoolDays = dateParser.listNonSchoolDays();
         showConstantCalender();
         setClickCal();
         updatePresentCounter();
@@ -154,6 +141,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         tblViewName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tblViewStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         tblViewPercentage.setCellValueFactory(cellData -> cellData.getValue().getAbsencePercentageProperty());
+
 
         tblViewStatus.setCellFactory(getCustomCellFactory());
 
@@ -166,7 +154,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     public void setUser(User user)
     {
         this.teacher = user;
-        lblName.setText(user.getName());
+        lblName.setText("Logged in as: " + user.getName());
         fillComboBox();
     }
 
@@ -183,7 +171,6 @@ public class TeacherAttendanceOverviewController implements Initializable
     @FXML
     private void handleAbsenceOverview(ActionEvent event) throws IOException
     {
-
         if (tblStatusView.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -207,10 +194,7 @@ public class TeacherAttendanceOverviewController implements Initializable
     {
         calendar = new DatePicker(LocalDate.now());
 
-        // Factory to create Cell of DatePicker
-        Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory();
-
-        calendar.setDayCellFactory(getDayCellFactory());
+        calendar.setDayCellFactory(dateParser.getDayCellFactory());
         DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
         Region pop = (Region) datePickerSkin.getPopupContent();
 
@@ -218,42 +202,6 @@ public class TeacherAttendanceOverviewController implements Initializable
 
         vBoxSelectionContent.setSpacing(200);
         vBoxSelectionContent.getChildren().add(pop);
-    }
-
-    // Factory to create Cell of DatePicker
-    private Callback<DatePicker, DateCell> getDayCellFactory()
-    {
-
-        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
-        {
-
-            @Override
-            public DateCell call(final DatePicker datePicker)
-            {
-                return new DateCell()
-                {
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty)
-                    {
-
-                        super.updateItem(item, empty);
-
-                        //dateParser.checkNonSchoolDay(item);
-                        //Instant instant = Instant.from(item);
-                        //DateTime date = new DateTime(item.atStartOfDay());
-                        for (Day day : nonSchoolDays)
-                        {
-                            if (day.getDateInTime().toLocalDate().toString().equals(item.toString()))
-                            {
-                                setTooltip(new Tooltip("Not school day"));
-                                setStyle("-fx-background-color: #C0C0C0;");
-                            }
-                        }
-                    }
-                };
-            }
-        };
-        return dayCellFactory;
     }
 
     private void setClickCal()
@@ -277,7 +225,7 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     }
 
-    private void handleDateSelection()
+    public void handleDateSelection()
     {
 
         if (clickedDay != null)
@@ -397,8 +345,18 @@ public class TeacherAttendanceOverviewController implements Initializable
 
     private void updateView()
     {
-        tblStatusView.setItems(model.updateList(filter, lastSelectedCourse));
+        updateView(getUsersFromModel());
+    }
+    
+    private void updateView(ObservableList<User> users)
+    {
+        tblStatusView.setItems(users);
         updatePresentCounter();
+    }
+    
+    private ObservableList<User> getUsersFromModel()
+    {
+        return model.updateList(filter, lastSelectedCourse);
     }
 
     @FXML
@@ -426,7 +384,8 @@ public class TeacherAttendanceOverviewController implements Initializable
     private void automaticUpdate()
     {
         // The time between every update in milliseconds
-        int delay = 150000;
+        int delay = 1200000; // 120 seconds
+
 
         // Creates a new timer
         Timer timer = new Timer();
@@ -438,21 +397,21 @@ public class TeacherAttendanceOverviewController implements Initializable
             @Override
             public void run()
             {
+                ObservableList<User> users = getUsersFromModel();
                 // Creates a new thread
                 Thread t = new Thread()
                 {
                     @Override
                     public void run()
                     {
-                        updateView();
+                        updateView(users);
                     }
                 };
                 Platform.runLater(t);
             }
         }, 0, delay);
     }
-
-
+    
     public void refreshStudents()
     {
         if (!cBoxClassSelection.getSelectionModel().isEmpty())
@@ -534,6 +493,7 @@ public class TeacherAttendanceOverviewController implements Initializable
         {
             tblStatusView.setItems(model.filterList(filter, lastSelectedCourse));
         }
+
     }
 
     public String getCSSClass(String string)
@@ -563,9 +523,10 @@ public class TeacherAttendanceOverviewController implements Initializable
                         {
 
                             if (item != null)
-                            {;
+                            {
                                 setText(item);
                                 String warningClass = getCSSClass(item);
+                                getStyleClass().clear();
                                 getStyleClass().add(warningClass);
                             }
                         }

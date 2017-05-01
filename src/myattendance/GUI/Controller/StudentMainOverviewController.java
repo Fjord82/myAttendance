@@ -10,24 +10,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import myattendance.BE.Day;
 import myattendance.BE.User;
-import myattendance.BLL.BLLFacade;
 import myattendance.GUI.Model.AttendanceParser;
 import myattendance.GUI.Model.DateParser;
 import myattendance.GUI.Model.StudentViewModel;
@@ -38,8 +35,7 @@ public class StudentMainOverviewController implements Initializable
 
     @FXML
     private VBox vBoxSelectionContent;
-    @FXML
-    private DatePicker datePicker;
+
     @FXML
     private Button btnLogout;
 
@@ -97,8 +93,8 @@ public class StudentMainOverviewController implements Initializable
 
     private void updateView()
     {
-        lblStudentName.setText(user.getName());
-        lblStudentClass.setText(user.getsClass());
+        lblStudentName.setText("Logged in as: " + user.getName());
+        lblStudentClass.setText("Class: " + user.getsClass());
 
         Label absenceLabel = new Label("Student Attendance: ");
         absenceLabel.setText("Student Absence: " + user.getAbsentDays().size() + "/" + model.getDaysUptoToday().size());
@@ -133,7 +129,7 @@ public class StudentMainOverviewController implements Initializable
 
             vBoxMiddle.getChildren().add(stackedChart);
             stackedChart.getData().add(model.getStackedChartData(user));
-            
+
             xAxisStacked.setLabel("Day");
             xAxisStacked.setTickMarkVisible(false);
             yAxisStacked.setLabel("Recorded Absences");
@@ -152,7 +148,7 @@ public class StudentMainOverviewController implements Initializable
 
             vBoxMiddle.getChildren().add(lineChart);
             lineChart.getData().add(model.getLineChartData(user));
-            
+
             xAxisLine.setLabel("Month");
             xAxisLine.setTickMarkVisible(false);
             yAxisLine.setLabel("Absent Days");
@@ -186,23 +182,21 @@ public class StudentMainOverviewController implements Initializable
 
     private void showConstantCalender()
     {
+        DatePicker calendar = new DatePicker(LocalDate.now());
 
-        //Install JFxtra from the internet!!!
-        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-
-        Node popupContent = datePickerSkin.getPopupContent();
+        calendar.setDayCellFactory(dateParser.getDayCellFactory());
+        DatePickerSkin datePickerSkin = new DatePickerSkin(calendar);
+        Region pop = (Region) datePickerSkin.getPopupContent();
 
         vBoxSelectionContent.setPadding(new Insets(5));
-
-        vBoxSelectionContent.getChildren().add(popupContent);
-
+        vBoxSelectionContent.getChildren().add(pop);
     }
 
     public void setUser(User user)
     {
         this.user = user;
         attendenceChecks();
-        user.setAbsentDays(model.getAbsentDays(user));
+        user.setAbsentDays(attendanceParser.getAbsentDays(user));
         updateView();
         updateStatistics();
     }
